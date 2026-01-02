@@ -55,8 +55,10 @@ Manages team membership and roles.
 - `POST /api/institutes` - Create a new institute
 - `GET /api/institutes/{id}` - Get institute by ID
 - `PUT /api/institutes/{id}` - Update institute
+- `DELETE /api/institutes/{id}` - Deactivate institute
 - `GET /api/institutes/{id}/settings` - Get institute settings
 - `PUT /api/institutes/{id}/settings` - Update institute settings
+- `POST /api/institutes/{id}/logo` - Upload institute logo
 - `GET /api/institutes/{id}/dashboard` - Get institute dashboard
 
 ### Centres
@@ -64,6 +66,7 @@ Manages team membership and roles.
 - `POST /api/institutes/{instituteId}/centres` - Create centre
 - `GET /api/centres/{id}` - Get centre by ID
 - `PUT /api/centres/{id}` - Update centre
+- `DELETE /api/centres/{id}` - Deactivate centre
 - `GET /api/centres/{id}/dashboard` - Get centre dashboard
 
 ### Facilities
@@ -107,6 +110,9 @@ The service requires MongoDB configuration in `appsettings.json`:
 
 ```json
 {
+  "ConnectionStrings": {
+    "MongoDB": "mongodb://localhost:27017"
+  },
   "MongoDB": {
     "ConnectionString": "mongodb://localhost:27017",
     "DatabaseName": "InstitutionDb"
@@ -116,6 +122,11 @@ The service requires MongoDB configuration in `appsettings.json`:
 
 ## Running the Service
 
+### Prerequisites
+- .NET 10.0 SDK
+- MongoDB (local or cloud instance)
+
+### Build
 ```bash
 cd src/SchoolConnect.Institution.Api
 dotnet run

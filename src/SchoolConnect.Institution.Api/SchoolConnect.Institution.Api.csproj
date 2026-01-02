@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SchoolConnect.Institution.Application\SchoolConnect.Institution.Application.csproj" />
     <ProjectReference Include="..\SchoolConnect.Institution.Infrastructure\SchoolConnect.Institution.Infrastructure.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Common.Api\SchoolConnect.Common.Api.csproj" />
   </ItemGroup>
 
 </Project>

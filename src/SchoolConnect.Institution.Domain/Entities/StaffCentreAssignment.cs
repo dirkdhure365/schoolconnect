@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
 
@@ -11,15 +12,16 @@ public class StaffCentreAssignment : Entity
     public DateTime StartDate { get; private set; }
     public DateTime? EndDate { get; private set; }
     public Guid AssignedBy { get; private set; }
-    
+
     private StaffCentreAssignment() { }
-    
+
     public static StaffCentreAssignment Create(
         Guid staffMemberId,
         Guid centreId,
         Guid assignedBy,
         DateTime startDate,
-        bool isPrimary = false)
+        bool isPrimary = false
+    )
     {
         var assignment = new StaffCentreAssignment
         {
@@ -29,16 +31,16 @@ public class StaffCentreAssignment : Entity
             StartDate = startDate,
             IsPrimary = isPrimary
         };
-        
+
         return assignment;
     }
-    
+
     public void SetAsPrimary()
     {
         IsPrimary = true;
         MarkAsUpdated();
     }
-    
+
     public void Remove(DateTime endDate)
     {
         EndDate = endDate;

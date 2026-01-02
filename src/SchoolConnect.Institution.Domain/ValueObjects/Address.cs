@@ -9,15 +9,16 @@ public class Address : ValueObject
     public string State { get; private set; }
     public string PostalCode { get; private set; }
     public string Country { get; private set; }
-    
-    private Address() { 
+
+    private Address()
+    {
         Street = string.Empty;
         City = string.Empty;
         State = string.Empty;
         PostalCode = string.Empty;
         Country = string.Empty;
     }
-    
+
     public Address(string street, string city, string state, string postalCode, string country)
     {
         Street = street ?? throw new ArgumentNullException(nameof(street));
@@ -26,7 +27,7 @@ public class Address : ValueObject
         PostalCode = postalCode ?? throw new ArgumentNullException(nameof(postalCode));
         Country = country ?? throw new ArgumentNullException(nameof(country));
     }
-    
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Street;

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using SchoolConnect.Institution.Domain.Interfaces;
 using SchoolConnect.Institution.Infrastructure.Persistence;
 using SchoolConnect.Institution.Infrastructure.Repositories;
@@ -11,12 +12,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInstitutionInfrastructure(
         this IServiceCollection services,
         string connectionString,
+        string databaseName = "SchoolConnectInstitution")
         string databaseName)
     {
+        // Register MongoDB client
+        services.AddSingleton<IMongoClient>(sp =>
+        {
+            return new MongoClient(connectionString);
+        });
+
         // Register DbContext
         services.AddSingleton<IInstitutionDbContext>(
             sp => new InstitutionDbContext(connectionString, databaseName));
-        
+
         // Register Repositories
         services.AddSingleton<IInstituteRepository, InstituteRepository>();
         services.AddSingleton<ICentreRepository, CentreRepository>();
@@ -31,7 +39,7 @@ public static class ServiceCollectionExtensions
         
         // Register Seed Service
         services.AddSingleton<InstitutionSeedService>();
-        
+
         return services;
     }
 }

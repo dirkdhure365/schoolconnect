@@ -1,6 +1,8 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
+using SchoolConnect.Institution.Domain.ValueObjects;
 using SchoolConnect.Institution.Domain.ValueObjects;
 
 namespace SchoolConnect.Institution.Domain.Entities;
@@ -17,9 +19,9 @@ public class Centre : AggregateRoot
     public CentreStatus Status { get; private set; }
     public WorkingHours WorkingHours { get; private set; } = null!;
     public Guid? CentreAdminId { get; private set; }
-    
+
     private Centre() { }
-    
+
     public static Centre Create(
         Guid instituteId,
         string name,
@@ -29,7 +31,8 @@ public class Centre : AggregateRoot
         int capacity,
         WorkingHours workingHours,
         GeoLocation? location = null,
-        Guid? centreAdminId = null)
+        Guid? centreAdminId = null
+    )
     {
         var centre = new Centre
         {
@@ -39,24 +42,27 @@ public class Centre : AggregateRoot
             Address = address,
             ContactInfo = contactInfo,
             Capacity = capacity,
+            Status = CentreStatus.Active,
             WorkingHours = workingHours,
             Location = location,
             CentreAdminId = centreAdminId,
             Status = CentreStatus.Active
         };
-        
-        centre.AddDomainEvent(new CentreCreatedEvent
-        {
-            AggregateId = centre.Id,
-            EventType = nameof(CentreCreatedEvent),
-            InstituteId = instituteId,
-            Name = name,
-            Code = code
-        });
-        
+
+        centre.AddDomainEvent(
+            new CentreCreatedEvent
+            {
+                AggregateId = centre.Id,
+                EventType = nameof(CentreCreatedEvent),
+                InstituteId = instituteId,
+                Name = name,
+                Code = code
+            }
+        );
+
         return centre;
     }
-    
+
     public void Update(
         string name,
         Address address,
@@ -64,7 +70,8 @@ public class Centre : AggregateRoot
         int capacity,
         WorkingHours workingHours,
         GeoLocation? location = null,
-        Guid? centreAdminId = null)
+        Guid? centreAdminId = null
+    )
     {
         Name = name;
         Address = address;
@@ -74,33 +81,37 @@ public class Centre : AggregateRoot
         Location = location;
         CentreAdminId = centreAdminId;
         MarkAsUpdated();
-        
-        AddDomainEvent(new CentreUpdatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(CentreUpdatedEvent),
-            Name = name
-        });
+
+        AddDomainEvent(
+            new CentreUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(CentreUpdatedEvent),
+                Name = name
+            }
+        );
     }
-    
+
     public void Deactivate()
     {
         Status = CentreStatus.Inactive;
         MarkAsUpdated();
-        
-        AddDomainEvent(new CentreDeactivatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(CentreDeactivatedEvent)
-        });
+
+        AddDomainEvent(
+            new CentreDeactivatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(CentreDeactivatedEvent)
+            }
+        );
     }
-    
+
     public void SetUnderMaintenance()
     {
         Status = CentreStatus.UnderMaintenance;
         MarkAsUpdated();
     }
-    
+
     public void Activate()
     {
         Status = CentreStatus.Active;

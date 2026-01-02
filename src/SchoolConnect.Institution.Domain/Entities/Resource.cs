@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
@@ -19,19 +20,22 @@ public class Resource : AggregateRoot
     public string? Currency { get; private set; }
     public string? Location { get; private set; }
     public Dictionary<string, string> Attributes { get; private set; } = new();
-    
+
     private Resource() { }
-    
+
     public static Resource Create(
         Guid centreId,
         string name,
         ResourceType type,
+        ResourceCondition condition,
         string? serialNumber = null,
         string? description = null,
+        string? imageUrl = null,
         DateTime? acquisitionDate = null,
         decimal? value = null,
         string? currency = null,
-        string? location = null)
+        string? location = null,
+        Dictionary<string, string>? attributes = null)
     {
         var resource = new Resource
         {
@@ -40,80 +44,63 @@ public class Resource : AggregateRoot
             Type = type,
             SerialNumber = serialNumber,
             Description = description,
+            ImageUrl = imageUrl,
+            Condition = condition,
+            Status = ResourceStatus.Available,
             AcquisitionDate = acquisitionDate,
             Value = value,
             Currency = currency,
             Location = location,
-            Condition = ResourceCondition.New,
-            Status = ResourceStatus.Available
         };
-        
+
         resource.AddDomainEvent(new ResourceCreatedEvent
         {
             AggregateId = resource.Id,
-            EventType = nameof(ResourceCreatedEvent),
             CentreId = centreId,
             Name = name,
             Type = type
         });
-        
+
         return resource;
     }
-    
+
     public void Update(
         string name,
+        string? serialNumber = null,
         string? description = null,
+        string? imageUrl = null,
         decimal? value = null,
-        string? location = null)
     {
         Name = name;
+        SerialNumber = serialNumber;
         Description = description;
+        ImageUrl = imageUrl;
         Value = value;
+        Currency = currency;
         Location = location;
-        MarkAsUpdated();
-        
+
         AddDomainEvent(new ResourceUpdatedEvent
         {
             AggregateId = Id,
-            EventType = nameof(ResourceUpdatedEvent),
             Name = name
         });
     }
-    
-    public void UpdateCondition(ResourceCondition condition)
+
     {
-        Condition = condition;
-        MarkAsUpdated();
     }
-    
-    public void SetAvailable()
+
     {
-        Status = ResourceStatus.Available;
-        MarkAsUpdated();
-    }
-    
-    public void SetAllocated()
-    {
-        Status = ResourceStatus.Allocated;
-        MarkAsUpdated();
-    }
-    
-    public void SetUnderRepair()
-    {
-        Status = ResourceStatus.UnderRepair;
-        MarkAsUpdated();
-    }
+
+        {
+            {
+        }
     
     public void MarkAsLost()
     {
         Status = ResourceStatus.Lost;
         MarkAsUpdated();
     }
-    
-    public void Retire()
+
     {
-        Status = ResourceStatus.Retired;
-        Condition = ResourceCondition.Retired;
-        MarkAsUpdated();
     }
 }

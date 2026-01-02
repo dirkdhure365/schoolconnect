@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
@@ -20,9 +21,9 @@ public class StaffMember : AggregateRoot
     public List<string> Qualifications { get; private set; } = new();
     public List<string> Specializations { get; private set; } = new();
     public int? MaxTeachingHoursPerWeek { get; private set; }
-    
+
     private StaffMember() { }
-    
+
     public static StaffMember Create(
         Guid instituteId,
         Guid userId,
@@ -35,7 +36,8 @@ public class StaffMember : AggregateRoot
         string? department = null,
         List<string>? qualifications = null,
         List<string>? specializations = null,
-        int? maxTeachingHoursPerWeek = null)
+        int? maxTeachingHoursPerWeek = null
+    )
     {
         var staff = new StaffMember
         {
@@ -53,72 +55,85 @@ public class StaffMember : AggregateRoot
             Specializations = specializations ?? new List<string>(),
             MaxTeachingHoursPerWeek = maxTeachingHoursPerWeek
         };
-        
-        staff.AddDomainEvent(new StaffOnboardedEvent
-        {
-            AggregateId = staff.Id,
-            EventType = nameof(StaffOnboardedEvent),
-            InstituteId = instituteId,
-            EmployeeCode = employeeCode,
-            FirstName = firstName,
-            LastName = lastName
-        });
-        
+
+        staff.AddDomainEvent(
+            new StaffOnboardedEvent
+            {
+                AggregateId = staff.Id,
+                EventType = nameof(StaffOnboardedEvent),
+                InstituteId = instituteId,
+                EmployeeCode = employeeCode,
+                FirstName = firstName,
+                LastName = lastName
+            }
+        );
+
         return staff;
     }
-    
+
     public void Update(
         string firstName,
         string lastName,
         string? jobTitle = null,
         string? department = null,
-        int? maxTeachingHoursPerWeek = null)
+        List<string>? qualifications = null,
+        List<string>? specializations = null,
+        int? maxTeachingHoursPerWeek = null
+    )
     {
         FirstName = firstName;
         LastName = lastName;
         JobTitle = jobTitle;
         Department = department;
+        if (qualifications != null)
+            Qualifications = qualifications;
+        if (specializations != null)
+            Specializations = specializations;
         MaxTeachingHoursPerWeek = maxTeachingHoursPerWeek;
         MarkAsUpdated();
-        
-        AddDomainEvent(new StaffUpdatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(StaffUpdatedEvent),
-            FirstName = firstName,
-            LastName = lastName
-        });
+
+        AddDomainEvent(
+            new StaffUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(StaffUpdatedEvent),
+                FirstName = firstName,
+                LastName = lastName
+            }
+        );
     }
-    
+
     public void SetOnLeave()
     {
         Status = StaffStatus.OnLeave;
         MarkAsUpdated();
     }
-    
+
     public void Suspend()
     {
         Status = StaffStatus.Suspended;
         MarkAsUpdated();
     }
-    
+
     public void Activate()
     {
         Status = StaffStatus.Active;
         MarkAsUpdated();
     }
-    
+
     public void Terminate(DateTime terminationDate)
     {
         Status = StaffStatus.Terminated;
         TerminationDate = terminationDate;
         MarkAsUpdated();
-        
-        AddDomainEvent(new StaffOffboardedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(StaffOffboardedEvent),
-            TerminationDate = terminationDate
-        });
+
+        AddDomainEvent(
+            new StaffOffboardedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(StaffOffboardedEvent),
+                TerminationDate = terminationDate
+            }
+        );
     }
 }

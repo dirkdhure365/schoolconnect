@@ -51,12 +51,7 @@ public record UpdateInstituteSettingsCommand(
 ) : IRequest<InstituteDto>;
 
 // Upload Institute Logo
-public record UploadInstituteLogoCommand(
-    Guid InstituteId,
-    string LogoUrl
-) : IRequest<InstituteDto>;
+public record UploadInstituteLogoCommand(Guid InstituteId, string LogoUrl) : IRequest<InstituteDto>;
 
 // Deactivate Institute
-public record DeactivateInstituteCommand(
-    Guid InstituteId
-) : IRequest<bool>;
+public record DeactivateInstituteCommand(Guid InstituteId) : IRequest<bool>;

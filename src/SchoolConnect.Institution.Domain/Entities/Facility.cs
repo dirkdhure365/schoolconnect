@@ -1,8 +1,18 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
+
+public class BookingRules
+{
+    public int MinDurationMinutes { get; set; }
+    public int MaxDurationMinutes { get; set; }
+    public int AdvanceBookingDays { get; set; }
+    public bool RequiresApproval { get; set; }
+    public List<string> AllowedRoles { get; set; } = [];
+}
 
 public class Facility : AggregateRoot
 {
@@ -17,9 +27,9 @@ public class Facility : AggregateRoot
     public FacilityStatus Status { get; private set; }
     public bool IsBookable { get; private set; }
     public BookingRules? BookingRules { get; private set; }
-    
+
     private Facility() { }
-    
+
     public static Facility Create(
         Guid centreId,
         string name,
@@ -29,7 +39,10 @@ public class Facility : AggregateRoot
         string? code = null,
         string? description = null,
         List<string>? amenities = null,
-        BookingRules? bookingRules = null)
+        string? imageUrl = null,
+        bool isBookable = true,
+        BookingRules? bookingRules = null
+    )
     {
         var facility = new Facility
         {
@@ -44,65 +57,79 @@ public class Facility : AggregateRoot
             BookingRules = bookingRules,
             Status = FacilityStatus.Available
         };
-        
-        facility.AddDomainEvent(new FacilityCreatedEvent
-        {
-            AggregateId = facility.Id,
-            EventType = nameof(FacilityCreatedEvent),
-            CentreId = centreId,
-            Name = name,
-            Type = type
-        });
-        
+
+        facility.AddDomainEvent(
+            new FacilityCreatedEvent
+            {
+                AggregateId = facility.Id,
+                EventType = nameof(FacilityCreatedEvent),
+                CentreId = centreId,
+                Name = name,
+                Type = type
+            }
+        );
+
         return facility;
     }
-    
+
     public void Update(
         string name,
         int capacity,
+        string? code = null,
         string? description = null,
         List<string>? amenities = null,
-        BookingRules? bookingRules = null)
+        string? imageUrl = null,
+        bool? isBookable = null,
+        BookingRules? bookingRules = null
+    )
     {
         Name = name;
+        Code = code;
         Capacity = capacity;
         Description = description;
-        if (amenities != null) Amenities = amenities;
-        if (bookingRules != null) BookingRules = bookingRules;
+        if (amenities != null)
+            Amenities = amenities;
+        ImageUrl = imageUrl;
+        if (isBookable.HasValue)
+            IsBookable = isBookable.Value;
+        if (bookingRules != null)
+            BookingRules = bookingRules;
         MarkAsUpdated();
-        
-        AddDomainEvent(new FacilityUpdatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(FacilityUpdatedEvent),
-            Name = name
-        });
+
+        AddDomainEvent(
+            new FacilityUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(FacilityUpdatedEvent),
+                Name = name
+            }
+        );
     }
-    
+
     public void UpdateImage(string imageUrl)
     {
         ImageUrl = imageUrl;
         MarkAsUpdated();
     }
-    
+
     public void SetAvailable()
     {
         Status = FacilityStatus.Available;
         MarkAsUpdated();
     }
-    
+
     public void SetOccupied()
     {
         Status = FacilityStatus.Occupied;
         MarkAsUpdated();
     }
-    
+
     public void SetUnderMaintenance()
     {
         Status = FacilityStatus.UnderMaintenance;
         MarkAsUpdated();
     }
-    
+
     public void Close()
     {
         Status = FacilityStatus.Closed;

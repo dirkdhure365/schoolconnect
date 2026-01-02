@@ -1,9 +1,43 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
 using SchoolConnect.Institution.Domain.ValueObjects;
+using SchoolConnect.Institution.Domain.ValueObjects;
 
 namespace SchoolConnect.Institution.Domain.Entities;
+
+public class InstituteSettings
+{
+    public string DefaultLanguage { get; set; } = "en";
+    public string DateFormat { get; set; } = "yyyy-MM-dd";
+    public string TimeFormat { get; set; } = "HH:mm";
+    public string Currency { get; set; } = "USD";
+    public GradingPolicy? GradingPolicy { get; set; }
+    public AttendancePolicy? AttendancePolicy { get; set; }
+    public List<string> EnabledFeatures { get; set; } = [];
+}
+
+public class GradingPolicy
+{
+    public string Name { get; set; } = string.Empty;
+    public decimal PassingGrade { get; set; }
+    public List<GradeRange> GradeRanges { get; set; } = [];
+}
+
+public class GradeRange
+{
+    public string Grade { get; set; } = string.Empty;
+    public decimal MinPercentage { get; set; }
+    public decimal MaxPercentage { get; set; }
+}
+
+public class AttendancePolicy
+{
+    public decimal MinimumAttendancePercentage { get; set; }
+    public bool TrackLateArrivals { get; set; }
+    public int GracePeriodMinutes { get; set; }
+}
 
 public class Institute : AggregateRoot
 {
@@ -20,9 +54,9 @@ public class Institute : AggregateRoot
     public int AcademicYearStartMonth { get; private set; } = 1;
     public InstituteSettings Settings { get; private set; } = new();
     public Guid? SubscriptionId { get; private set; }
-    
+
     private Institute() { }
-    
+
     public static Institute Create(
         string name,
         string code,
@@ -33,7 +67,8 @@ public class Institute : AggregateRoot
         string timezone,
         int academicYearStartMonth,
         string? description = null,
-        Guid? subscriptionId = null)
+        Guid? subscriptionId = null
+    )
     {
         var institute = new Institute
         {
@@ -50,19 +85,21 @@ public class Institute : AggregateRoot
             SubscriptionId = subscriptionId,
             Settings = new InstituteSettings()
         };
-        
-        institute.AddDomainEvent(new InstituteCreatedEvent
-        {
-            AggregateId = institute.Id,
-            EventType = nameof(InstituteCreatedEvent),
-            Name = name,
-            Code = code,
-            Type = type
-        });
-        
+
+        institute.AddDomainEvent(
+            new InstituteCreatedEvent
+            {
+                AggregateId = institute.Id,
+                EventType = nameof(InstituteCreatedEvent),
+                Name = name,
+                Code = code,
+                Type = type
+            }
+        );
+
         return institute;
     }
-    
+
     public void Update(
         string name,
         string? description,
@@ -70,7 +107,8 @@ public class Institute : AggregateRoot
         Address address,
         string country,
         string timezone,
-        int academicYearStartMonth)
+        int academicYearStartMonth
+    )
     {
         Name = name;
         Description = description;
@@ -80,52 +118,58 @@ public class Institute : AggregateRoot
         Timezone = timezone;
         AcademicYearStartMonth = academicYearStartMonth;
         MarkAsUpdated();
-        
-        AddDomainEvent(new InstituteUpdatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(InstituteUpdatedEvent),
-            Name = name
-        });
+
+        AddDomainEvent(
+            new InstituteUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteUpdatedEvent),
+                Name = name
+            }
+        );
     }
-    
+
     public void UpdateSettings(InstituteSettings settings)
     {
         Settings = settings;
         MarkAsUpdated();
-        
-        AddDomainEvent(new InstituteUpdatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(InstituteUpdatedEvent),
-            Name = Name
-        });
+
+        AddDomainEvent(
+            new InstituteUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteUpdatedEvent),
+                Name = Name
+            }
+        );
     }
-    
+
     public void UploadLogo(string logoUrl)
     {
         LogoUrl = logoUrl;
         MarkAsUpdated();
     }
-    
+
     public void Activate()
     {
         Status = InstituteStatus.Active;
         MarkAsUpdated();
     }
-    
+
     public void Deactivate()
     {
         Status = InstituteStatus.Inactive;
         MarkAsUpdated();
-        
-        AddDomainEvent(new InstituteDeactivatedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(InstituteDeactivatedEvent)
-        });
+
+        AddDomainEvent(
+            new InstituteDeactivatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteDeactivatedEvent)
+            }
+        );
     }
-    
+
     public void Suspend()
     {
         Status = InstituteStatus.Suspended;

@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
 
@@ -10,13 +11,10 @@ public class TeamMember : Entity
     public string? Role { get; private set; }
     public DateTime JoinedAt { get; private set; }
     public DateTime? LeftAt { get; private set; }
-    
+
     private TeamMember() { }
-    
-    public static TeamMember Create(
-        Guid teamId,
-        Guid staffMemberId,
-        string? role = null)
+
+    public static TeamMember Create(Guid teamId, Guid staffMemberId, string? role = null)
     {
         var member = new TeamMember
         {
@@ -25,16 +23,16 @@ public class TeamMember : Entity
             Role = role,
             JoinedAt = DateTime.UtcNow
         };
-        
+
         return member;
     }
-    
+
     public void UpdateRole(string? role)
     {
         Role = role;
         MarkAsUpdated();
     }
-    
+
     public void Remove()
     {
         LeftAt = DateTime.UtcNow;

@@ -44,6 +44,4 @@ public record UpdateCentreCommand(
     Guid? CentreAdminId = null
 ) : IRequest<CentreDto>;
 
-public record DeactivateCentreCommand(
-    Guid Id
-) : IRequest<bool>;
+public record DeactivateCentreCommand(Guid Id) : IRequest<bool>;

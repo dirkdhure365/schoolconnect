@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Primitives;
 
@@ -9,16 +10,16 @@ public record InstituteCreatedEvent : DomainEvent
     public string Name { get; init; } = string.Empty;
     public string Code { get; init; } = string.Empty;
     public InstituteType Type { get; init; }
+    public string Country { get; init; } = string.Empty;
 }
 
 public record InstituteUpdatedEvent : DomainEvent
 {
     public string Name { get; init; } = string.Empty;
+    public string? Description { get; init; }
 }
 
-public record InstituteDeactivatedEvent : DomainEvent
-{
-}
+public record InstituteDeactivatedEvent : DomainEvent { }
 
 // Centre Events
 public record CentreCreatedEvent : DomainEvent
@@ -33,9 +34,7 @@ public record CentreUpdatedEvent : DomainEvent
     public string Name { get; init; } = string.Empty;
 }
 
-public record CentreDeactivatedEvent : DomainEvent
-{
-}
+public record CentreDeactivatedEvent : DomainEvent { }
 
 // Facility Events
 public record FacilityCreatedEvent : DomainEvent
@@ -121,6 +120,7 @@ public record StaffAssignedToCentreEvent : DomainEvent
 {
     public Guid StaffMemberId { get; init; }
     public Guid CentreId { get; init; }
+    public bool IsPrimary { get; init; }
 }
 
 public record StaffRemovedFromCentreEvent : DomainEvent
@@ -142,9 +142,7 @@ public record TeamUpdatedEvent : DomainEvent
     public string Name { get; init; } = string.Empty;
 }
 
-public record TeamDeletedEvent : DomainEvent
-{
-}
+public record TeamDeletedEvent : DomainEvent { }
 
 public record TeamMemberAddedEvent : DomainEvent
 {

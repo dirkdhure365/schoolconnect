@@ -1,3 +1,4 @@
+using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
 using SchoolConnect.Institution.Domain.Primitives;
@@ -17,9 +18,9 @@ public class ResourceAllocation : AggregateRoot
     public ResourceCondition? ConditionOnReturn { get; private set; }
     public string? Notes { get; private set; }
     public AllocationStatus Status { get; private set; }
-    
+
     private ResourceAllocation() { }
-    
+
     public static ResourceAllocation Create(
         Guid resourceId,
         Guid allocatedToId,
@@ -28,7 +29,8 @@ public class ResourceAllocation : AggregateRoot
         Guid allocatedBy,
         DateTime startDate,
         DateTime? endDate = null,
-        string? notes = null)
+        string? notes = null
+    )
     {
         var allocation = new ResourceAllocation
         {
@@ -42,61 +44,69 @@ public class ResourceAllocation : AggregateRoot
             Notes = notes,
             Status = AllocationStatus.Active
         };
-        
-        allocation.AddDomainEvent(new ResourceAllocatedEvent
-        {
-            AggregateId = allocation.Id,
-            EventType = nameof(ResourceAllocatedEvent),
-            ResourceId = resourceId,
-            AllocatedToId = allocatedToId,
-            AllocatedToType = allocatedToType
-        });
-        
+
+        allocation.AddDomainEvent(
+            new ResourceAllocatedEvent
+            {
+                AggregateId = allocation.Id,
+                EventType = nameof(ResourceAllocatedEvent),
+                ResourceId = resourceId,
+                AllocatedToId = allocatedToId,
+                AllocatedToType = allocatedToType
+            }
+        );
+
         return allocation;
     }
-    
+
     public void Return(ResourceCondition conditionOnReturn, string? notes = null)
     {
+        Status = AllocationStatus.Returned;
         ReturnedDate = DateTime.UtcNow;
         ConditionOnReturn = conditionOnReturn;
         Status = AllocationStatus.Returned;
-        if (notes != null) Notes = notes;
+        if (notes != null)
+            Notes = notes;
         MarkAsUpdated();
-        
-        AddDomainEvent(new ResourceReturnedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(ResourceReturnedEvent),
-            ResourceId = ResourceId,
-            ConditionOnReturn = conditionOnReturn
-        });
+
+        AddDomainEvent(
+            new ResourceReturnedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(ResourceReturnedEvent),
+                ResourceId = ResourceId,
+                ConditionOnReturn = conditionOnReturn
+            }
+        );
     }
-    
+
     public void MarkAsOverdue()
     {
         Status = AllocationStatus.Overdue;
         MarkAsUpdated();
     }
-    
+
     public void MarkAsLost()
     {
         Status = AllocationStatus.Lost;
         MarkAsUpdated();
     }
-    
+
     public void ReportDamage(ResourceCondition condition, string notes)
     {
         ConditionOnReturn = condition;
         Notes = notes;
         MarkAsUpdated();
-        
-        AddDomainEvent(new ResourceDamagedEvent
-        {
-            AggregateId = Id,
-            EventType = nameof(ResourceDamagedEvent),
-            ResourceId = ResourceId,
-            Condition = condition,
-            Notes = notes
-        });
+
+        AddDomainEvent(
+            new ResourceDamagedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(ResourceDamagedEvent),
+                ResourceId = ResourceId,
+                Condition = condition,
+                Notes = notes
+            }
+        );
     }
 }
