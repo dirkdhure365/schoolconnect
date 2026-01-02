@@ -1,0 +1,16 @@
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.csproj.AssemblyReference.cache
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.AssemblyInfoInputs.cache
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.AssemblyInfo.cs
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.csproj.CoreCompileInputs.cache
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.sourcelink.json
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/bin/Debug/net10.0/SchoolConnect.EducationSystem.Application.deps.json
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/bin/Debug/net10.0/SchoolConnect.EducationSystem.Application.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/bin/Debug/net10.0/SchoolConnect.EducationSystem.Application.pdb
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/bin/Debug/net10.0/SchoolConnect.EducationSystem.Domain.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/bin/Debug/net10.0/SchoolConnect.EducationSystem.Domain.pdb
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolCo.1E66C744.Up2Date
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/refint/SchoolConnect.EducationSystem.Application.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/SchoolConnect.EducationSystem.Application.pdb
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Application/obj/Debug/net10.0/ref/SchoolConnect.EducationSystem.Application.dll

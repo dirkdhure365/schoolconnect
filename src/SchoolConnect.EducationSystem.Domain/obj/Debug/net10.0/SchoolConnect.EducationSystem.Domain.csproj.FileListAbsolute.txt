@@ -1,0 +1,12 @@
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/bin/Debug/net10.0/SchoolConnect.EducationSystem.Domain.deps.json
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/bin/Debug/net10.0/SchoolConnect.EducationSystem.Domain.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/bin/Debug/net10.0/SchoolConnect.EducationSystem.Domain.pdb
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.AssemblyInfoInputs.cache
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.AssemblyInfo.cs
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.csproj.CoreCompileInputs.cache
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.sourcelink.json
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/refint/SchoolConnect.EducationSystem.Domain.dll
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/SchoolConnect.EducationSystem.Domain.pdb
+/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.EducationSystem.Domain/obj/Debug/net10.0/ref/SchoolConnect.EducationSystem.Domain.dll

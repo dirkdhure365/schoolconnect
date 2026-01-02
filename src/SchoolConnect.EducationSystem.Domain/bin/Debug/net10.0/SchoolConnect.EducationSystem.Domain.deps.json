@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "SchoolConnect.EducationSystem.Domain/1.0.0": {
+        "runtime": {
+          "SchoolConnect.EducationSystem.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SchoolConnect.EducationSystem.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
