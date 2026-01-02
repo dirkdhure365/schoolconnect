@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: education-system-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: EducationSystemDb
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - education-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: education-system-api
+    restart: always
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
+      - MongoDB__ConnectionString=mongodb://mongodb:27017
+      - MongoDB__DatabaseName=EducationSystemDb
+    depends_on:
+      - mongodb
+    networks:
+      - education-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  education-network:
+    driver: bridge
