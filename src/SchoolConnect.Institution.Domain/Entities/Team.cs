@@ -1,6 +1,7 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -37,6 +38,7 @@ public class Team : AggregateRoot
         {
             AggregateId = team.Id,
             AggregateType = nameof(Team),
+            EventType = nameof(TeamCreatedEvent),
             InstituteId = instituteId,
             Name = name,
             Type = type
@@ -49,16 +51,20 @@ public class Team : AggregateRoot
         string name,
         string? description = null,
         Guid? leaderId = null)
+    public void Update(string name, string? description = null, Guid? leaderId = null)
     {
         Name = name;
         Description = description;
         LeaderId = leaderId;
         UpdatedAt = DateTime.UtcNow;
+        if (leaderId.HasValue) LeaderId = leaderId;
+        MarkAsUpdated();
 
         AddDomainEvent(new TeamUpdatedEvent
         {
             AggregateId = Id,
             AggregateType = nameof(Team),
+            EventType = nameof(TeamUpdatedEvent),
             Name = name
         });
     }
@@ -69,6 +75,7 @@ public class Team : AggregateRoot
         {
             AggregateId = Id,
             AggregateType = nameof(Team)
+            EventType = nameof(TeamDeletedEvent)
         });
     }
 

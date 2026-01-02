@@ -1,8 +1,10 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Events;
 
+// Institute Events
 public record InstituteCreatedEvent : DomainEvent
 {
     public string Name { get; init; } = string.Empty;
@@ -17,10 +19,9 @@ public record InstituteUpdatedEvent : DomainEvent
     public string? Description { get; init; }
 }
 
-public record InstituteDeactivatedEvent : DomainEvent
-{
-}
+public record InstituteDeactivatedEvent : DomainEvent { }
 
+// Centre Events
 public record CentreCreatedEvent : DomainEvent
 {
     public Guid InstituteId { get; init; }
@@ -33,10 +34,9 @@ public record CentreUpdatedEvent : DomainEvent
     public string Name { get; init; } = string.Empty;
 }
 
-public record CentreDeactivatedEvent : DomainEvent
-{
-}
+public record CentreDeactivatedEvent : DomainEvent { }
 
+// Facility Events
 public record FacilityCreatedEvent : DomainEvent
 {
     public Guid CentreId { get; init; }
@@ -63,6 +63,7 @@ public record FacilityBookingCancelledEvent : DomainEvent
     public string? Reason { get; init; }
 }
 
+// Resource Events
 public record ResourceCreatedEvent : DomainEvent
 {
     public Guid CentreId { get; init; }
@@ -90,9 +91,12 @@ public record ResourceReturnedEvent : DomainEvent
 
 public record ResourceDamagedEvent : DomainEvent
 {
+    public Guid ResourceId { get; init; }
     public ResourceCondition Condition { get; init; }
+    public string Notes { get; init; } = string.Empty;
 }
 
+// Staff Events
 public record StaffOnboardedEvent : DomainEvent
 {
     public Guid InstituteId { get; init; }
@@ -125,6 +129,7 @@ public record StaffRemovedFromCentreEvent : DomainEvent
     public Guid CentreId { get; init; }
 }
 
+// Team Events
 public record TeamCreatedEvent : DomainEvent
 {
     public Guid InstituteId { get; init; }
@@ -137,9 +142,7 @@ public record TeamUpdatedEvent : DomainEvent
     public string Name { get; init; } = string.Empty;
 }
 
-public record TeamDeletedEvent : DomainEvent
-{
-}
+public record TeamDeletedEvent : DomainEvent { }
 
 public record TeamMemberAddedEvent : DomainEvent
 {

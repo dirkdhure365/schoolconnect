@@ -1,60 +1,57 @@
 using MediatR;
+using SchoolConnect.Institution.Domain.DTOs;
 using SchoolConnect.Institution.Domain.Enums;
 
 namespace SchoolConnect.Institution.Application.Commands.Institutes;
 
-public record CreateInstituteCommand : IRequest<Guid>
-{
-    public string Name { get; init; } = string.Empty;
-    public string Code { get; init; } = string.Empty;
-    public InstituteType Type { get; init; }
-    public string Email { get; init; } = string.Empty;
-    public string Phone { get; init; } = string.Empty;
-    public string? Website { get; init; }
-    public string Street { get; init; } = string.Empty;
-    public string City { get; init; } = string.Empty;
-    public string State { get; init; } = string.Empty;
-    public string PostalCode { get; init; } = string.Empty;
-    public string Country { get; init; } = string.Empty;
-    public string Timezone { get; init; } = "UTC";
-    public int AcademicYearStartMonth { get; init; } = 1;
-    public string? Description { get; init; }
-}
+// Create Institute
+public record CreateInstituteCommand(
+    string Name,
+    string Code,
+    InstituteType Type,
+    string Email,
+    string Phone,
+    string? Website,
+    string Street,
+    string City,
+    string State,
+    string PostalCode,
+    string Country,
+    string Timezone,
+    int AcademicYearStartMonth,
+    string? Description = null,
+    Guid? SubscriptionId = null
+) : IRequest<InstituteDto>;
 
-public record UpdateInstituteCommand : IRequest<Unit>
-{
-    public Guid Id { get; init; }
-    public string Name { get; init; } = string.Empty;
-    public string? Description { get; init; }
-    public string Email { get; init; } = string.Empty;
-    public string Phone { get; init; } = string.Empty;
-    public string? Website { get; init; }
-    public string Street { get; init; } = string.Empty;
-    public string City { get; init; } = string.Empty;
-    public string State { get; init; } = string.Empty;
-    public string PostalCode { get; init; } = string.Empty;
-    public string Country { get; init; } = string.Empty;
-    public string Timezone { get; init; } = "UTC";
-    public int AcademicYearStartMonth { get; init; } = 1;
-}
+// Update Institute
+public record UpdateInstituteCommand(
+    Guid Id,
+    string Name,
+    string? Description,
+    string Email,
+    string Phone,
+    string? Website,
+    string Street,
+    string City,
+    string State,
+    string PostalCode,
+    string Country,
+    string Timezone,
+    int AcademicYearStartMonth
+) : IRequest<InstituteDto>;
 
-public record DeactivateInstituteCommand : IRequest<Unit>
-{
-    public Guid Id { get; init; }
-}
+// Update Institute Settings
+public record UpdateInstituteSettingsCommand(
+    Guid InstituteId,
+    string DefaultLanguage,
+    string DateFormat,
+    string TimeFormat,
+    string Currency,
+    List<string> EnabledFeatures
+) : IRequest<InstituteDto>;
 
-public record UpdateInstituteSettingsCommand : IRequest<Unit>
-{
-    public Guid Id { get; init; }
-    public string DefaultLanguage { get; init; } = "en";
-    public string DateFormat { get; init; } = "yyyy-MM-dd";
-    public string TimeFormat { get; init; } = "HH:mm";
-    public string Currency { get; init; } = "USD";
-    public List<string> EnabledFeatures { get; init; } = [];
-}
+// Upload Institute Logo
+public record UploadInstituteLogoCommand(Guid InstituteId, string LogoUrl) : IRequest<InstituteDto>;
 
-public record UploadInstituteLogoCommand : IRequest<Unit>
-{
-    public Guid Id { get; init; }
-    public string LogoUrl { get; init; } = string.Empty;
-}
+// Deactivate Institute
+public record DeactivateInstituteCommand(Guid InstituteId) : IRequest<bool>;

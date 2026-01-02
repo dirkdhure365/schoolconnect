@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using SchoolConnect.Institution.Domain.Interfaces;
 using SchoolConnect.Institution.Infrastructure.Persistence;
 using SchoolConnect.Institution.Infrastructure.Repositories;
+using SchoolConnect.Institution.Infrastructure.Seed;
 
 namespace SchoolConnect.Institution.Infrastructure.Extensions;
 
@@ -12,6 +13,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         string connectionString,
         string databaseName = "SchoolConnectInstitution")
+        string databaseName)
     {
         // Register MongoDB client
         services.AddSingleton<IMongoClient>(sp =>
@@ -20,19 +22,23 @@ public static class ServiceCollectionExtensions
         });
 
         // Register DbContext
-        services.AddScoped(sp =>
-        {
-            var mongoClient = sp.GetRequiredService<IMongoClient>();
-            return new InstitutionDbContext(mongoClient, databaseName);
-        });
+        services.AddSingleton<IInstitutionDbContext>(
+            sp => new InstitutionDbContext(connectionString, databaseName));
 
         // Register Repositories
-        services.AddScoped<IInstituteRepository, InstituteRepository>();
-        services.AddScoped<ICentreRepository, CentreRepository>();
-        services.AddScoped<IFacilityRepository, FacilityRepository>();
-        services.AddScoped<IResourceRepository, ResourceRepository>();
-        services.AddScoped<IStaffRepository, StaffRepository>();
-        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddSingleton<IInstituteRepository, InstituteRepository>();
+        services.AddSingleton<ICentreRepository, CentreRepository>();
+        services.AddSingleton<IFacilityRepository, FacilityRepository>();
+        services.AddSingleton<IFacilityBookingRepository, FacilityBookingRepository>();
+        services.AddSingleton<IResourceRepository, ResourceRepository>();
+        services.AddSingleton<IResourceAllocationRepository, ResourceAllocationRepository>();
+        services.AddSingleton<IStaffRepository, StaffRepository>();
+        services.AddSingleton<IStaffCentreAssignmentRepository, StaffCentreAssignmentRepository>();
+        services.AddSingleton<ITeamRepository, TeamRepository>();
+        services.AddSingleton<ITeamMemberRepository, TeamMemberRepository>();
+        
+        // Register Seed Service
+        services.AddSingleton<InstitutionSeedService>();
 
         return services;
     }

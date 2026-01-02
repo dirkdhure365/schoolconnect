@@ -1,23 +1,12 @@
 using MediatR;
-using SchoolConnect.Institution.Application.DTOs;
+using SchoolConnect.Institution.Domain.DTOs;
 
 namespace SchoolConnect.Institution.Application.Queries.Institutes;
 
-public record GetInstituteByIdQuery : IRequest<InstituteDto?>
-{
-    public Guid Id { get; init; }
-}
+public record GetInstituteByIdQuery(Guid Id) : IRequest<InstituteDto?>;
 
-public record GetInstitutesQuery : IRequest<List<InstituteSummaryDto>>
-{
-}
+public record GetInstitutesQuery() : IRequest<IEnumerable<InstituteDto>>;
 
-public record GetInstituteSettingsQuery : IRequest<InstituteSettingsDto?>
-{
-    public Guid Id { get; init; }
-}
+public record GetInstituteSettingsQuery(Guid InstituteId) : IRequest<InstituteSettingsDto?>;
 
-public record GetInstituteDashboardQuery : IRequest<InstituteDashboardDto?>
-{
-    public Guid Id { get; init; }
-}
+public record GetInstituteDashboardQuery(Guid InstituteId) : IRequest<InstituteDashboardDto?>;

@@ -1,6 +1,7 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -27,8 +28,12 @@ public class FacilityBooking : AggregateRoot
         DateTime startTime,
         DateTime endTime,
         string? description = null,
-        string? notes = null)
+        string? notes = null
+    )
     {
+        if (endTime <= startTime)
+            throw new ArgumentException("End time must be after start time");
+
         var booking = new FacilityBooking
         {
             FacilityId = facilityId,
@@ -37,36 +42,35 @@ public class FacilityBooking : AggregateRoot
             Description = description,
             StartTime = startTime,
             EndTime = endTime,
-            Status = BookingStatus.Pending,
-            Notes = notes
+            Notes = notes,
+            Status = BookingStatus.Pending
         };
 
-        booking.AddDomainEvent(new FacilityBookedEvent
-        {
-            AggregateId = booking.Id,
-            AggregateType = nameof(FacilityBooking),
-            FacilityId = facilityId,
-            BookedBy = bookedBy,
-            StartTime = startTime,
-            EndTime = endTime
-        });
+        booking.AddDomainEvent(
+            new FacilityBookedEvent
+            {
+                AggregateId = booking.Id,
+                EventType = nameof(FacilityBookedEvent),
+                FacilityId = facilityId,
+                BookedBy = bookedBy,
+                StartTime = startTime,
+                EndTime = endTime
+            }
+        );
 
         return booking;
     }
 
-    public void Update(
-        string purpose,
-        DateTime startTime,
-        DateTime endTime,
-        string? description = null,
-        string? notes = null)
+    public void Update(DateTime startTime, DateTime endTime, string? notes = null)
     {
-        Purpose = purpose;
-        Description = description;
+        if (endTime <= startTime)
+            throw new ArgumentException("End time must be after start time");
+
         StartTime = startTime;
         EndTime = endTime;
-        Notes = notes;
-        UpdatedAt = DateTime.UtcNow;
+        if (notes != null)
+            Notes = notes;
+        MarkAsUpdated();
     }
 
     public void Approve(Guid approvedBy)
@@ -74,32 +78,29 @@ public class FacilityBooking : AggregateRoot
         Status = BookingStatus.Confirmed;
         ApprovedBy = approvedBy;
         ApprovedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
     }
 
     public void Cancel(string? reason = null)
     {
         Status = BookingStatus.Cancelled;
         CancellationReason = reason;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
 
-        AddDomainEvent(new FacilityBookingCancelledEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(FacilityBooking),
-            FacilityId = FacilityId,
-            Reason = reason
-        });
+        AddDomainEvent(
+            new FacilityBookingCancelledEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(FacilityBookingCancelledEvent),
+                FacilityId = FacilityId,
+                Reason = reason
+            }
+        );
     }
 
     public void Complete()
     {
         Status = BookingStatus.Completed;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    protected override void When(DomainEvent @event)
-    {
-        // Event sourcing support - not implemented in this version
+        MarkAsUpdated();
     }
 }

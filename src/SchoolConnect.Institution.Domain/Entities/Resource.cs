@@ -1,6 +1,7 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -50,13 +51,11 @@ public class Resource : AggregateRoot
             Value = value,
             Currency = currency,
             Location = location,
-            Attributes = attributes ?? new()
         };
 
         resource.AddDomainEvent(new ResourceCreatedEvent
         {
             AggregateId = resource.Id,
-            AggregateType = nameof(Resource),
             CentreId = centreId,
             Name = name,
             Type = type
@@ -71,9 +70,6 @@ public class Resource : AggregateRoot
         string? description = null,
         string? imageUrl = null,
         decimal? value = null,
-        string? currency = null,
-        string? location = null,
-        Dictionary<string, string>? attributes = null)
     {
         Name = name;
         SerialNumber = serialNumber;
@@ -82,41 +78,29 @@ public class Resource : AggregateRoot
         Value = value;
         Currency = currency;
         Location = location;
-        if (attributes != null) Attributes = attributes;
-        UpdatedAt = DateTime.UtcNow;
 
         AddDomainEvent(new ResourceUpdatedEvent
         {
             AggregateId = Id,
-            AggregateType = nameof(Resource),
             Name = name
         });
     }
 
-    public void UpdateStatus(ResourceStatus status)
     {
-        Status = status;
-        UpdatedAt = DateTime.UtcNow;
     }
 
-    public void UpdateCondition(ResourceCondition condition)
     {
-        Condition = condition;
-        UpdatedAt = DateTime.UtcNow;
 
-        if (condition == ResourceCondition.Damaged)
         {
-            AddDomainEvent(new ResourceDamagedEvent
             {
-                AggregateId = Id,
-                AggregateType = nameof(Resource),
-                Condition = condition
-            });
         }
+    
+    public void MarkAsLost()
+    {
+        Status = ResourceStatus.Lost;
+        MarkAsUpdated();
     }
 
-    protected override void When(DomainEvent @event)
     {
-        // Event sourcing support - not implemented in this version
     }
 }

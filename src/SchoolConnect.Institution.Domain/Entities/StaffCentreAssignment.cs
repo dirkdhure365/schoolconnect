@@ -1,5 +1,6 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -18,30 +19,31 @@ public class StaffCentreAssignment : Entity
         Guid staffMemberId,
         Guid centreId,
         Guid assignedBy,
-        bool isPrimary = false,
-        DateTime? startDate = null)
+        DateTime startDate,
+        bool isPrimary = false
+    )
     {
         var assignment = new StaffCentreAssignment
         {
             StaffMemberId = staffMemberId,
             CentreId = centreId,
-            IsPrimary = isPrimary,
-            StartDate = startDate ?? DateTime.UtcNow,
-            AssignedBy = assignedBy
+            AssignedBy = assignedBy,
+            StartDate = startDate,
+            IsPrimary = isPrimary
         };
 
         return assignment;
     }
 
-    public void End(DateTime? endDate = null)
-    {
-        EndDate = endDate ?? DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
     public void SetAsPrimary()
     {
         IsPrimary = true;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
+    }
+
+    public void Remove(DateTime endDate)
+    {
+        EndDate = endDate;
+        MarkAsUpdated();
     }
 }

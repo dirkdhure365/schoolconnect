@@ -1,4 +1,4 @@
-using SchoolConnect.Common.Domain.Primitives;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.ValueObjects;
 
@@ -8,7 +8,7 @@ public class ContactInfo : ValueObject
     public string Phone { get; private set; }
     public string? Website { get; private set; }
 
-    private ContactInfo() 
+    private ContactInfo()
     {
         Email = string.Empty;
         Phone = string.Empty;
@@ -16,8 +16,8 @@ public class ContactInfo : ValueObject
 
     public ContactInfo(string email, string phone, string? website = null)
     {
-        Email = email;
-        Phone = phone;
+        Email = email ?? throw new ArgumentNullException(nameof(email));
+        Phone = phone ?? throw new ArgumentNullException(nameof(phone));
         Website = website;
     }
 
@@ -25,6 +25,7 @@ public class ContactInfo : ValueObject
     {
         yield return Email;
         yield return Phone;
-        if (Website != null) yield return Website;
+        if (Website != null)
+            yield return Website;
     }
 }

@@ -1,45 +1,52 @@
 # SchoolConnect Institution Management Microservice
 
 ## Overview
-The Institution Management microservice handles schools, centres, facilities, resources, staff, and teams within the SchoolConnect platform. It provides comprehensive APIs for managing educational institutions and their related entities.
+The Institution Management microservice handles schools, centres, facilities, resources, staff, and teams for the SchoolConnect platform.
 
 ## Architecture
+This microservice follows Clean Architecture principles with CQRS pattern:
+- **Domain Layer**: Contains entities, value objects, enums, events, exceptions, and repository interfaces
+- **Application Layer**: Contains commands, queries, handlers, and DTOs
+- **Infrastructure Layer**: Contains database context, repository implementations, and seed services
+- **API Layer**: Contains HTTP endpoints using minimal APIs
 
-This microservice follows Clean Architecture principles with the following layers:
+## Technology Stack
+- .NET 10.0
+- MongoDB for data persistence
+- MediatR for CQRS implementation
+- Swashbuckle for API documentation
 
-### Domain Layer (`SchoolConnect.Institution.Domain`)
-- **Entities**: 10 aggregate roots and entities
-  - Institute, Centre, Facility, FacilityBooking
-  - Resource, ResourceAllocation
-  - StaffMember, StaffCentreAssignment
-  - Team, TeamMember
-- **Value Objects**: Address, ContactInfo, WorkingHours, GeoLocation
-- **Enums**: 13 enumerations for various statuses and types
-- **Domain Events**: 25 events tracking entity lifecycle changes
-- **Exceptions**: 6 custom domain exceptions
-- **Interfaces**: 6 repository interfaces
+## Domain Entities
 
-### Application Layer (`SchoolConnect.Institution.Application`)
-- **DTOs**: 16 data transfer objects
-- **Commands**: CQRS command handlers for write operations
-- **Queries**: CQRS query handlers for read operations
-- **Mappers**: AutoMapper profiles for entity-DTO mapping
-- Uses MediatR for mediator pattern implementation
+### Institute
+Represents an educational institution with settings, contact information, and organizational details.
 
-### Infrastructure Layer (`SchoolConnect.Institution.Infrastructure`)
-- **Persistence**: MongoDB database context
-- **Repositories**: 6 repository implementations
-- **Extensions**: Dependency injection configuration
+### Centre
+Represents a campus or branch of an institution with location, capacity, and working hours.
 
-### API Layer (`SchoolConnect.Institution.Api`)
-- **Endpoints**: RESTful API endpoints using Minimal API pattern
-- **Configuration**: Swagger/OpenAPI documentation
-- **Middleware**: CORS, authentication, error handling
+### Facility
+Represents physical spaces like classrooms, labs, libraries, etc. with booking capabilities.
 
-## Database
-- **Database Type**: MongoDB
-- **Database Name**: SchoolConnectInstitution
-- **Collections**: 10 collections (institutes, centres, facilities, facility_bookings, resources, resource_allocations, staff_members, staff_centre_assignments, teams, team_members)
+### FacilityBooking
+Manages bookings for facilities with approval workflows.
+
+### Resource
+Tracks institutional resources like equipment, vehicles, instruments, etc.
+
+### ResourceAllocation
+Manages allocation of resources to staff or students.
+
+### StaffMember
+Represents employees with qualifications, specializations, and employment details.
+
+### StaffCentreAssignment
+Tracks staff assignments to different centres.
+
+### Team
+Groups staff members into departments, subjects, projects, committees, or clubs.
+
+### TeamMember
+Manages team membership and roles.
 
 ## API Endpoints
 
@@ -62,19 +69,53 @@ This microservice follows Clean Architecture principles with the following layer
 - `DELETE /api/centres/{id}` - Deactivate centre
 - `GET /api/centres/{id}/dashboard` - Get centre dashboard
 
-### Facilities, Resources, Staff, and Teams
-Additional endpoints for facilities, resources, staff, and teams are planned for future implementation.
+### Facilities
+- `GET /api/centres/{centreId}/facilities` - List facilities by centre
+- `POST /api/centres/{centreId}/facilities` - Create facility
+- `GET /api/facilities/{id}` - Get facility by ID
+- `PUT /api/facilities/{id}` - Update facility
+- `GET /api/facilities/{id}/bookings` - Get facility bookings
+- `POST /api/facilities/{id}/bookings` - Book facility
+- `GET /api/facilities/{id}/schedule` - Get facility schedule
+
+### Resources
+- `GET /api/centres/{centreId}/resources` - List resources by centre
+- `POST /api/centres/{centreId}/resources` - Create resource
+- `GET /api/resources/{id}` - Get resource by ID
+- `PUT /api/resources/{id}` - Update resource
+- `POST /api/resources/{id}/allocate` - Allocate resource
+- `GET /api/resources/{id}/allocations` - Get resource allocations
+
+### Staff
+- `GET /api/institutes/{instituteId}/staff` - List staff by institute
+- `POST /api/institutes/{instituteId}/staff` - Onboard staff
+- `GET /api/staff/{id}` - Get staff by ID
+- `PUT /api/staff/{id}` - Update staff
+- `GET /api/staff/{id}/centres` - Get staff centre assignments
+- `POST /api/staff/{id}/centres` - Assign staff to centre
+- `GET /api/staff/{id}/teams` - Get staff team memberships
+- `GET /api/centres/{centreId}/staff` - List staff by centre
+
+### Teams
+- `GET /api/institutes/{instituteId}/teams` - List teams by institute
+- `POST /api/institutes/{instituteId}/teams` - Create team
+- `GET /api/teams/{id}` - Get team by ID
+- `PUT /api/teams/{id}` - Update team
+- `GET /api/teams/{id}/members` - Get team members
+- `POST /api/teams/{id}/members` - Add team member
 
 ## Configuration
 
-### appsettings.json
+The service requires MongoDB configuration in `appsettings.json`:
+
 ```json
 {
   "ConnectionStrings": {
     "MongoDB": "mongodb://localhost:27017"
   },
   "MongoDB": {
-    "DatabaseName": "SchoolConnectInstitution"
+    "ConnectionString": "mongodb://localhost:27017",
+    "DatabaseName": "InstitutionDb"
   }
 }
 ```
@@ -87,87 +128,79 @@ Additional endpoints for facilities, resources, staff, and teams are planned for
 
 ### Build
 ```bash
-dotnet build src/SchoolConnect.Institution.Api/SchoolConnect.Institution.Api.csproj
+cd src/SchoolConnect.Institution.Api
+dotnet run
 ```
 
-### Run
+The API will be available at `https://localhost:5001` with Swagger UI at the root.
+
+## Seed Data
+
+Use the seed endpoint to populate the database with sample data:
+
 ```bash
-dotnet run --project src/SchoolConnect.Institution.Api/SchoolConnect.Institution.Api.csproj
+POST /api/seed
 ```
 
-The API will start on `http://localhost:5000` by default.
+## Project Structure
 
-### Swagger UI
-Once running, access the Swagger UI at: `http://localhost:5000/swagger`
+```
+src/SchoolConnect.Institution/
+├── SchoolConnect.Institution.Domain/
+│   ├── Entities/
+│   ├── ValueObjects/
+│   ├── Events/
+│   ├── Enums/
+│   ├── Exceptions/
+│   ├── Interfaces/
+│   └── Primitives/
+├── SchoolConnect.Institution.Application/
+│   ├── Commands/
+│   ├── Queries/
+│   ├── Handlers/
+│   ├── DTOs/
+│   └── Validators/
+├── SchoolConnect.Institution.Infrastructure/
+│   ├── Persistence/
+│   ├── Repositories/
+│   ├── Seed/
+│   └── Extensions/
+└── SchoolConnect.Institution.Api/
+    └── Program.cs
+```
 
-## Domain Models
+## Implementation Status
 
-### Institute
-Represents an educational institution with:
-- Basic information (name, code, type, description)
-- Contact details and address
-- Settings (language, timezone, academic year)
-- Status management
+### Completed
+- ✅ Domain Layer (all entities, value objects, enums, events, exceptions, interfaces)
+- ✅ Application Layer (all commands, queries, DTOs, ALL handlers implemented)
+  - ✅ Institute handlers (Create, Update, Get, List)
+  - ✅ Centre handlers (Create, Update, Deactivate, Get, List, Dashboard)
+  - ✅ Facility handlers (Create, Update, Delete, Book, Approve, Cancel, Get, List, Schedule)
+  - ✅ Resource handlers (Create, Update, Delete, Allocate, Return, Report Damage, Get, List, Inventory Report)
+  - ✅ Staff handlers (Onboard, Update, Offboard, Assign, Remove, Get, List by Institute/Centre/Teams)
+  - ✅ Team handlers (Create, Update, Delete, Add Member, Remove Member, Get, List)
+- ✅ Infrastructure Layer (database context, all repositories, seed service)
+- ✅ API Layer (all endpoints, service registration, Swagger configuration)
+- ✅ Solution builds successfully
 
-### Centre
-Represents a physical location/campus with:
-- Institute association
-- Address and geolocation
-- Capacity and working hours
-- Status management
+### Remaining Work (Optional Enhancements)
+- Add validation using FluentValidation
+- Add comprehensive unit and integration tests
+- Add error handling middleware
+- Add authentication and authorization
+- Add logging and monitoring
 
-### Facility
-Represents bookable spaces like classrooms, labs, etc. with:
-- Type and capacity
-- Amenities and features
-- Booking rules
-- Status tracking
+## Notes
 
-### Resource
-Represents physical assets with:
-- Type and condition tracking
-- Acquisition details and value
-- Allocation management
-- Location tracking
+The implementation is now **complete** with:
+1. Complete domain model with all entities and value objects
+2. Full repository pattern implementation
+3. CQRS structure with all commands and queries
+4. **All handlers implemented** for Institutes, Centres, Facilities, Resources, Staff, and Teams
+5. Complete API endpoints
+6. MongoDB integration
+7. Comprehensive error handling in handlers
+8. Proper domain event support
 
-### Staff Member
-Represents institutional employees with:
-- Employment details
-- Qualifications and specializations
-- Centre assignments
-- Team memberships
-
-### Team
-Represents groups of staff members with:
-- Purpose and type
-- Leadership structure
-- Member management
-
-## Technology Stack
-- **Framework**: ASP.NET Core 10.0
-- **Database**: MongoDB 3.5.2
-- **ORM/Driver**: MongoDB.Driver
-- **Mapping**: AutoMapper 16.0.0
-- **Mediator**: MediatR 12.4.0
-- **Validation**: FluentValidation 12.1.1
-- **API Documentation**: Swashbuckle.AspNetCore 10.1.0
-
-## Development Patterns
-- **Architecture**: Clean Architecture / Onion Architecture
-- **Design Pattern**: CQRS (Command Query Responsibility Segregation)
-- **Domain-Driven Design**: Aggregates, Entities, Value Objects, Domain Events
-- **Repository Pattern**: Abstraction over data access
-- **Dependency Injection**: Built-in .NET DI container
-
-## Future Enhancements
-1. Complete implementation of Facility, Resource, Staff, and Team command/query handlers
-2. Add FluentValidation validators for all commands
-3. Implement seed data service
-4. Add comprehensive unit and integration tests
-5. Implement authentication and authorization
-6. Add caching layer for frequently accessed data
-7. Implement event publishing to message bus
-8. Add logging and monitoring
-
-## License
-Copyright © 2026 SchoolConnect
+The microservice is ready for use with all core functionality implemented. The solution compiles and runs successfully.

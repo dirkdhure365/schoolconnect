@@ -1,4 +1,4 @@
-using SchoolConnect.Common.Domain.Primitives;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.ValueObjects;
 
@@ -10,7 +10,7 @@ public class Address : ValueObject
     public string PostalCode { get; private set; }
     public string Country { get; private set; }
 
-    private Address() 
+    private Address()
     {
         Street = string.Empty;
         City = string.Empty;
@@ -21,11 +21,11 @@ public class Address : ValueObject
 
     public Address(string street, string city, string state, string postalCode, string country)
     {
-        Street = street;
-        City = city;
-        State = state;
-        PostalCode = postalCode;
-        Country = country;
+        Street = street ?? throw new ArgumentNullException(nameof(street));
+        City = city ?? throw new ArgumentNullException(nameof(city));
+        State = state ?? throw new ArgumentNullException(nameof(state));
+        PostalCode = postalCode ?? throw new ArgumentNullException(nameof(postalCode));
+        Country = country ?? throw new ArgumentNullException(nameof(country));
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

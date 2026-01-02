@@ -1,6 +1,7 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -17,8 +18,8 @@ public class StaffMember : AggregateRoot
     public DateTime JoinDate { get; private set; }
     public DateTime? TerminationDate { get; private set; }
     public StaffStatus Status { get; private set; }
-    public List<string> Qualifications { get; private set; } = [];
-    public List<string> Specializations { get; private set; } = [];
+    public List<string> Qualifications { get; private set; } = new();
+    public List<string> Specializations { get; private set; } = new();
     public int? MaxTeachingHoursPerWeek { get; private set; }
 
     private StaffMember() { }
@@ -35,7 +36,8 @@ public class StaffMember : AggregateRoot
         string? department = null,
         List<string>? qualifications = null,
         List<string>? specializations = null,
-        int? maxTeachingHoursPerWeek = null)
+        int? maxTeachingHoursPerWeek = null
+    )
     {
         var staff = new StaffMember
         {
@@ -49,20 +51,22 @@ public class StaffMember : AggregateRoot
             EmploymentType = employmentType,
             JoinDate = joinDate,
             Status = StaffStatus.Active,
-            Qualifications = qualifications ?? [],
-            Specializations = specializations ?? [],
+            Qualifications = qualifications ?? new List<string>(),
+            Specializations = specializations ?? new List<string>(),
             MaxTeachingHoursPerWeek = maxTeachingHoursPerWeek
         };
 
-        staff.AddDomainEvent(new StaffOnboardedEvent
-        {
-            AggregateId = staff.Id,
-            AggregateType = nameof(StaffMember),
-            InstituteId = instituteId,
-            EmployeeCode = employeeCode,
-            FirstName = firstName,
-            LastName = lastName
-        });
+        staff.AddDomainEvent(
+            new StaffOnboardedEvent
+            {
+                AggregateId = staff.Id,
+                EventType = nameof(StaffOnboardedEvent),
+                InstituteId = instituteId,
+                EmployeeCode = employeeCode,
+                FirstName = firstName,
+                LastName = lastName
+            }
+        );
 
         return staff;
     }
@@ -74,48 +78,62 @@ public class StaffMember : AggregateRoot
         string? department = null,
         List<string>? qualifications = null,
         List<string>? specializations = null,
-        int? maxTeachingHoursPerWeek = null)
+        int? maxTeachingHoursPerWeek = null
+    )
     {
         FirstName = firstName;
         LastName = lastName;
         JobTitle = jobTitle;
         Department = department;
-        if (qualifications != null) Qualifications = qualifications;
-        if (specializations != null) Specializations = specializations;
+        if (qualifications != null)
+            Qualifications = qualifications;
+        if (specializations != null)
+            Specializations = specializations;
         MaxTeachingHoursPerWeek = maxTeachingHoursPerWeek;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
 
-        AddDomainEvent(new StaffUpdatedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(StaffMember),
-            FirstName = firstName,
-            LastName = lastName
-        });
+        AddDomainEvent(
+            new StaffUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(StaffUpdatedEvent),
+                FirstName = firstName,
+                LastName = lastName
+            }
+        );
     }
 
-    public void Offboard(DateTime? terminationDate = null)
+    public void SetOnLeave()
+    {
+        Status = StaffStatus.OnLeave;
+        MarkAsUpdated();
+    }
+
+    public void Suspend()
+    {
+        Status = StaffStatus.Suspended;
+        MarkAsUpdated();
+    }
+
+    public void Activate()
+    {
+        Status = StaffStatus.Active;
+        MarkAsUpdated();
+    }
+
+    public void Terminate(DateTime terminationDate)
     {
         Status = StaffStatus.Terminated;
-        TerminationDate = terminationDate ?? DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        TerminationDate = terminationDate;
+        MarkAsUpdated();
 
-        AddDomainEvent(new StaffOffboardedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(StaffMember),
-            TerminationDate = TerminationDate.Value
-        });
-    }
-
-    public void UpdateStatus(StaffStatus status)
-    {
-        Status = status;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    protected override void When(DomainEvent @event)
-    {
-        // Event sourcing support - not implemented in this version
+        AddDomainEvent(
+            new StaffOffboardedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(StaffOffboardedEvent),
+                TerminationDate = terminationDate
+            }
+        );
     }
 }

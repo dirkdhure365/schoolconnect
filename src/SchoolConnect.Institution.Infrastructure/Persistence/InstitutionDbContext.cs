@@ -3,23 +3,23 @@ using SchoolConnect.Institution.Domain.Entities;
 
 namespace SchoolConnect.Institution.Infrastructure.Persistence;
 
-public class InstitutionDbContext
+public interface IInstitutionDbContext
+{
+    IMongoCollection<T> GetCollection<T>(string name);
+}
+
+public class InstitutionDbContext : IInstitutionDbContext
 {
     private readonly IMongoDatabase _database;
 
-    public InstitutionDbContext(IMongoClient mongoClient, string databaseName = "SchoolConnectInstitution")
+    public InstitutionDbContext(string connectionString, string databaseName)
     {
-        _database = mongoClient.GetDatabase(databaseName);
+        var client = new MongoClient(connectionString);
+        _database = client.GetDatabase(databaseName);
     }
 
-    public IMongoCollection<Institute> Institutes => _database.GetCollection<Institute>("institutes");
-    public IMongoCollection<Centre> Centres => _database.GetCollection<Centre>("centres");
-    public IMongoCollection<Facility> Facilities => _database.GetCollection<Facility>("facilities");
-    public IMongoCollection<FacilityBooking> FacilityBookings => _database.GetCollection<FacilityBooking>("facility_bookings");
-    public IMongoCollection<Resource> Resources => _database.GetCollection<Resource>("resources");
-    public IMongoCollection<ResourceAllocation> ResourceAllocations => _database.GetCollection<ResourceAllocation>("resource_allocations");
-    public IMongoCollection<StaffMember> StaffMembers => _database.GetCollection<StaffMember>("staff_members");
-    public IMongoCollection<StaffCentreAssignment> StaffCentreAssignments => _database.GetCollection<StaffCentreAssignment>("staff_centre_assignments");
-    public IMongoCollection<Team> Teams => _database.GetCollection<Team>("teams");
-    public IMongoCollection<TeamMember> TeamMembers => _database.GetCollection<TeamMember>("team_members");
+    public IMongoCollection<T> GetCollection<T>(string name)
+    {
+        return _database.GetCollection<T>(name);
+    }
 }

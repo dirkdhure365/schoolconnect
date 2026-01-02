@@ -1,7 +1,9 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
-using SchoolConnect.Institution.Domain.ValueObjects;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
+using SchoolConnect.Institution.Domain.ValueObjects;
+using SchoolConnect.Institution.Domain.ValueObjects;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -15,7 +17,7 @@ public class Centre : AggregateRoot
     public GeoLocation? Location { get; private set; }
     public int Capacity { get; private set; }
     public CentreStatus Status { get; private set; }
-    public WorkingHours? WorkingHours { get; private set; }
+    public WorkingHours WorkingHours { get; private set; } = null!;
     public Guid? CentreAdminId { get; private set; }
 
     private Centre() { }
@@ -27,9 +29,10 @@ public class Centre : AggregateRoot
         Address address,
         ContactInfo contactInfo,
         int capacity,
-        WorkingHours? workingHours = null,
+        WorkingHours workingHours,
         GeoLocation? location = null,
-        Guid? centreAdminId = null)
+        Guid? centreAdminId = null
+    )
     {
         var centre = new Centre
         {
@@ -42,17 +45,20 @@ public class Centre : AggregateRoot
             Status = CentreStatus.Active,
             WorkingHours = workingHours,
             Location = location,
-            CentreAdminId = centreAdminId
+            CentreAdminId = centreAdminId,
+            Status = CentreStatus.Active
         };
 
-        centre.AddDomainEvent(new CentreCreatedEvent
-        {
-            AggregateId = centre.Id,
-            AggregateType = nameof(Centre),
-            InstituteId = instituteId,
-            Name = name,
-            Code = code
-        });
+        centre.AddDomainEvent(
+            new CentreCreatedEvent
+            {
+                AggregateId = centre.Id,
+                EventType = nameof(CentreCreatedEvent),
+                InstituteId = instituteId,
+                Name = name,
+                Code = code
+            }
+        );
 
         return centre;
     }
@@ -62,9 +68,10 @@ public class Centre : AggregateRoot
         Address address,
         ContactInfo contactInfo,
         int capacity,
-        WorkingHours? workingHours = null,
+        WorkingHours workingHours,
         GeoLocation? location = null,
-        Guid? centreAdminId = null)
+        Guid? centreAdminId = null
+    )
     {
         Name = name;
         Address = address;
@@ -73,36 +80,41 @@ public class Centre : AggregateRoot
         WorkingHours = workingHours;
         Location = location;
         CentreAdminId = centreAdminId;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
 
-        AddDomainEvent(new CentreUpdatedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(Centre),
-            Name = name
-        });
+        AddDomainEvent(
+            new CentreUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(CentreUpdatedEvent),
+                Name = name
+            }
+        );
     }
 
     public void Deactivate()
     {
         Status = CentreStatus.Inactive;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
 
-        AddDomainEvent(new CentreDeactivatedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(Centre)
-        });
+        AddDomainEvent(
+            new CentreDeactivatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(CentreDeactivatedEvent)
+            }
+        );
+    }
+
+    public void SetUnderMaintenance()
+    {
+        Status = CentreStatus.UnderMaintenance;
+        MarkAsUpdated();
     }
 
     public void Activate()
     {
         Status = CentreStatus.Active;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    protected override void When(DomainEvent @event)
-    {
-        // Event sourcing support - not implemented in this version
+        MarkAsUpdated();
     }
 }

@@ -1,7 +1,9 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
-using SchoolConnect.Institution.Domain.ValueObjects;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
+using SchoolConnect.Institution.Domain.ValueObjects;
+using SchoolConnect.Institution.Domain.ValueObjects;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -64,7 +66,9 @@ public class Institute : AggregateRoot
         string country,
         string timezone,
         int academicYearStartMonth,
-        string? description = null)
+        string? description = null,
+        Guid? subscriptionId = null
+    )
     {
         var institute = new Institute
         {
@@ -78,18 +82,20 @@ public class Institute : AggregateRoot
             Timezone = timezone,
             AcademicYearStartMonth = academicYearStartMonth,
             Description = description,
+            SubscriptionId = subscriptionId,
             Settings = new InstituteSettings()
         };
 
-        institute.AddDomainEvent(new InstituteCreatedEvent
-        {
-            AggregateId = institute.Id,
-            AggregateType = nameof(Institute),
-            Name = name,
-            Code = code,
-            Type = type,
-            Country = country
-        });
+        institute.AddDomainEvent(
+            new InstituteCreatedEvent
+            {
+                AggregateId = institute.Id,
+                EventType = nameof(InstituteCreatedEvent),
+                Name = name,
+                Code = code,
+                Type = type
+            }
+        );
 
         return institute;
     }
@@ -101,7 +107,8 @@ public class Institute : AggregateRoot
         Address address,
         string country,
         string timezone,
-        int academicYearStartMonth)
+        int academicYearStartMonth
+    )
     {
         Name = name;
         Description = description;
@@ -110,49 +117,62 @@ public class Institute : AggregateRoot
         Country = country;
         Timezone = timezone;
         AcademicYearStartMonth = academicYearStartMonth;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
 
-        AddDomainEvent(new InstituteUpdatedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(Institute),
-            Name = name,
-            Description = description
-        });
+        AddDomainEvent(
+            new InstituteUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteUpdatedEvent),
+                Name = name
+            }
+        );
     }
 
     public void UpdateSettings(InstituteSettings settings)
     {
         Settings = settings;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
+
+        AddDomainEvent(
+            new InstituteUpdatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteUpdatedEvent),
+                Name = Name
+            }
+        );
     }
 
     public void UploadLogo(string logoUrl)
     {
         LogoUrl = logoUrl;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    public void Deactivate()
-    {
-        Status = InstituteStatus.Inactive;
-        UpdatedAt = DateTime.UtcNow;
-
-        AddDomainEvent(new InstituteDeactivatedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(Institute)
-        });
+        MarkAsUpdated();
     }
 
     public void Activate()
     {
         Status = InstituteStatus.Active;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
     }
 
-    protected override void When(DomainEvent @event)
+    public void Deactivate()
     {
-        // Event sourcing support - not implemented in this version
+        Status = InstituteStatus.Inactive;
+        MarkAsUpdated();
+
+        AddDomainEvent(
+            new InstituteDeactivatedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(InstituteDeactivatedEvent)
+            }
+        );
+    }
+
+    public void Suspend()
+    {
+        Status = InstituteStatus.Suspended;
+        MarkAsUpdated();
     }
 }

@@ -1,6 +1,7 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Enums;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -28,7 +29,8 @@ public class ResourceAllocation : AggregateRoot
         Guid allocatedBy,
         DateTime startDate,
         DateTime? endDate = null,
-        string? notes = null)
+        string? notes = null
+    )
     {
         var allocation = new ResourceAllocation
         {
@@ -43,14 +45,16 @@ public class ResourceAllocation : AggregateRoot
             Status = AllocationStatus.Active
         };
 
-        allocation.AddDomainEvent(new ResourceAllocatedEvent
-        {
-            AggregateId = allocation.Id,
-            AggregateType = nameof(ResourceAllocation),
-            ResourceId = resourceId,
-            AllocatedToId = allocatedToId,
-            AllocatedToType = allocatedToType
-        });
+        allocation.AddDomainEvent(
+            new ResourceAllocatedEvent
+            {
+                AggregateId = allocation.Id,
+                EventType = nameof(ResourceAllocatedEvent),
+                ResourceId = resourceId,
+                AllocatedToId = allocatedToId,
+                AllocatedToType = allocatedToType
+            }
+        );
 
         return allocation;
     }
@@ -60,32 +64,49 @@ public class ResourceAllocation : AggregateRoot
         Status = AllocationStatus.Returned;
         ReturnedDate = DateTime.UtcNow;
         ConditionOnReturn = conditionOnReturn;
-        if (notes != null) Notes = notes;
-        UpdatedAt = DateTime.UtcNow;
+        Status = AllocationStatus.Returned;
+        if (notes != null)
+            Notes = notes;
+        MarkAsUpdated();
 
-        AddDomainEvent(new ResourceReturnedEvent
-        {
-            AggregateId = Id,
-            AggregateType = nameof(ResourceAllocation),
-            ResourceId = ResourceId,
-            ConditionOnReturn = conditionOnReturn
-        });
+        AddDomainEvent(
+            new ResourceReturnedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(ResourceReturnedEvent),
+                ResourceId = ResourceId,
+                ConditionOnReturn = conditionOnReturn
+            }
+        );
     }
 
     public void MarkAsOverdue()
     {
         Status = AllocationStatus.Overdue;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
     }
 
     public void MarkAsLost()
     {
         Status = AllocationStatus.Lost;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
     }
 
-    protected override void When(DomainEvent @event)
+    public void ReportDamage(ResourceCondition condition, string notes)
     {
-        // Event sourcing support - not implemented in this version
+        ConditionOnReturn = condition;
+        Notes = notes;
+        MarkAsUpdated();
+
+        AddDomainEvent(
+            new ResourceDamagedEvent
+            {
+                AggregateId = Id,
+                EventType = nameof(ResourceDamagedEvent),
+                ResourceId = ResourceId,
+                Condition = condition,
+                Notes = notes
+            }
+        );
     }
 }

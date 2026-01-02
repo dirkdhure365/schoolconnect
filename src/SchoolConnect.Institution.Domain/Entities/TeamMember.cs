@@ -1,5 +1,6 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Institution.Domain.Events;
+using SchoolConnect.Institution.Domain.Primitives;
 
 namespace SchoolConnect.Institution.Domain.Entities;
 
@@ -13,32 +14,28 @@ public class TeamMember : Entity
 
     private TeamMember() { }
 
-    public static TeamMember Create(
-        Guid teamId,
-        Guid staffMemberId,
-        string? role = null,
-        DateTime? joinedAt = null)
+    public static TeamMember Create(Guid teamId, Guid staffMemberId, string? role = null)
     {
         var member = new TeamMember
         {
             TeamId = teamId,
             StaffMemberId = staffMemberId,
             Role = role,
-            JoinedAt = joinedAt ?? DateTime.UtcNow
+            JoinedAt = DateTime.UtcNow
         };
 
         return member;
     }
 
-    public void Leave(DateTime? leftAt = null)
-    {
-        LeftAt = leftAt ?? DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
     public void UpdateRole(string? role)
     {
         Role = role;
-        UpdatedAt = DateTime.UtcNow;
+        MarkAsUpdated();
+    }
+
+    public void Remove()
+    {
+        LeftAt = DateTime.UtcNow;
+        MarkAsUpdated();
     }
 }
