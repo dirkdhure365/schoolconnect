@@ -11,7 +11,7 @@ public class DataSeeder
     private readonly IRepository<EducationPhase> _educationPhaseRepo;
     private readonly IRepository<Domain.Entities.Program> _programRepo;
     private readonly IRepository<Subject> _subjectRepo;
-    private readonly IRepository<Curriculum> _curriculumRepo;
+    private readonly IRepository<Domain.Entities.Curriculum> _curriculumRepo;
 
     public DataSeeder(
         IRepository<Country> countryRepo,
@@ -20,7 +20,7 @@ public class DataSeeder
         IRepository<EducationPhase> educationPhaseRepo,
         IRepository<Domain.Entities.Program> programRepo,
         IRepository<Subject> subjectRepo,
-        IRepository<Curriculum> curriculumRepo)
+        IRepository<Domain.Entities.Curriculum> curriculumRepo)
     {
         _countryRepo = countryRepo;
         _educationSystemRepo = educationSystemRepo;

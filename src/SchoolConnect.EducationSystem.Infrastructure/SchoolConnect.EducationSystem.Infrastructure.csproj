@@ -3,6 +3,10 @@
   <ItemGroup>
     <ProjectReference Include="..\SchoolConnect.EducationSystem.Domain\SchoolConnect.EducationSystem.Domain.csproj" />
     <ProjectReference Include="..\SchoolConnect.EducationSystem.Application\SchoolConnect.EducationSystem.Application.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Curriculum.Cambridge\SchoolConnect.Curriculum.Cambridge.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Curriculum.Ieb\SchoolConnect.Curriculum.Ieb.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Curriculum.Bec\SchoolConnect.Curriculum.Bec.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Curriculum.Ecz\SchoolConnect.Curriculum.Ecz.csproj" />
   </ItemGroup>
 
   <ItemGroup>

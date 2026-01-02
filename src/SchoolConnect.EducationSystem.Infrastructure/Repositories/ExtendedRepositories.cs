@@ -105,10 +105,10 @@ public class CurriculumRepositoryExtended : CurriculumRepository, ICurriculumRep
         _context = context;
     }
 
-    public async Task<List<Curriculum>> GetBySubjectIdAsync(string subjectId)
+    public async Task<List<Domain.Entities.Curriculum>> GetBySubjectIdAsync(string subjectId)
     {
-        var collection = _context.GetCollection<Curriculum>("Curricula");
-        var filter = Builders<Curriculum>.Filter.Eq(e => e.SubjectId, subjectId);
+        var collection = _context.GetCollection<Domain.Entities.Curriculum>("Curricula");
+        var filter = Builders<Domain.Entities.Curriculum>.Filter.Eq(e => e.SubjectId, subjectId);
         return await collection.Find(filter).ToListAsync();
     }
 }
