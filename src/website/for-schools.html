@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SchoolConnect for Schools - Centralized management, real-time visibility, streamlined communication, and data-driven decisions for school administrators.">
+    <title>For Schools | SchoolConnect - School Management Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans antialiased">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header id="main-header" class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-blue-600">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="features.html" class="text-gray-700 hover:text-blue-600 transition">Features</a>
+                    <div class="relative group">
+                        <button class="text-blue-600 font-semibold flex items-center">
+                            Solutions <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
+                            <a href="for-schools.html" class="block px-4 py-2 text-blue-600 font-semibold bg-blue-50">For Schools</a>
+                            <a href="for-teachers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Teachers</a>
+                            <a href="for-parents.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Parents</a>
+                            <a href="for-students.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Students</a>
+                        </div>
+                    </div>
+                    <a href="pricing.html" class="text-gray-700 hover:text-blue-600 transition">Pricing</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://portal.schoolconnect.co.za/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary">Start Free Trial</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-gray-700">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <div class="flex flex-col space-y-4">
+            <a href="features.html" class="text-lg text-gray-700 hover:text-blue-600">Features</a>
+            <a href="for-schools.html" class="text-lg text-blue-600 font-semibold">For Schools</a>
+            <a href="for-teachers.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Teachers</a>
+            <a href="for-parents.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Parents</a>
+            <a href="for-students.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Students</a>
+            <a href="pricing.html" class="text-lg text-gray-700 hover:text-blue-600">Pricing</a>
+            <a href="about.html" class="text-lg text-gray-700 hover:text-blue-600">About</a>
+            <a href="contact.html" class="text-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <hr class="border-gray-200">
+            <a href="https://portal.schoolconnect.co.za/login" class="text-lg text-gray-700 hover:text-blue-600">Login</a>
+            <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-center">Start Free Trial</a>
+        </div>
+    </div>
+    
+    <main id="main-content">
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center" data-animate>
+                    <div class="feature-icon mx-auto mb-6">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">SchoolConnect for Schools</h1>
+                    <p class="text-xl md:text-2xl text-blue-100 mb-8">
+                        Centralize your school operations and make data-driven decisions with real-time insights
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg">
+                            <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                        </a>
+                        <a href="https://portal.schoolconnect.co.za/demo" class="btn-secondary text-lg">
+                            <i class="fas fa-calendar-check mr-2"></i>Request Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Key Benefits for School Administrators</h2>
+                    <p class="text-xl text-gray-600">Transform how you manage your educational institution</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Centralized Management</h3>
+                        <p class="text-gray-600">
+                            Manage all school operations from a single dashboard. Control multiple campuses, staff, students, and resources efficiently.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Real-Time Visibility</h3>
+                        <p class="text-gray-600">
+                            Get instant insights into academic performance, attendance, and operations with comprehensive dashboards and reports.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Streamlined Communication</h3>
+                        <p class="text-gray-600">
+                            Connect with all stakeholders - teachers, parents, and students - through integrated messaging and notifications.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Reduced Admin Overhead</h3>
+                        <p class="text-gray-600">
+                            Automate routine tasks, streamline workflows, and eliminate paper-based processes to save time and resources.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Data-Driven Decisions</h3>
+                        <p class="text-gray-600">
+                            Make informed decisions with powerful analytics, trends, and predictive insights about your institution.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Compliance & Reporting</h3>
+                        <p class="text-gray-600">
+                            Stay compliant with regulations and generate required reports automatically with built-in templates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section gradient-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Features Built for School Leaders</h2>
+                    <p class="text-xl text-gray-600">Everything you need to run a modern educational institution</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-building text-blue-600 mr-3 text-2xl"></i>
+                            Multi-Campus Management
+                        </h3>
+                        <p class="text-gray-600">
+                            Oversee multiple schools or centres from one platform. Standardize processes while allowing campus-level customization.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-users-cog text-blue-600 mr-3 text-2xl"></i>
+                            Staff & HR Features
+                        </h3>
+                        <p class="text-gray-600">
+                            Manage staff profiles, qualifications, assignments, performance reviews, and professional development tracking.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-dollar-sign text-blue-600 mr-3 text-2xl"></i>
+                            Financial Overview
+                        </h3>
+                        <p class="text-gray-600">
+                            Integrate with billing systems for complete visibility into fees, payments, and financial health of your institution.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-door-open text-blue-600 mr-3 text-2xl"></i>
+                            Facility & Resource Management
+                        </h3>
+                        <p class="text-gray-600">
+                            Schedule and track usage of classrooms, labs, equipment, and other school facilities efficiently.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-palette text-blue-600 mr-3 text-2xl"></i>
+                            Custom Branding
+                        </h3>
+                        <p class="text-gray-600">
+                            Customize the platform with your school's logo, colors, and branding to maintain institutional identity.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-shield-alt text-blue-600 mr-3 text-2xl"></i>
+                            Role-Based Permissions
+                        </h3>
+                        <p class="text-gray-600">
+                            Define granular access controls for different roles - principals, administrators, department heads, and staff.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-chart-pie text-blue-600 mr-3 text-2xl"></i>
+                            Analytics Dashboard
+                        </h3>
+                        <p class="text-gray-600">
+                            Comprehensive dashboards showing key metrics, trends, and insights across academics, attendance, and operations.
+                        </p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-user-friends text-blue-600 mr-3 text-2xl"></i>
+                            Parent Engagement Tools
+                        </h3>
+                        <p class="text-gray-600">
+                            Increase parent satisfaction with transparent communication, progress tracking, and easy parent-school interaction.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Real-World Impact</h2>
+                    <p class="text-xl text-gray-600">See how schools are transforming with SchoolConnect</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card text-center" data-animate>
+                        <div class="text-5xl font-bold text-blue-600 mb-2">5 Campuses</div>
+                        <h3 class="text-xl font-bold mb-3">One Dashboard</h3>
+                        <p class="text-gray-600">
+                            "We manage all our 5 campuses from a single platform. Real-time visibility has transformed our operations."
+                        </p>
+                        <div class="mt-4">
+                            <p class="font-semibold">Greenfield Academy</p>
+                            <p class="text-sm text-gray-500">South Africa</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card text-center" data-animate>
+                        <div class="text-5xl font-bold text-green-600 mb-2">60%</div>
+                        <h3 class="text-xl font-bold mb-3">Less Admin Time</h3>
+                        <p class="text-gray-600">
+                            "Automation and streamlined processes have reduced our administrative workload by 60%. Staff can focus on students."
+                        </p>
+                        <div class="mt-4">
+                            <p class="font-semibold">Sunrise Secondary</p>
+                            <p class="text-sm text-gray-500">Zimbabwe</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card text-center" data-animate>
+                        <div class="text-5xl font-bold text-purple-600 mb-2">95%</div>
+                        <h3 class="text-xl font-bold mb-3">Parent Satisfaction</h3>
+                        <p class="text-gray-600">
+                            "Parent satisfaction scores increased to 95% thanks to transparent communication and real-time updates."
+                        </p>
+                        <div class="mt-4">
+                            <p class="font-semibold">Hope International School</p>
+                            <p class="text-sm text-gray-500">Zambia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4 text-center" data-animate>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your School?</h2>
+                <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
+                    Join hundreds of schools using SchoolConnect to streamline operations and improve outcomes
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </a>
+                    <a href="contact.html" class="btn-secondary text-lg">
+                        <i class="fas fa-envelope mr-2"></i>Contact Sales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </h3>
+                    <p class="text-gray-400 mb-4">Transforming education through innovative technology solutions.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="for-schools.html" class="text-gray-400 hover:text-white transition">For Schools</a></li>
+                        <li><a href="for-teachers.html" class="text-gray-400 hover:text-white transition">For Teachers</a></li>
+                        <li><a href="for-parents.html" class="text-gray-400 hover:text-white transition">For Parents</a></li>
+                        <li><a href="for-students.html" class="text-gray-400 hover:text-white transition">For Students</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="features.html" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-600">
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="border-gray-800 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                <p>&copy; <span class="current-year">2024</span> SchoolConnect. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

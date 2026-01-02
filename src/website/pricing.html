@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SchoolConnect pricing plans - Choose from Free, Basic, Standard, Premium, or Enterprise plans. Simple, transparent pricing for schools of all sizes.">
+    <meta property="og:title" content="SchoolConnect Pricing - Plans for Every School">
+    <meta property="og:description" content="Flexible pricing plans from free to enterprise for schools of all sizes">
+    
+    <title>Pricing Plans | SchoolConnect - Affordable Education Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans antialiased">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header id="main-header" class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-blue-600">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="features.html" class="text-gray-700 hover:text-blue-600 transition">Features</a>
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-blue-600 transition flex items-center">
+                            Solutions
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
+                            <a href="for-schools.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Schools</a>
+                            <a href="for-teachers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Teachers</a>
+                            <a href="for-parents.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Parents</a>
+                            <a href="for-students.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Students</a>
+                        </div>
+                    </div>
+                    <a href="pricing.html" class="text-blue-600 font-semibold">Pricing</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://portal.schoolconnect.co.za/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary">Start Free Trial</a>
+                </div>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-gray-700">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        
+        <div class="flex flex-col space-y-4">
+            <a href="features.html" class="text-lg text-gray-700 hover:text-blue-600">Features</a>
+            <a href="for-schools.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Schools</a>
+            <a href="for-teachers.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Teachers</a>
+            <a href="for-parents.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Parents</a>
+            <a href="for-students.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Students</a>
+            <a href="pricing.html" class="text-lg text-blue-600 font-semibold">Pricing</a>
+            <a href="about.html" class="text-lg text-gray-700 hover:text-blue-600">About</a>
+            <a href="contact.html" class="text-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <hr class="border-gray-200">
+            <a href="https://portal.schoolconnect.co.za/login" class="text-lg text-gray-700 hover:text-blue-600">Login</a>
+            <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-center">Start Free Trial</a>
+        </div>
+    </div>
+    
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center" data-animate>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        Simple, Transparent Pricing
+                    </h1>
+                    <p class="text-xl md:text-2xl text-blue-100">
+                        Choose the perfect plan for your school. Start free, scale as you grow.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Cards -->
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Free Plan -->
+                    <div class="pricing-card" data-animate>
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Free</h3>
+                            <div class="mb-4">
+                                <span class="text-5xl font-bold">$0</span>
+                                <span class="text-gray-600">/month</span>
+                            </div>
+                            <p class="text-gray-600">Perfect for small schools getting started</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 50 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>1 centre</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Basic features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Email support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Community access</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-secondary w-full text-center">
+                            Get Started Free
+                        </a>
+                    </div>
+                    
+                    <!-- Basic Plan -->
+                    <div class="pricing-card" data-animate>
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Basic</h3>
+                            <div class="mb-4">
+                                <span class="text-5xl font-bold">$99</span>
+                                <span class="text-gray-600">/month</span>
+                            </div>
+                            <p class="text-gray-600">For growing schools</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 200 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>1 centre</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>All core features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Email & chat support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>5GB storage</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-primary w-full text-center">
+                            Start Free Trial
+                        </a>
+                    </div>
+                    
+                    <!-- Standard Plan (Featured) -->
+                    <div class="pricing-card featured" data-animate>
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Standard</h3>
+                            <div class="mb-4">
+                                <span class="text-5xl font-bold">$249</span>
+                                <span class="text-gray-600">/month</span>
+                            </div>
+                            <p class="text-gray-600">Most popular choice</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 500 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 3 centres</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>All features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Priority support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>25GB storage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>API access</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-primary w-full text-center">
+                            Start Free Trial
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Premium & Enterprise -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Premium Plan -->
+                    <div class="pricing-card" data-animate>
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Premium</h3>
+                            <div class="mb-4">
+                                <span class="text-5xl font-bold">$499</span>
+                                <span class="text-gray-600">/month</span>
+                            </div>
+                            <p class="text-gray-600">For established institutions</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 1,500 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Up to 10 centres</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>All features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Dedicated support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>100GB storage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Custom integrations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Advanced analytics</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-primary w-full text-center">
+                            Start Free Trial
+                        </a>
+                    </div>
+                    
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card" data-animate>
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                            <div class="mb-4">
+                                <span class="text-3xl font-bold">Custom Pricing</span>
+                            </div>
+                            <p class="text-gray-600">For large organizations</p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Unlimited students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Unlimited centres</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>All features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>24/7 dedicated support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Unlimited storage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>Custom development</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>On-premise option</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                                <span>SLA guarantee</span>
+                            </li>
+                        </ul>
+                        <a href="contact.html" class="btn-secondary w-full text-center">
+                            Contact Sales
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Feature Comparison Table -->
+        <section class="section gradient-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Compare Plans</h2>
+                    <p class="text-xl text-gray-600">See which features are included in each plan</p>
+                </div>
+                
+                <div class="overflow-x-auto" data-animate>
+                    <table class="w-full bg-white rounded-lg shadow-lg">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="px-6 py-4 text-left text-gray-900 font-bold">Feature</th>
+                                <th class="px-6 py-4 text-center text-gray-900 font-bold">Free</th>
+                                <th class="px-6 py-4 text-center text-gray-900 font-bold">Basic</th>
+                                <th class="px-6 py-4 text-center text-gray-900 font-bold">Standard</th>
+                                <th class="px-6 py-4 text-center text-gray-900 font-bold">Premium</th>
+                                <th class="px-6 py-4 text-center text-gray-900 font-bold">Enterprise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Students</td>
+                                <td class="px-6 py-4 text-center">50</td>
+                                <td class="px-6 py-4 text-center">200</td>
+                                <td class="px-6 py-4 text-center">500</td>
+                                <td class="px-6 py-4 text-center">1,500</td>
+                                <td class="px-6 py-4 text-center">Unlimited</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">Centres</td>
+                                <td class="px-6 py-4 text-center">1</td>
+                                <td class="px-6 py-4 text-center">1</td>
+                                <td class="px-6 py-4 text-center">3</td>
+                                <td class="px-6 py-4 text-center">10</td>
+                                <td class="px-6 py-4 text-center">Unlimited</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Storage</td>
+                                <td class="px-6 py-4 text-center">1GB</td>
+                                <td class="px-6 py-4 text-center">5GB</td>
+                                <td class="px-6 py-4 text-center">25GB</td>
+                                <td class="px-6 py-4 text-center">100GB</td>
+                                <td class="px-6 py-4 text-center">Unlimited</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">Institution Management</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Lesson Delivery</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">Assessment & Grading</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Communication</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">Collaboration</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Calendar & Scheduling</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">API Access</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Advanced Analytics</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">Custom Development</td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-minus text-gray-400"></i></td>
+                                <td class="px-6 py-4 text-center"><i class="fas fa-check text-green-600"></i></td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-6 py-4 font-semibold">Support</td>
+                                <td class="px-6 py-4 text-center text-sm">Email</td>
+                                <td class="px-6 py-4 text-center text-sm">Email & Chat</td>
+                                <td class="px-6 py-4 text-center text-sm">Priority</td>
+                                <td class="px-6 py-4 text-center text-sm">Dedicated</td>
+                                <td class="px-6 py-4 text-center text-sm">24/7 Dedicated</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                    <p class="text-xl text-gray-600">Everything you need to know about pricing</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            Can I change plans later?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            Is there a free trial?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, all paid plans come with a 14-day free trial. No credit card required to start.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            What happens if I exceed my student limit?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            We'll notify you when you're approaching your limit. You can upgrade your plan or we'll automatically suggest the best plan for your needs.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            Do you offer discounts for annual billing?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, we offer a 20% discount for annual billing on all paid plans. Contact sales for more details.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            What payment methods do you accept?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            We accept all major credit cards, bank transfers, and PayPal. Enterprise customers can arrange custom payment terms.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-animate>
+                        <button class="faq-question">
+                            Can I cancel anytime?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, you can cancel your subscription at any time. No long-term contracts or cancellation fees.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4 text-center" data-animate>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready to Get Started?
+                </h2>
+                <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
+                    Start your free trial today or contact our sales team for a custom Enterprise plan
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </a>
+                    <a href="contact.html" class="btn-secondary text-lg">
+                        <i class="fas fa-envelope mr-2"></i>Contact Sales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Transforming education through innovative technology solutions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="for-schools.html" class="text-gray-400 hover:text-white transition">For Schools</a></li>
+                        <li><a href="for-teachers.html" class="text-gray-400 hover:text-white transition">For Teachers</a></li>
+                        <li><a href="for-parents.html" class="text-gray-400 hover:text-white transition">For Parents</a></li>
+                        <li><a href="for-students.html" class="text-gray-400 hover:text-white transition">For Students</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="features.html" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-600">
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <hr class="border-gray-800 mb-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                <p>&copy; <span class="current-year">2024</span> SchoolConnect. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
