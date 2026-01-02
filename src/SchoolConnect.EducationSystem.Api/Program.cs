@@ -49,10 +49,28 @@ builder.Services.AddSingleton<AppInterfaces.IRepository<Subject>>(sp =>
 builder.Services.AddSingleton<AppInterfaces.ISubjectRepository>(sp => 
     new SubjectRepositoryExtended(sp.GetRequiredService<IMongoDbContext>(), sp.GetRequiredService<AppInterfaces.IEventStore>()));
 
-builder.Services.AddSingleton<AppInterfaces.IRepository<Curriculum>>(sp => 
+builder.Services.AddSingleton<AppInterfaces.IRepository<SchoolConnect.EducationSystem.Domain.Entities.Curriculum>>(sp => 
     new CurriculumRepositoryExtended(sp.GetRequiredService<IMongoDbContext>(), sp.GetRequiredService<AppInterfaces.IEventStore>()));
 builder.Services.AddSingleton<AppInterfaces.ICurriculumRepository>(sp => 
     new CurriculumRepositoryExtended(sp.GetRequiredService<IMongoDbContext>(), sp.GetRequiredService<AppInterfaces.IEventStore>()));
+
+// Register Cambridge services
+builder.Services.AddScoped<SchoolConnect.Curriculum.Cambridge.Repositories.ICambridgeRepository, CambridgeMongoRepository>();
+builder.Services.AddScoped<AppInterfaces.ICurriculumService, SchoolConnect.Curriculum.Cambridge.Services.CambridgeCurriculumService>();
+builder.Services.AddScoped<AppInterfaces.IPracticalCurriculumService, SchoolConnect.Curriculum.Cambridge.Services.CambridgeCurriculumService>();
+
+// Register IEB services
+builder.Services.AddScoped<SchoolConnect.Curriculum.Ieb.Repositories.IIebRepository, IebMongoRepository>();
+builder.Services.AddScoped<AppInterfaces.ICurriculumService, SchoolConnect.Curriculum.Ieb.Services.IebCurriculumService>();
+builder.Services.AddScoped<AppInterfaces.IPracticalCurriculumService, SchoolConnect.Curriculum.Ieb.Services.IebCurriculumService>();
+
+// Register BEC services
+builder.Services.AddScoped<SchoolConnect.Curriculum.Bec.Repositories.IBecRepository, BecMongoRepository>();
+builder.Services.AddScoped<AppInterfaces.ICurriculumService, SchoolConnect.Curriculum.Bec.Services.BecCurriculumService>();
+
+// Register ECZ services
+builder.Services.AddScoped<SchoolConnect.Curriculum.Ecz.Repositories.IEczRepository, EczMongoRepository>();
+builder.Services.AddScoped<AppInterfaces.ICurriculumService, SchoolConnect.Curriculum.Ecz.Services.EczCurriculumService>();
 
 // Register DataSeeder
 builder.Services.AddSingleton<DataSeeder>();

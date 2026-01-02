@@ -52,7 +52,7 @@ public class SubjectRepository : MongoRepository<Subject>
     }
 }
 
-public class CurriculumRepository : MongoRepository<Curriculum>
+public class CurriculumRepository : MongoRepository<Domain.Entities.Curriculum>
 {
     public CurriculumRepository(IMongoDbContext context, Application.Interfaces.IEventStore eventStore) 
         : base(context, eventStore, "Curricula")
