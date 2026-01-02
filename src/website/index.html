@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SchoolConnect - Transform your school with our comprehensive education platform. Manage institutions, deliver lessons, assess students, and communicate effectively.">
+    <meta property="og:title" content="SchoolConnect - Transform Your School">
+    <meta property="og:description" content="Comprehensive education platform for schools, teachers, parents, and students">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://schoolconnect.co.za">
+    
+    <title>SchoolConnect - Transform Your School | Education Platform</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans antialiased">
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header / Navigation -->
+    <header id="main-header" class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-blue-600">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="features.html" class="text-gray-700 hover:text-blue-600 transition">Features</a>
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-blue-600 transition flex items-center">
+                            Solutions
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
+                            <a href="for-schools.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Schools</a>
+                            <a href="for-teachers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Teachers</a>
+                            <a href="for-parents.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Parents</a>
+                            <a href="for-students.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Students</a>
+                        </div>
+                    </div>
+                    <a href="pricing.html" class="text-gray-700 hover:text-blue-600 transition">Pricing</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://portal.schoolconnect.co.za/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary">Start Free Trial</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-gray-700">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        
+        <div class="flex flex-col space-y-4">
+            <a href="features.html" class="text-lg text-gray-700 hover:text-blue-600">Features</a>
+            <a href="for-schools.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Schools</a>
+            <a href="for-teachers.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Teachers</a>
+            <a href="for-parents.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Parents</a>
+            <a href="for-students.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Students</a>
+            <a href="pricing.html" class="text-lg text-gray-700 hover:text-blue-600">Pricing</a>
+            <a href="about.html" class="text-lg text-gray-700 hover:text-blue-600">About</a>
+            <a href="contact.html" class="text-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <hr class="border-gray-200">
+            <a href="https://portal.schoolconnect.co.za/login" class="text-lg text-gray-700 hover:text-blue-600">Login</a>
+            <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-center">Start Free Trial</a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="gradient-hero text-white py-20 md:py-32">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center" data-animate>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        Transform Your School with SchoolConnect
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-blue-100">
+                        The comprehensive education platform that empowers schools, teachers, parents, and students to achieve more together
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                        <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg">
+                            <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                        </a>
+                        <a href="https://portal.schoolconnect.co.za/demo" class="btn-secondary text-lg">
+                            <i class="fas fa-calendar-check mr-2"></i>Request Demo
+                        </a>
+                    </div>
+                    <!-- Hero Image Placeholder -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                        <div class="aspect-video bg-white/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-play-circle text-8xl text-white/50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Trusted By Section -->
+        <section class="bg-white py-12 border-b">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-8">
+                    <p class="text-gray-600 text-lg">Trusted by educational institutions worldwide</p>
+                </div>
+                <div class="grid grid-cols-3 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
+                    <div data-animate>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Schools</div>
+                    </div>
+                    <div data-animate>
+                        <div class="stat-number">50,000+</div>
+                        <div class="stat-label">Students</div>
+                    </div>
+                    <div data-animate>
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-label">Teachers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Key Features Overview -->
+        <section class="section gradient-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Everything You Need in One Platform
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Streamline your school operations with our comprehensive suite of tools designed for modern education
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Institution Management</h3>
+                        <p class="text-gray-600">
+                            Manage multiple campuses, staff, facilities, and resources from a single dashboard with role-based access control.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Lesson Delivery</h3>
+                        <p class="text-gray-600">
+                            Plan, schedule, and deliver engaging lessons with templates, live sessions, and curriculum tracking.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Assessment & Grading</h3>
+                        <p class="text-gray-600">
+                            Create assessments, grade with rubrics, generate reports, and track student progress with powerful analytics.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Communication</h3>
+                        <p class="text-gray-600">
+                            Stay connected with in-app messaging, announcements, email/SMS notifications, and emergency alerts.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Collaboration</h3>
+                        <p class="text-gray-600">
+                            Work together with Trello-style boards, team workspaces, document sharing, and task management.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div class="card" data-animate>
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Calendar & Scheduling</h3>
+                        <p class="text-gray-600">
+                            Manage school events, schedule activities, plan terms and holidays with integrated calendar system.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12" data-animate>
+                    <a href="features.html" class="btn-primary text-lg">
+                        View All Features <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stakeholder Sections -->
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Built for Every Stakeholder
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Tailored solutions for schools, teachers, parents, and students
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- For Schools -->
+                    <div class="card text-center" data-animate>
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">For Schools</h3>
+                        <p class="text-gray-600 mb-4">
+                            Centralized management, real-time insights, and streamlined operations across all campuses.
+                        </p>
+                        <a href="for-schools.html" class="text-blue-600 hover:text-blue-700 font-semibold">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- For Teachers -->
+                    <div class="card text-center" data-animate>
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">For Teachers</h3>
+                        <p class="text-gray-600 mb-4">
+                            Focus on teaching with easy lesson planning, grading tools, and student engagement features.
+                        </p>
+                        <a href="for-teachers.html" class="text-blue-600 hover:text-blue-700 font-semibold">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- For Parents -->
+                    <div class="card text-center" data-animate>
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">For Parents</h3>
+                        <p class="text-gray-600 mb-4">
+                            Stay connected with your child's education through real-time updates and direct teacher communication.
+                        </p>
+                        <a href="for-parents.html" class="text-blue-600 hover:text-blue-700 font-semibold">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- For Students -->
+                    <div class="card text-center" data-animate>
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">For Students</h3>
+                        <p class="text-gray-600 mb-4">
+                            Organize your school life, access materials anywhere, and collaborate with classmates effectively.
+                        </p>
+                        <a href="for-students.html" class="text-blue-600 hover:text-blue-700 font-semibold">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials -->
+        <section class="section gradient-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        What Our Users Say
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Hear from schools, teachers, and parents who have transformed their education experience
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial" data-animate>
+                        <div class="mb-4">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            "SchoolConnect has transformed how we manage our 5 campuses. Everything is now centralized, and we've reduced administrative time by 60%. Highly recommended!"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                MN
+                            </div>
+                            <div>
+                                <p class="font-bold">Margaret Ndlovu</p>
+                                <p class="text-gray-600 text-sm">Principal, Greenfield Academy</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial" data-animate>
+                        <div class="mb-4">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            "As a teacher, I love how easy it is to plan lessons and track student progress. The curriculum alignment feature saves me hours every week!"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                JM
+                            </div>
+                            <div>
+                                <p class="font-bold">John Mutasa</p>
+                                <p class="text-gray-600 text-sm">Mathematics Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial" data-animate>
+                        <div class="mb-4">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            "I can now track my children's progress in real-time and communicate directly with their teachers. It's made parenting so much easier!"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                SK
+                            </div>
+                            <div>
+                                <p class="font-bold">Sarah Khumalo</p>
+                                <p class="text-gray-600 text-sm">Parent of 2 Students</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Preview -->
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Simple, Transparent Pricing
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Choose the plan that's right for your institution
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Basic Plan -->
+                    <div class="pricing-card" data-animate>
+                        <h3 class="text-2xl font-bold mb-2">Basic</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$99</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Up to 200 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>1 centre</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>All core features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Email & chat support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>5GB storage</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-secondary w-full text-center">
+                            Get Started
+                        </a>
+                    </div>
+                    
+                    <!-- Standard Plan (Featured) -->
+                    <div class="pricing-card featured" data-animate>
+                        <h3 class="text-2xl font-bold mb-2">Standard</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$249</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Up to 500 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Up to 3 centres</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>All features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Priority support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>25GB storage</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-primary w-full text-center">
+                            Get Started
+                        </a>
+                    </div>
+                    
+                    <!-- Premium Plan -->
+                    <div class="pricing-card" data-animate>
+                        <h3 class="text-2xl font-bold mb-2">Premium</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold">$499</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Up to 1,500 students</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Up to 10 centres</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>All features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Dedicated support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>100GB storage</span>
+                            </li>
+                        </ul>
+                        <a href="https://portal.schoolconnect.co.za/signup" class="btn-secondary w-full text-center">
+                            Get Started
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12" data-animate>
+                    <a href="pricing.html" class="text-blue-600 hover:text-blue-700 font-semibold text-lg">
+                        View All Plans & Compare Features <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Banner -->
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4 text-center" data-animate>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready to Transform Your School?
+                </h2>
+                <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
+                    Join hundreds of schools already using SchoolConnect to streamline operations and improve outcomes
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </a>
+                    <a href="contact.html" class="btn-secondary text-lg">
+                        <i class="fas fa-envelope mr-2"></i>Contact Sales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-graduation-cap mr-2"></i>SchoolConnect
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Transforming education through innovative technology solutions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Solutions -->
+                <div>
+                    <h4 class="font-bold mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="for-schools.html" class="text-gray-400 hover:text-white transition">For Schools</a></li>
+                        <li><a href="for-teachers.html" class="text-gray-400 hover:text-white transition">For Teachers</a></li>
+                        <li><a href="for-parents.html" class="text-gray-400 hover:text-white transition">For Parents</a></li>
+                        <li><a href="for-students.html" class="text-gray-400 hover:text-white transition">For Students</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company -->
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="features.html" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-bold mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-600">
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <hr class="border-gray-800 mb-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                <p>&copy; <span class="current-year">2024</span> SchoolConnect. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">
+                    We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                    <a href="#" class="underline">Learn more</a>
+                </p>
+                <button id="accept-cookies" class="btn-primary whitespace-nowrap">
+                    Accept Cookies
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

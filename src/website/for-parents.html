@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SchoolConnect for Parents - Stay connected with your child's education through real-time updates and direct teacher communication.">
+    <title>For Parents | SchoolConnect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans antialiased">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header id="main-header" class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-bold text-blue-600"><i class="fas fa-graduation-cap mr-2"></i>SchoolConnect</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="features.html" class="text-gray-700 hover:text-blue-600 transition">Features</a>
+                    <div class="relative group">
+                        <button class="text-blue-600 font-semibold flex items-center">Solutions <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
+                            <a href="for-schools.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Schools</a>
+                            <a href="for-teachers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Teachers</a>
+                            <a href="for-parents.html" class="block px-4 py-2 text-blue-600 font-semibold bg-blue-50">For Parents</a>
+                            <a href="for-students.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">For Students</a>
+                        </div>
+                    </div>
+                    <a href="pricing.html" class="text-gray-700 hover:text-blue-600 transition">Pricing</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://portal.schoolconnect.co.za/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary">Start Free Trial</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700"><i class="fas fa-bars text-2xl"></i></button>
+            </div>
+        </nav>
+    </header>
+    
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-gray-700"><i class="fas fa-times text-2xl"></i></button>
+        <div class="flex flex-col space-y-4">
+            <a href="features.html" class="text-lg text-gray-700 hover:text-blue-600">Features</a>
+            <a href="for-schools.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Schools</a>
+            <a href="for-teachers.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Teachers</a>
+            <a href="for-parents.html" class="text-lg text-blue-600 font-semibold pl-4">For Parents</a>
+            <a href="for-students.html" class="text-lg text-gray-700 hover:text-blue-600 pl-4">For Students</a>
+            <a href="pricing.html" class="text-lg text-gray-700 hover:text-blue-600">Pricing</a>
+            <a href="about.html" class="text-lg text-gray-700 hover:text-blue-600">About</a>
+            <a href="contact.html" class="text-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <hr class="border-gray-200">
+            <a href="https://portal.schoolconnect.co.za/login" class="text-lg text-gray-700 hover:text-blue-600">Login</a>
+            <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-center">Start Free Trial</a>
+        </div>
+    </div>
+    
+    <main id="main-content">
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center" data-animate>
+                    <div class="feature-icon mx-auto mb-6"><i class="fas fa-user-friends"></i></div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">SchoolConnect for Parents</h1>
+                    <p class="text-xl md:text-2xl text-blue-100 mb-8">Stay connected with your child's education through real-time updates and secure communication</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg"><i class="fas fa-rocket mr-2"></i>Start Free Trial</a>
+                        <a href="https://portal.schoolconnect.co.za/demo" class="btn-secondary text-lg"><i class="fas fa-calendar-check mr-2"></i>Request Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Key Benefits for Parents</h2>
+                    <p class="text-xl text-gray-600">Be involved in your child's educational journey</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Real-Time Progress</h3>
+                        <p class="text-gray-600">Track your child's academic progress, grades, and achievements in real-time from anywhere.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Instant Notifications</h3>
+                        <p class="text-gray-600">Get notified immediately about grades, attendance, assignments, and important school updates.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Direct Teacher Communication</h3>
+                        <p class="text-gray-600">Message teachers directly through secure in-app messaging for quick responses.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Never Miss Dates</h3>
+                        <p class="text-gray-600">Access the school calendar with all important dates, events, and parent meetings.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Homework Tracking</h3>
+                        <p class="text-gray-600">See all homework assignments, due dates, and submissions in one place.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="text-2xl font-bold mb-3">Secure & Private</h3>
+                        <p class="text-gray-600">Your child's information is protected with bank-level security and privacy controls.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section gradient-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Features You'll Love</h2>
+                    <p class="text-xl text-gray-600">Everything you need to support your child</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center"><i class="fas fa-chart-bar text-purple-600 mr-3 text-2xl"></i>Student Progress Dashboard</h3>
+                        <p class="text-gray-600">View comprehensive dashboard showing grades, attendance, behavior, and overall performance.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center"><i class="fas fa-file-alt text-purple-600 mr-3 text-2xl"></i>Grade & Report Access</h3>
+                        <p class="text-gray-600">Access all grades, report cards, and assessment results as soon as they're published.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center"><i class="fas fa-user-check text-purple-600 mr-3 text-2xl"></i>Attendance Notifications</h3>
+                        <p class="text-gray-600">Receive instant notifications if your child is absent or late to class.</p>
+                    </div>
+                    
+                    <div class="card" data-animate>
+                        <h3 class="text-xl font-bold mb-3 flex items-center"><i class="fas fa-mobile-alt text-purple-600 mr-3 text-2xl"></i>Mobile App Access</h3>
+                        <p class="text-gray-600">Stay connected on the go with our mobile app for iOS and Android devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-animate>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">What Parents Say</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card text-center" data-animate>
+                        <p class="text-gray-600 mb-4 italic">"I love getting instant notifications when my daughter's grades are posted. No more surprises at report card time!"</p>
+                        <p class="font-semibold">Sarah Khumalo</p>
+                        <p class="text-sm text-gray-500">Parent of 2</p>
+                    </div>
+                    
+                    <div class="card text-center" data-animate>
+                        <p class="text-gray-600 mb-4 italic">"Being able to message teachers directly has been a game-changer. I get responses within hours."</p>
+                        <p class="font-semibold">David Moyo</p>
+                        <p class="text-sm text-gray-500">Parent</p>
+                    </div>
+                    
+                    <div class="card text-center" data-animate>
+                        <p class="text-gray-600 mb-4 italic">"The homework tracker helps me ensure my son stays on top of his assignments. So helpful!"</p>
+                        <p class="font-semibold">Linda Banda</p>
+                        <p class="text-sm text-gray-500">Parent</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="gradient-hero text-white py-20">
+            <div class="container mx-auto px-4 text-center" data-animate>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Start Staying Connected Today</h2>
+                <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">Join thousands of parents using SchoolConnect to support their children's education</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://portal.schoolconnect.co.za/signup?trial=true" class="btn-primary text-lg"><i class="fas fa-rocket mr-2"></i>Start Free Trial</a>
+                    <a href="contact.html" class="btn-secondary text-lg"><i class="fas fa-envelope mr-2"></i>Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4"><i class="fas fa-graduation-cap mr-2"></i>SchoolConnect</h3>
+                    <p class="text-gray-400 mb-4">Transforming education through innovative technology solutions.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="for-schools.html" class="text-gray-400 hover:text-white transition">For Schools</a></li>
+                        <li><a href="for-teachers.html" class="text-gray-400 hover:text-white transition">For Teachers</a></li>
+                        <li><a href="for-parents.html" class="text-gray-400 hover:text-white transition">For Parents</a></li>
+                        <li><a href="for-students.html" class="text-gray-400 hover:text-white transition">For Students</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="features.html" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-600">
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="border-gray-800 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                <p>&copy; <span class="current-year">2024</span> SchoolConnect. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
