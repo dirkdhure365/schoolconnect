@@ -89,15 +89,21 @@ public class MongoEventStore : IEventStore
     {
         var domainEvents = new List<DomainEvent>();
 
-        foreach (var storedEvent in storedEvents)
-        {
-            // In a real implementation, you would need a type registry to map event type names to actual types
-            // For now, this is a simplified version
-            // You might want to use reflection or a type registry pattern here
-            
-            // This is a placeholder - actual implementation would require proper type resolution
-            // domainEvents.Add(JsonSerializer.Deserialize<DomainEvent>(storedEvent.EventData));
-        }
+        // TODO: Implement event deserialization
+        // This requires a type registry to map event type names to actual types
+        // For a complete implementation, you should:
+        // 1. Create an IEventTypeRegistry interface
+        // 2. Implement a registry that maps event type names to Type objects
+        // 3. Use JsonSerializer.Deserialize with the resolved type
+        // 
+        // Example implementation:
+        // foreach (var storedEvent in storedEvents)
+        // {
+        //     var eventType = _eventTypeRegistry.GetType(storedEvent.EventType);
+        //     var @event = JsonSerializer.Deserialize(storedEvent.EventData, eventType) as DomainEvent;
+        //     if (@event != null)
+        //         domainEvents.Add(@event);
+        // }
 
         return domainEvents;
     }

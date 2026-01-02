@@ -11,4 +11,6 @@ public interface IRepository<T> where T : AggregateRoot
     Task<T> AddAsync(T entity, CancellationToken ct = default);
     Task UpdateAsync(T entity, CancellationToken ct = default);
     Task DeleteAsync(Guid id, CancellationToken ct = default);
+    // Note: GetPagedAsync is available in concrete MongoRepository implementation
+    // It's not in this interface to avoid coupling Domain to Application layer
 }
