@@ -1,0 +1,19 @@
+@SchoolConnect.Curriculum.Api_HostAddress = http://localhost:5105
+
+# Get all registered curriculum boards
+GET {{SchoolConnect.Curriculum.Api_HostAddress}}/api/curriculum/boards
+Accept: application/json
+
+###
+
+# Get boards for South Africa
+GET {{SchoolConnect.Curriculum.Api_HostAddress}}/api/curriculum/boards/country/South%20Africa
+Accept: application/json
+
+###
+
+# Get CAPS framework (example - requires board registration in Program.cs)
+# GET {{SchoolConnect.Curriculum.Api_HostAddress}}/api/curriculum/CAPS/framework
+# Accept: application/json
+
+###
