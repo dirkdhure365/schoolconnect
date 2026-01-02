@@ -1,0 +1,117 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "SchoolConnect.Curriculum.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "SchoolConnect.Curriculum.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SchoolConnect.Curriculum.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SchoolConnect.Curriculum.Application.dll": {}
+        }
+      },
+      "SchoolConnect.Curriculum.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SchoolConnect.Curriculum.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SchoolConnect.Curriculum.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SchoolConnect.Curriculum.Application/1.0.0": {
+      "type": "project",
+      "path": "../SchoolConnect.Curriculum.Application/SchoolConnect.Curriculum.Application.csproj",
+      "msbuildProject": "../SchoolConnect.Curriculum.Application/SchoolConnect.Curriculum.Application.csproj"
+    },
+    "SchoolConnect.Curriculum.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SchoolConnect.Curriculum.Domain/SchoolConnect.Curriculum.Domain.csproj",
+      "msbuildProject": "../SchoolConnect.Curriculum.Domain/SchoolConnect.Curriculum.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "SchoolConnect.Curriculum.Application >= 1.0.0",
+      "SchoolConnect.Curriculum.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/runner/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Zimsec/SchoolConnect.Curriculum.Zimsec.csproj",
+      "projectName": "SchoolConnect.Curriculum.Zimsec",
+      "projectPath": "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Zimsec/SchoolConnect.Curriculum.Zimsec.csproj",
+      "packagesPath": "/home/runner/.nuget/packages/",
+      "outputPath": "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Zimsec/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/runner/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Application/SchoolConnect.Curriculum.Application.csproj": {
+              "projectPath": "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Application/SchoolConnect.Curriculum.Application.csproj"
+            },
+            "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Domain/SchoolConnect.Curriculum.Domain.csproj": {
+              "projectPath": "/home/runner/work/schoolconnect/schoolconnect/src/SchoolConnect.Curriculum.Domain/SchoolConnect.Curriculum.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "10.0.100"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
