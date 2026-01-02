@@ -4,7 +4,7 @@ A comprehensive .NET 10 Minimal API for managing Southern African education syst
 
 ## Overview
 
-This API implements a hierarchical curriculum model representing education systems across Southern African countries including Zimbabwe, South Africa, Botswana, and Zambia.
+This API implements a hierarchical curriculum model representing education systems across Southern African countries and international curricula including Zimbabwe (ZIMSEC), South Africa (CAPS/DBE, IEB), Botswana (BEC), Zambia (ECZ), and Cambridge International (CAIE).
 
 ## Features
 
@@ -14,6 +14,7 @@ This API implements a hierarchical curriculum model representing education syste
 - **RESTful API**: Comprehensive endpoints for all education system entities
 - **Swagger Documentation**: Interactive API documentation
 - **Docker Support**: Containerized application with Docker Compose
+- **Board-Specific Curriculum Services**: Dedicated implementations for Cambridge, IEB, BEC, and ECZ examination boards
 
 ## Architecture
 
@@ -25,21 +26,36 @@ SchoolConnect.EducationSystem/
 │   ├── SchoolConnect.EducationSystem.Domain/       # Domain entities, events, aggregates
 │   ├── SchoolConnect.EducationSystem.Application/  # Commands, queries, handlers, DTOs
 │   ├── SchoolConnect.EducationSystem.Infrastructure/ # MongoDB persistence, event store
-│   └── SchoolConnect.EducationSystem.Api/          # Minimal API endpoints
+│   ├── SchoolConnect.EducationSystem.Api/          # Minimal API endpoints
+│   ├── SchoolConnect.Curriculum.Cambridge/         # Cambridge (CAIE) curriculum framework
+│   ├── SchoolConnect.Curriculum.Ieb/               # IEB (South Africa) curriculum framework
+│   ├── SchoolConnect.Curriculum.Bec/               # BEC (Botswana) curriculum framework
+│   └── SchoolConnect.Curriculum.Ecz/               # ECZ (Zambia) curriculum framework
 ├── Dockerfile
 ├── docker-compose.yml
-└── README.md
+├── README.md
+└── CURRICULUM_BOARDS_IMPLEMENTATION.md
 ```
 
 ### Data Model
 
-- **Country** - Southern African countries (Zimbabwe, South Africa, Botswana, Zambia)
+- **Country** - Southern African countries and international regions
 - **Education System** - National education framework for each country
-- **Assessment Board** - Examining bodies (ZIMSEC, CAPS/DBE, BEC, ECZ)
+- **Assessment Board** - Examining bodies (ZIMSEC, CAPS/DBE, IEB, BEC, ECZ, Cambridge CAIE)
 - **Education Phase** - Stages of education (Foundation, Intermediate, Senior, FET)
-- **Program** - Qualification programs (O Level, A Level, NSC, BGCSE)
+- **Program** - Qualification programs (O Level, A Level, NSC, BGCSE, IGCSE, etc.)
 - **Subject** - Academic subjects offered in each program
 - **Curriculum** - Detailed curriculum content for each subject
+
+### Curriculum Board Services
+
+The system includes specialized curriculum services for:
+- **Cambridge (CAIE)**: IGCSE, AS & A Level with practical assessment support
+- **IEB**: Independent Examinations Board for South Africa with PAT support
+- **BEC**: Botswana Examinations Council with JC and BGCSE programs
+- **ECZ**: Examinations Council of Zambia with division-based grading
+
+See [CURRICULUM_BOARDS_IMPLEMENTATION.md](CURRICULUM_BOARDS_IMPLEMENTATION.md) for detailed information.
 
 ## Getting Started
 
