@@ -1,7 +1,6 @@
-using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Calendar.Domain.Enums;
 using SchoolConnect.Calendar.Domain.Events;
-using SchoolConnect.Calendar.Domain.ValueObjects;
+using SchoolConnect.Common.Domain.Primitives;
 
 namespace SchoolConnect.Calendar.Domain.Entities;
 
@@ -9,24 +8,24 @@ public class Timetable : AggregateRoot
 {
     public Guid InstituteId { get; private set; }
     public Guid CentreId { get; private set; }
-    
+
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public int AcademicYear { get; private set; }
     public int? TermNumber { get; private set; }
-    
+
     public DateTime EffectiveFrom { get; private set; }
     public DateTime EffectiveTo { get; private set; }
-    
+
     public TimetableStatus Status { get; private set; }
     public DateTime? PublishedAt { get; private set; }
     public Guid? PublishedByUserId { get; private set; }
-    
+
     public TimetableSettings Settings { get; private set; } = TimetableSettings.CreateDefault();
-    
+
     public int PeriodCount { get; private set; }
     public int SlotCount { get; private set; }
-    
+
     public Guid CreatedByUserId { get; private set; }
 
     private Timetable() { }
@@ -41,7 +40,8 @@ public class Timetable : AggregateRoot
         Guid createdBy,
         string? description = null,
         int? termNumber = null,
-        TimetableSettings? settings = null)
+        TimetableSettings? settings = null
+    )
     {
         if (effectiveTo <= effectiveFrom)
             throw new ArgumentException("Effective to date must be after effective from date");
@@ -64,12 +64,9 @@ public class Timetable : AggregateRoot
             UpdatedAt = DateTime.UtcNow
         };
 
-        timetable.Apply(new TimetableCreatedEvent(
-            timetable.Id,
-            instituteId,
-            centreId,
-            name,
-            createdBy));
+        timetable.Apply(
+            new TimetableCreatedEvent(timetable.Id, instituteId, centreId, name, createdBy)
+        );
 
         return timetable;
     }
@@ -80,19 +77,25 @@ public class Timetable : AggregateRoot
         DateTime? effectiveFrom = null,
         DateTime? effectiveTo = null,
         TimetableSettings? settings = null,
-        Guid? updatedBy = null)
+        Guid? updatedBy = null
+    )
     {
-        if (name != null) Name = name;
-        if (description != null) Description = description;
-        if (effectiveFrom.HasValue) EffectiveFrom = effectiveFrom.Value;
-        if (effectiveTo.HasValue) EffectiveTo = effectiveTo.Value;
-        if (settings != null) Settings = settings;
+        if (name != null)
+            Name = name;
+        if (description != null)
+            Description = description;
+        if (effectiveFrom.HasValue)
+            EffectiveFrom = effectiveFrom.Value;
+        if (effectiveTo.HasValue)
+            EffectiveTo = effectiveTo.Value;
+        if (settings != null)
+            Settings = settings;
 
         UpdatedAt = DateTime.UtcNow;
 
         if (updatedBy.HasValue)
         {
-            Apply(new TimetableUpdatedEvent(Id, updatedBy.Value));
+            Apply(new TimetableUpdatedEvent(Id, Name) { AggregateType = nameof(Timetable) });
         }
     }
 

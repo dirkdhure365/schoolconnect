@@ -4,7 +4,7 @@ using SchoolConnect.Calendar.Domain.Enums;
 
 namespace SchoolConnect.Calendar.Application.Commands.Timetables;
 
-public record CreateTimetableCommand(
+public record CreateTimetable2Command(
     Guid InstituteId,
     Guid CentreId,
     string Name,
@@ -25,14 +25,9 @@ public record UpdateTimetableCommand(
     DateTime? EffectiveTo = null
 ) : IRequest<Unit>;
 
-public record DeleteTimetableCommand(
-    Guid TimetableId
-) : IRequest<Unit>;
+public record DeleteTimetableCommand(Guid TimetableId) : IRequest<Unit>;
 
-public record PublishTimetableCommand(
-    Guid TimetableId,
-    Guid PublishedBy
-) : IRequest<Unit>;
+public record PublishTimetable2Command(Guid TimetableId, Guid PublishedBy) : IRequest<Unit>;
 
 public record CreatePeriodCommand(
     Guid TimetableId,
@@ -53,11 +48,9 @@ public record UpdatePeriodCommand(
     PeriodType? Type = null
 ) : IRequest<Unit>;
 
-public record DeletePeriodCommand(
-    Guid PeriodId
-) : IRequest<Unit>;
+public record DeletePeriodCommand(Guid PeriodId) : IRequest<Unit>;
 
-public record CreateSlotCommand(
+public record CreateSlot2Command(
     Guid TimetableId,
     Guid TimetablePeriodId,
     DayOfWeek DayOfWeek,
@@ -85,9 +78,7 @@ public record UpdateSlotCommand(
     string? Notes = null
 ) : IRequest<Unit>;
 
-public record DeleteSlotCommand(
-    Guid SlotId
-) : IRequest<Unit>;
+public record DeleteSlotCommand(Guid SlotId) : IRequest<Unit>;
 
 public record CreateSubstitutionCommand(
     Guid TimetableSlotId,

@@ -2,6 +2,7 @@ using AutoMapper;
 using SchoolConnect.Calendar.Application.DTOs;
 using SchoolConnect.Calendar.Domain.Entities;
 using SchoolConnect.Calendar.Domain.ValueObjects;
+using DomainTimetableSettings = SchoolConnect.Calendar.Domain.Entities.TimetableSettings;
 
 namespace SchoolConnect.Calendar.Application.Mappers;
 
@@ -29,6 +30,6 @@ public class CalendarMappingProfile : Profile
 
         CreateMap<EventLocation, EventLocationDto>().ReverseMap();
         CreateMap<RecurrenceRule, RecurrenceRuleDto>().ReverseMap();
-        CreateMap<TimetableSettings, TimetableSettingsDto>().ReverseMap();
+        CreateMap<DomainTimetableSettings, TimetableSettingsDto>().ReverseMap();
     }
 }

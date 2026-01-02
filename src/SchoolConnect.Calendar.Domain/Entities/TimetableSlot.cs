@@ -1,5 +1,5 @@
-using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Calendar.Domain.Events;
+using SchoolConnect.Common.Domain.Primitives;
 
 namespace SchoolConnect.Calendar.Domain.Entities;
 
@@ -8,25 +8,25 @@ public class TimetableSlot : AggregateRoot
     public Guid TimetableId { get; private set; }
     public Guid TimetablePeriodId { get; private set; }
     public DayOfWeek DayOfWeek { get; private set; }
-    
+
     public Guid ClassId { get; private set; }
     public string ClassName { get; private set; } = string.Empty;
     public Guid CohortId { get; private set; }
     public string CohortName { get; private set; } = string.Empty;
-    
+
     public Guid SubjectId { get; private set; }
     public string SubjectName { get; private set; } = string.Empty;
     public string SubjectCode { get; private set; } = string.Empty;
-    
+
     public Guid TeacherId { get; private set; }
     public string TeacherName { get; private set; } = string.Empty;
-    
+
     public Guid? FacilityId { get; private set; }
     public string? FacilityName { get; private set; }
-    
+
     public string? Notes { get; private set; }
     public string? Color { get; private set; }
-    
+
     public bool IsActive { get; private set; }
 
     private TimetableSlot() { }
@@ -47,7 +47,8 @@ public class TimetableSlot : AggregateRoot
         Guid? facilityId = null,
         string? facilityName = null,
         string? notes = null,
-        string? color = null)
+        string? color = null
+    )
     {
         var slot = new TimetableSlot
         {
@@ -73,11 +74,9 @@ public class TimetableSlot : AggregateRoot
             UpdatedAt = DateTime.UtcNow
         };
 
-        slot.Apply(new TimetableSlotCreatedEvent(
-            slot.Id,
-            timetableId,
-            classId,
-            teacherId));
+        slot.Apply(
+            new TimetableSlotCreatedEvent(slot.Id, timetableId, classId, subjectId, teacherId)
+        );
 
         return slot;
     }
@@ -88,18 +87,31 @@ public class TimetableSlot : AggregateRoot
         Guid? facilityId = null,
         string? facilityName = null,
         string? notes = null,
-        string? color = null)
+        string? color = null
+    )
     {
-        if (teacherId.HasValue) TeacherId = teacherId.Value;
-        if (teacherName != null) TeacherName = teacherName;
-        if (facilityId.HasValue) FacilityId = facilityId;
-        if (facilityName != null) FacilityName = facilityName;
-        if (notes != null) Notes = notes;
-        if (color != null) Color = color;
+        if (teacherId.HasValue)
+            TeacherId = teacherId.Value;
+        if (teacherName != null)
+            TeacherName = teacherName;
+        if (facilityId.HasValue)
+            FacilityId = facilityId;
+        if (facilityName != null)
+            FacilityName = facilityName;
+        if (notes != null)
+            Notes = notes;
+        if (color != null)
+            Color = color;
 
         UpdatedAt = DateTime.UtcNow;
 
-        Apply(new TimetableSlotUpdatedEvent(Id, TimetableId));
+        Apply(
+            new TimetableSlotUpdatedEvent(Id)
+            {
+                AggregateId = Id,
+                AggregateType = nameof(TimetableSlot)
+            }
+        );
     }
 
     public void Deactivate()

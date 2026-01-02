@@ -1,8 +1,8 @@
 using MediatR;
 using SchoolConnect.Calendar.Application.Commands.Events;
 using SchoolConnect.Calendar.Domain.Entities;
-using SchoolConnect.Calendar.Domain.Interfaces;
 using SchoolConnect.Calendar.Domain.Exceptions;
+using SchoolConnect.Calendar.Domain.Interfaces;
 
 namespace SchoolConnect.Calendar.Application.Handlers;
 
@@ -22,17 +22,19 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Gui
             request.Title,
             request.StartTime,
             request.EndTime,
-            request.CreatedBy,
-            request.CreatedByName,
+            request.Type, // Fix: Pass EventType as 5th argument
+            request.Visibility, // Fix: Pass EventVisibility as 6th argument
+            request.CreatedBy, // Fix: Pass CreatedBy as 7th argument
+            request.CreatedByName, // Fix: Pass CreatedByName as 8th argument
             request.CentreId,
             request.ClassId,
             request.Description,
             request.Location,
             request.IsAllDay,
             request.Timezone,
-            request.Type,
-            request.Visibility,
-            request.RsvpRequired
+            null, // Recurrence (not present in command, pass null)
+            request.RsvpRequired // Fix: Pass RsvpRequired as 15th argument
+        // Remaining optional parameters omitted, will use defaults
         );
 
         await _eventRepository.AddAsync(calendarEvent, cancellationToken);
@@ -51,7 +53,8 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, Uni
 
     public async Task<Unit> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
     {
-        var calendarEvent = await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
+        var calendarEvent =
+            await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
             ?? throw new EventNotFoundException(request.EventId);
 
         calendarEvent.Update(
@@ -81,7 +84,8 @@ public class CancelEventCommandHandler : IRequestHandler<CancelEventCommand, Uni
 
     public async Task<Unit> Handle(CancelEventCommand request, CancellationToken cancellationToken)
     {
-        var calendarEvent = await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
+        var calendarEvent =
+            await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
             ?? throw new EventNotFoundException(request.EventId);
 
         calendarEvent.Cancel(request.CancellationReason);
@@ -117,12 +121,13 @@ public class AddAttendeeCommandHandler : IRequestHandler<AddAttendeeCommand, Gui
 
     public async Task<Guid> Handle(AddAttendeeCommand request, CancellationToken cancellationToken)
     {
-        var calendarEvent = await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
+        var calendarEvent =
+            await _eventRepository.GetByIdAsync(request.EventId, cancellationToken)
             ?? throw new EventNotFoundException(request.EventId);
 
         calendarEvent.AddAttendee();
         await _eventRepository.UpdateAsync(calendarEvent, cancellationToken);
-        
+
         return Guid.NewGuid(); // In a real implementation, this would return the created attendee ID
     }
 }

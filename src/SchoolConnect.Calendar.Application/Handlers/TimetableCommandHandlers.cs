@@ -1,9 +1,10 @@
 using MediatR;
 using SchoolConnect.Calendar.Application.Commands.Timetables;
+using SchoolConnect.Calendar.Application.DTOs;
 using SchoolConnect.Calendar.Domain.Entities;
-using SchoolConnect.Calendar.Domain.Interfaces;
-using SchoolConnect.Calendar.Domain.Exceptions;
 using SchoolConnect.Calendar.Domain.Enums;
+using SchoolConnect.Calendar.Domain.Exceptions;
+using SchoolConnect.Calendar.Domain.Interfaces;
 
 namespace SchoolConnect.Calendar.Application.Handlers;
 
@@ -16,8 +17,25 @@ public class CreateTimetableCommandHandler : IRequestHandler<CreateTimetableComm
         _timetableRepository = timetableRepository;
     }
 
-    public async Task<Guid> Handle(CreateTimetableCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(
+        CreateTimetableCommand request,
+        CancellationToken cancellationToken
+    )
     {
+        // Convert TimetableSettingsDto to TimetableSettings
+        TimetableSettings? settings = request.Settings is not null
+            ? new TimetableSettings
+            {
+                DayStartTime = request.Settings.DayStartTime,
+                DayEndTime = request.Settings.DayEndTime,
+                DefaultPeriodDurationMinutes = request.Settings.DefaultPeriodDurationMinutes,
+                BreakDurationMinutes = request.Settings.BreakDurationMinutes,
+                WorkingDays = request.Settings.WorkingDays,
+                AllowDoubleBooking = request.Settings.AllowDoubleBooking,
+                RequireFacility = request.Settings.RequireFacility
+            }
+            : null;
+
         var timetable = Timetable.Create(
             request.InstituteId,
             request.CentreId,
@@ -28,7 +46,7 @@ public class CreateTimetableCommandHandler : IRequestHandler<CreateTimetableComm
             request.CreatedBy,
             request.Description,
             request.TermNumber,
-            request.Settings
+            settings // Use the converted settings
         );
 
         await _timetableRepository.AddAsync(timetable, cancellationToken);
@@ -45,9 +63,13 @@ public class UpdateTimetableCommandHandler : IRequestHandler<UpdateTimetableComm
         _timetableRepository = timetableRepository;
     }
 
-    public async Task<Unit> Handle(UpdateTimetableCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(
+        UpdateTimetableCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        var timetable = await _timetableRepository.GetByIdAsync(request.TimetableId, cancellationToken)
+        var timetable =
+            await _timetableRepository.GetByIdAsync(request.TimetableId, cancellationToken)
             ?? throw new TimetableNotFoundException(request.TimetableId);
 
         timetable.Update(
@@ -71,9 +93,13 @@ public class PublishTimetableCommandHandler : IRequestHandler<PublishTimetableCo
         _timetableRepository = timetableRepository;
     }
 
-    public async Task<Unit> Handle(PublishTimetableCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(
+        PublishTimetableCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        var timetable = await _timetableRepository.GetByIdAsync(request.TimetableId, cancellationToken)
+        var timetable =
+            await _timetableRepository.GetByIdAsync(request.TimetableId, cancellationToken)
             ?? throw new TimetableNotFoundException(request.TimetableId);
 
         timetable.Publish(request.PublishedBy);
@@ -82,7 +108,7 @@ public class PublishTimetableCommandHandler : IRequestHandler<PublishTimetableCo
     }
 }
 
-public class CreateSlotCommandHandler : IRequestHandler<CreateSlotCommand, Guid>
+public class CreateSlotCommandHandler : IRequestHandler<CreateSlotCommand, TimetableSlotDto>
 {
     private readonly ITimetableSlotRepository _slotRepository;
 
@@ -91,11 +117,14 @@ public class CreateSlotCommandHandler : IRequestHandler<CreateSlotCommand, Guid>
         _slotRepository = slotRepository;
     }
 
-    public async Task<Guid> Handle(CreateSlotCommand request, CancellationToken cancellationToken)
+    public async Task<TimetableSlotDto> Handle(
+        CreateSlotCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var slot = TimetableSlot.Create(
             request.TimetableId,
-            request.TimetablePeriodId,
+            request.PeriodId,
             request.DayOfWeek,
             request.ClassId,
             request.ClassName,
@@ -113,13 +142,37 @@ public class CreateSlotCommandHandler : IRequestHandler<CreateSlotCommand, Guid>
         );
 
         await _slotRepository.AddAsync(slot, cancellationToken);
-        return slot.Id;
+
+        // Map to TimetableSlotDto (assuming a constructor or mapping exists)
+        return new TimetableSlotDto
+        {
+            Id = slot.Id,
+            TimetableId = slot.TimetableId,
+            TimetablePeriodId = slot.TimetablePeriodId, // Use TimetablePeriodId instead of PeriodId
+            DayOfWeek = slot.DayOfWeek,
+            ClassId = slot.ClassId,
+            ClassName = slot.ClassName,
+            CohortId = slot.CohortId,
+            CohortName = slot.CohortName,
+            SubjectId = slot.SubjectId,
+            SubjectName = slot.SubjectName,
+            SubjectCode = slot.SubjectCode,
+            TeacherId = slot.TeacherId,
+            TeacherName = slot.TeacherName,
+            FacilityId = slot.FacilityId,
+            FacilityName = slot.FacilityName,
+            Notes = slot.Notes,
+            Color = slot.Color
+        };
     }
 }
 
 public class CreateSubstitutionCommandHandler : IRequestHandler<CreateSubstitutionCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateSubstitutionCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(
+        CreateSubstitutionCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var change = TimetableChange.Create(
             request.TimetableSlotId,
@@ -139,4 +192,21 @@ public class CreateSubstitutionCommandHandler : IRequestHandler<CreateSubstituti
         // In a real implementation, this would be saved via a repository
         return change.Id;
     }
+}
+
+public record CreateTimetableCommand
+    : IRequest<Guid>,
+        IBaseRequest,
+        IEquatable<CreateTimetableCommand>
+{
+    public Guid InstituteId { get; init; }
+    public Guid CentreId { get; init; }
+    public string Name { get; init; }
+    public int AcademicYear { get; init; }
+    public DateTime EffectiveFrom { get; init; }
+    public DateTime EffectiveTo { get; init; }
+    public Guid CreatedBy { get; init; }
+    public string? Description { get; init; }
+    public int? TermNumber { get; init; }
+    public TimetableSettingsDto? Settings { get; init; }
 }

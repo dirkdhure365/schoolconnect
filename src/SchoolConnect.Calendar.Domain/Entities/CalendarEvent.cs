@@ -1,7 +1,7 @@
-using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Calendar.Domain.Enums;
 using SchoolConnect.Calendar.Domain.Events;
 using SchoolConnect.Calendar.Domain.ValueObjects;
+using SchoolConnect.Common.Domain.Primitives;
 
 namespace SchoolConnect.Calendar.Domain.Entities;
 
@@ -10,40 +10,40 @@ public class CalendarEvent : AggregateRoot
     public Guid InstituteId { get; private set; }
     public Guid? CentreId { get; private set; }
     public Guid? ClassId { get; private set; }
-    
+
     public string Title { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public EventLocation? Location { get; private set; }
-    
+
     public DateTime StartTime { get; private set; }
     public DateTime EndTime { get; private set; }
     public bool IsAllDay { get; private set; }
     public string? Timezone { get; private set; }
-    
+
     public RecurrenceRule? Recurrence { get; private set; }
     public Guid? RecurrenceGroupId { get; private set; }
     public bool IsRecurrenceException { get; private set; }
     public DateTime? OriginalStartTime { get; private set; }
-    
+
     public EventType Type { get; private set; }
     public string? Color { get; private set; }
     public string? IconUrl { get; private set; }
-    
+
     public EventVisibility Visibility { get; private set; }
     public bool RsvpRequired { get; private set; }
     public int? MaxAttendees { get; private set; }
     public DateTime? RsvpDeadline { get; private set; }
-    
+
     public int AttendeeCount { get; private set; }
     public int ConfirmedCount { get; private set; }
     public int DeclinedCount { get; private set; }
-    
+
     public List<string> AttachmentUrls { get; private set; } = [];
     public Dictionary<string, string> CustomFields { get; private set; } = new();
-    
+
     public EventStatus Status { get; private set; }
     public string? CancellationReason { get; private set; }
-    
+
     public Guid CreatedByUserId { get; private set; }
     public string CreatedByName { get; private set; } = string.Empty;
 
@@ -56,8 +56,8 @@ public class CalendarEvent : AggregateRoot
         DateTime endTime,
         EventType type,
         EventVisibility visibility,
-        Guid createdBy,
-        string createdByName,
+        Guid? createdBy,
+        string? createdByName,
         Guid? centreId = null,
         Guid? classId = null,
         string? description = null,
@@ -69,7 +69,8 @@ public class CalendarEvent : AggregateRoot
         int? maxAttendees = null,
         DateTime? rsvpDeadline = null,
         string? color = null,
-        string? iconUrl = null)
+        string? iconUrl = null
+    )
     {
         if (endTime <= startTime)
             throw new ArgumentException("End time must be after start time");
@@ -96,19 +97,22 @@ public class CalendarEvent : AggregateRoot
             MaxAttendees = maxAttendees,
             RsvpDeadline = rsvpDeadline,
             Status = EventStatus.Scheduled,
-            CreatedByUserId = createdBy,
+            CreatedByUserId = createdBy ?? throw new ArgumentNullException(nameof(createdBy)),
             CreatedByName = createdByName,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
 
-        calendarEvent.Apply(new EventCreatedEvent(
-            calendarEvent.Id,
-            instituteId,
-            title,
-            startTime,
-            endTime,
-            createdBy));
+        calendarEvent.Apply(
+            new EventCreatedEvent(
+                calendarEvent.Id,
+                instituteId,
+                title,
+                startTime,
+                endTime,
+                createdBy ?? Guid.Empty
+            )
+        );
 
         return calendarEvent;
     }
@@ -122,22 +126,31 @@ public class CalendarEvent : AggregateRoot
         bool? isAllDay = null,
         EventType? type = null,
         EventVisibility? visibility = null,
-        Guid? updatedBy = null)
+        Guid? updatedBy = null
+    )
     {
-        if (title != null) Title = title;
-        if (description != null) Description = description;
-        if (location != null) Location = location;
-        if (startTime.HasValue) StartTime = startTime.Value;
-        if (endTime.HasValue) EndTime = endTime.Value;
-        if (isAllDay.HasValue) IsAllDay = isAllDay.Value;
-        if (type.HasValue) Type = type.Value;
-        if (visibility.HasValue) Visibility = visibility.Value;
+        if (title != null)
+            Title = title;
+        if (description != null)
+            Description = description;
+        if (location != null)
+            Location = location;
+        if (startTime.HasValue)
+            StartTime = startTime.Value;
+        if (endTime.HasValue)
+            EndTime = endTime.Value;
+        if (isAllDay.HasValue)
+            IsAllDay = isAllDay.Value;
+        if (type.HasValue)
+            Type = type.Value;
+        if (visibility.HasValue)
+            Visibility = visibility.Value;
 
         UpdatedAt = DateTime.UtcNow;
 
         if (updatedBy.HasValue)
         {
-            Apply(new EventUpdatedEvent(Id, updatedBy.Value));
+            Apply(new EventUpdatedEvent(Id, Title) { AggregateType = nameof(CalendarEvent) });
         }
     }
 
@@ -147,12 +160,19 @@ public class CalendarEvent : AggregateRoot
         CancellationReason = reason;
         UpdatedAt = DateTime.UtcNow;
 
-        Apply(new EventCancelledEvent(Id, reason, cancelledBy));
+        Apply(new EventCancelledEvent(Id, reason) { AggregateType = nameof(CalendarEvent) });
     }
 
     public void Delete(Guid deletedBy)
     {
-        Apply(new EventDeletedEvent(Id, deletedBy));
+        Apply(
+            new EventDeletedEvent(Id)
+            {
+                AggregateId = Id,
+                AggregateType = nameof(CalendarEvent)
+                // Set other required properties if needed
+            }
+        );
     }
 
     public void UpdateAttendeeCount(int confirmed, int declined)
@@ -166,5 +186,37 @@ public class CalendarEvent : AggregateRoot
     protected override void When(DomainEvent @event)
     {
         // Event sourcing implementation if needed
+    }
+
+    public void Cancel(string? cancellationReason)
+    {
+        if (Status == EventStatus.Cancelled)
+            throw new InvalidOperationException("Event is already cancelled");
+
+        Status = EventStatus.Cancelled;
+        CancellationReason = cancellationReason;
+        UpdatedAt = DateTime.UtcNow;
+
+        Apply(
+            new EventCancelledEvent(Id, cancellationReason ?? string.Empty)
+            {
+                AggregateType = nameof(CalendarEvent)
+            }
+        );
+    }
+
+    public void AddAttendee()
+    {
+        if (MaxAttendees.HasValue && AttendeeCount >= MaxAttendees.Value)
+            throw new InvalidOperationException("Maximum attendee limit reached");
+
+        if (RsvpDeadline.HasValue && DateTime.UtcNow > RsvpDeadline.Value)
+            throw new InvalidOperationException("RSVP deadline has passed");
+
+        if (Status == EventStatus.Cancelled)
+            throw new InvalidOperationException("Cannot add attendee to a cancelled event");
+
+        AttendeeCount++;
+        UpdatedAt = DateTime.UtcNow;
     }
 }

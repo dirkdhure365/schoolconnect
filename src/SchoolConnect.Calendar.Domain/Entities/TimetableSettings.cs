@@ -9,4 +9,9 @@ public class TimetableSettings
     public List<DayOfWeek> WorkingDays { get; set; } = [];
     public bool AllowDoubleBooking { get; set; }
     public bool RequireFacility { get; set; }
+
+    internal static TimetableSettings CreateDefault()
+    {
+        return new TimetableSettings();
+    }
 }

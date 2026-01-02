@@ -4,7 +4,7 @@ using SchoolConnect.Calendar.Domain.Enums;
 
 namespace SchoolConnect.Calendar.Application.Commands.Events;
 
-public record CreateEventCommand(
+public record CreateEvent2Command(
     Guid InstituteId,
     string Title,
     DateTime StartTime,
@@ -24,4 +24,5 @@ public record CreateEventCommand(
     int? MaxAttendees = null,
     DateTime? RsvpDeadline = null,
     string? Color = null,
-    string? IconUrl = null) : IRequest<CalendarEventDto>;
+    string? IconUrl = null
+) : IRequest<CalendarEventDto>;
