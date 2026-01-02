@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SchoolConnect.Common.Application\SchoolConnect.Common.Application.csproj" />
+		<ProjectReference Include="..\SchoolConnect.Billing.Domain\SchoolConnect.Billing.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="14.0.0" />
+		<PackageReference Include="AutoMapper" Version="16.0.0" />
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolConnect.Billing.Application\SchoolConnect.Billing.Application.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Billing.Infrastructure\SchoolConnect.Billing.Infrastructure.csproj" />
+    <ProjectReference Include="..\SchoolConnect.Common.Api\SchoolConnect.Common.Api.csproj" />
+  </ItemGroup>
+
+</Project>
