@@ -21,7 +21,7 @@ public class EventAttendee : Entity
     public bool NotificationSent { get; private set; }
     
     public DateTime AddedAt { get; private set; }
-    public Guid AddedBy { get; private set; }
+    public Guid AddedByUserId { get; private set; }
 
     private EventAttendee() { }
 
@@ -31,25 +31,28 @@ public class EventAttendee : Entity
         string userName,
         Guid addedBy,
         string? userEmail = null,
+        string? avatarUrl = null,
         string? role = null,
         bool isOrganizer = false)
     {
-        return new EventAttendee
+        var attendee = new EventAttendee
         {
             Id = Guid.NewGuid(),
             EventId = eventId,
             UserId = userId,
             UserName = userName,
             UserEmail = userEmail,
+            AvatarUrl = avatarUrl,
             Role = role,
             IsOrganizer = isOrganizer,
             RsvpStatus = RsvpStatus.Pending,
-            NotificationSent = false,
-            AddedBy = addedBy,
             AddedAt = DateTime.UtcNow,
+            AddedByUserId = addedBy,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
+
+        return attendee;
     }
 
     public void UpdateRsvp(RsvpStatus status, string? notes = null)

@@ -1,7 +1,8 @@
 using AutoMapper;
+using SchoolConnect.Calendar.Application.DTOs;
 using SchoolConnect.Calendar.Domain.Entities;
 using SchoolConnect.Calendar.Domain.ValueObjects;
-using SchoolConnect.Calendar.Application.DTOs;
+using DomainTimetableSettings = SchoolConnect.Calendar.Domain.Entities.TimetableSettings;
 
 namespace SchoolConnect.Calendar.Application.Mappers;
 
@@ -9,23 +10,26 @@ public class CalendarMappingProfile : Profile
 {
     public CalendarMappingProfile()
     {
-        // CalendarEvent mappings
-        CreateMap<CalendarEvent, CalendarEventDto>();
-        CreateMap<EventLocation, EventLocationDto>();
-        CreateMap<RecurrenceRule, RecurrenceRuleDto>();
-        
-        // EventAttendee mappings
-        CreateMap<EventAttendee, EventAttendeeDto>();
-        
-        // EventReminder mappings
+        CreateMap<CalendarEvent, CalendarEventDto>()
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedByUserId));
+
+        CreateMap<EventAttendee, EventAttendeeDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
         CreateMap<EventReminder, EventReminderDto>();
-        
-        // Timetable mappings
-        CreateMap<Timetable, TimetableDto>();
-        CreateMap<TimetablePeriod, TimetablePeriodDto>()
-            .ForMember(dest => dest.DurationMinutes, 
-                opt => opt.MapFrom(src => (int)(src.EndTime - src.StartTime).TotalMinutes));
+
+        CreateMap<Timetable, TimetableDto>()
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedByUserId));
+
+        CreateMap<TimetablePeriod, TimetablePeriodDto>();
+
         CreateMap<TimetableSlot, TimetableSlotDto>();
-        CreateMap<TimetableChange, TimetableChangeDto>();
+
+        CreateMap<TimetableChange, TimetableChangeDto>()
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedByUserId));
+
+        CreateMap<EventLocation, EventLocationDto>().ReverseMap();
+        CreateMap<RecurrenceRule, RecurrenceRuleDto>().ReverseMap();
+        CreateMap<DomainTimetableSettings, TimetableSettingsDto>().ReverseMap();
     }
 }

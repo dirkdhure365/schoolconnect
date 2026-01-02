@@ -2,13 +2,8 @@ namespace SchoolConnect.Calendar.Domain.Exceptions;
 
 public class PastEventModificationException : Exception
 {
-    public PastEventModificationException()
-        : base("Cannot modify events that have already occurred.")
-    {
-    }
-    
-    public PastEventModificationException(string message)
-        : base(message)
+    public PastEventModificationException(Guid eventId)
+        : base($"Cannot modify past event with ID {eventId}")
     {
     }
 }

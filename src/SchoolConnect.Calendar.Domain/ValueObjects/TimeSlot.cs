@@ -12,6 +12,9 @@ public class TimeSlot : ValueObject
 
     public static TimeSlot Create(DayOfWeek day, TimeOnly startTime, TimeOnly endTime)
     {
+        if (endTime <= startTime)
+            throw new ArgumentException("End time must be after start time");
+
         return new TimeSlot
         {
             Day = day,

@@ -1,139 +1,112 @@
 # SchoolConnect Calendar & Scheduling Microservice
 
-A comprehensive calendar and scheduling microservice for the SchoolConnect platform, built using Clean Architecture principles and CQRS pattern.
-
-## Overview
-
-The Calendar & Scheduling microservice handles calendar events, timetables, bookings, reminders, and schedule management for educational institutions. It provides a robust API for managing events, timetable periods, slots, substitutions, and conflict detection.
+The Calendar & Scheduling microservice handles events, timetables, bookings, reminders, and schedule management for all stakeholders in the SchoolConnect platform.
 
 ## Architecture
 
-This microservice follows Clean Architecture with four distinct layers:
+This microservice follows Clean Architecture principles with the following layers:
 
-### 1. Domain Layer (`SchoolConnect.Calendar.Domain`)
-Contains the core business logic and rules:
-
+### Domain Layer (`SchoolConnect.Calendar.Domain`)
+Contains the core business logic and domain models:
 - **Entities**: CalendarEvent, EventAttendee, EventReminder, Timetable, TimetablePeriod, TimetableSlot, TimetableChange
-- **Value Objects**: RecurrenceRule, TimeSlot, EventLocation, ReminderSettings
-- **Domain Events**: 17 event types for event sourcing
-- **Enums**: EventType, EventStatus, EventVisibility, RsvpStatus, ReminderChannel, ReminderStatus, TimetableStatus, PeriodType, ChangeType, ConflictType
+- **Value Objects**: EventLocation, RecurrenceRule, TimeSlot, ReminderSettings, TimetableSettings
+- **Domain Events**: Event and timetable-related events for event sourcing
+- **Enums**: EventType, EventStatus, EventVisibility, RsvpStatus, ReminderChannel, etc.
 - **Exceptions**: Custom domain exceptions
-- **Interfaces**: Repository contracts
+- **Interfaces**: Repository interfaces
 
-### 2. Application Layer (`SchoolConnect.Calendar.Application`)
-Contains application logic and use cases:
-
-- **Commands**: CQRS commands for write operations
-- **Queries**: CQRS queries for read operations
-- **Handlers**: MediatR handlers for commands and queries
-- **DTOs**: Data Transfer Objects for API communication
+### Application Layer (`SchoolConnect.Calendar.Application`)
+Contains application business logic:
+- **Commands**: CreateEvent, UpdateEvent, CancelEvent, CreateTimetable, CreateSlot, etc.
+- **Queries**: GetEventById, GetEventsByDateRange, GetTimetableSlots, etc.
+- **DTOs**: Data transfer objects for API responses
 - **Mappers**: AutoMapper profiles
-- **Services**: Application service interfaces
+- **Services**: Conflict detection, reminder scheduling
 
-### 3. Infrastructure Layer (`SchoolConnect.Calendar.Infrastructure`)
-Contains implementation details:
-
-- **Repositories**: MongoDB repository implementations
+### Infrastructure Layer (`SchoolConnect.Calendar.Infrastructure`)
+Contains infrastructure implementations:
+- **Persistence**: MongoDB-based data access with CalendarDbContext
+- **Repositories**: Implementations of repository interfaces
 - **Services**: ConflictDetectionService, ReminderSchedulerService
-- **Extensions**: Dependency Injection setup
+- **Extensions**: Dependency injection configuration
 
-### 4. API Layer (`SchoolConnect.Calendar.Api`)
+### API Layer (`SchoolConnect.Calendar.Api`)
 RESTful API endpoints:
-
-- **EventEndpoints**: Calendar event management
-- **TimetableEndpoints**: Timetable management
-- **TimetableSlotEndpoints**: Slot and substitution management
+- **Event Endpoints**: CRUD operations for calendar events
+- **Timetable Endpoints**: Timetable management
+- **Slot Endpoints**: Timetable slot management
 
 ## Features
 
 ### Calendar Events
-- Create, update, cancel, and delete events
+- Create and manage events (meetings, classes, exams, holidays, etc.)
 - Support for recurring events with flexible recurrence rules
-- Event attendees and RSVP management
-- Event reminders via multiple channels (InApp, Push, Email, SMS)
-- Event visibility levels (Public, Institute, Centre, Class, Private)
-- Attachments and custom fields support
-- Date range queries and upcoming events
+- Event visibility control (Public, Institute, Centre, Class, Private)
+- RSVP functionality with attendee management
+- Event reminders via multiple channels (Email, Push, SMS, In-App)
+- Virtual meeting integration (Zoom, Teams, Meet)
+- Attachments and custom fields
 
 ### Timetables
-- Create and manage academic timetables
-- Define periods with specific time slots
-- Support for different period types (Lesson, Break, Lunch, Assembly, etc.)
-- Publish and archive timetables
-- Clone timetables for new terms
+- Academic timetable creation and management
+- Period and slot scheduling
+- Teacher, class, and facility assignment
+- Conflict detection (double-booking prevention)
+- Timetable publishing workflow
+- Substitution and change management
+- Multiple timetable versions (Draft, Published, Archived)
 
-### Timetable Slots
-- Assign classes, subjects, teachers, and facilities to time slots
+### Scheduling
+- Automated conflict detection
+- Availability checking for teachers and facilities
 - Bulk slot creation
-- Slot updates and deletions
-- Teacher, class, and facility-specific timetable views
-
-### Substitutions & Changes
-- Create teacher substitutions
-- Track room changes
-- Schedule rescheduling
-- Notification management for changes
-
-### Conflict Detection
-- Detect teacher double-booking
-- Detect facility double-booking
-- Detect class conflicts
-- Overlapping period detection
-
-## Technology Stack
-
-- **.NET 10.0**: Latest .NET framework
-- **MongoDB**: NoSQL database for data persistence
-- **MediatR**: CQRS implementation
-- **AutoMapper**: Object-to-object mapping
-- **Minimal APIs**: Lightweight HTTP API framework
-- **Swagger/OpenAPI**: API documentation
+- Schedule optimization
 
 ## API Endpoints
 
 ### Calendar Events
 ```
-GET    /api/calendar/events/{id}
-GET    /api/calendar/events
-GET    /api/calendar/events/range
-GET    /api/calendar/events/upcoming
-POST   /api/calendar/events
-PUT    /api/calendar/events/{id}
-POST   /api/calendar/events/{id}/cancel
-DELETE /api/calendar/events/{id}
-POST   /api/calendar/events/{id}/attendees
-DELETE /api/calendar/events/{eventId}/attendees/{userId}
+GET    /api/calendar/events/{id}           - Get event by ID
+GET    /api/calendar/events/range          - Get events by date range
+POST   /api/calendar/events                - Create new event
+PUT    /api/calendar/events/{id}           - Update event
+POST   /api/calendar/events/{id}/cancel    - Cancel event
+DELETE /api/calendar/events/{id}           - Delete event
+POST   /api/calendar/events/{id}/rsvp      - RSVP to event
 ```
 
 ### Timetables
 ```
-GET    /api/timetables/{id}
-PUT    /api/timetables/{id}
-POST   /api/timetables/{id}/publish
-DELETE /api/timetables/{id}
-GET    /api/timetables/{id}/slots
-POST   /api/timetables/{id}/slots
-GET    /api/institutes/{instituteId}/timetables
-POST   /api/institutes/{instituteId}/timetables
+GET    /api/timetables/{id}                          - Get timetable by ID
+POST   /api/institutes/{instituteId}/timetables      - Create timetable
+POST   /api/timetables/{id}/publish                  - Publish timetable
+GET    /api/timetables/{timetableId}/slots           - Get timetable slots
+POST   /api/timetables/{timetableId}/slots           - Create slot
 ```
 
-### Timetable Views
-```
-GET    /api/timetables/views/teacher/{teacherId}
-GET    /api/timetables/views/class/{classId}
-```
+## Technology Stack
 
-### Timetable Slots
-```
-PUT    /api/timetable-slots/{id}
-DELETE /api/timetable-slots/{id}
-POST   /api/timetable-slots/{id}/substitutions
-```
+- **.NET 10.0**: Latest .NET framework
+- **MongoDB**: Document database for flexible schema
+- **MediatR**: CQRS pattern implementation
+- **AutoMapper**: Object-to-object mapping
+- **FluentValidation**: Input validation
+- **Swagger/OpenAPI**: API documentation
+
+## Database Schema
+
+The service uses MongoDB with the following collections:
+- `events` - Calendar events
+- `event_attendees` - Event attendees and RSVPs
+- `event_reminders` - Event reminders
+- `timetables` - Academic timetables
+- `timetable_periods` - Timetable periods
+- `timetable_slots` - Scheduled slots
+- `timetable_changes` - Schedule changes and substitutions
 
 ## Configuration
 
-The service requires MongoDB configuration in `appsettings.json`:
-
+### appsettings.json
 ```json
 {
   "ConnectionStrings": {
@@ -145,83 +118,86 @@ The service requires MongoDB configuration in `appsettings.json`:
 }
 ```
 
-## Building and Running
+## Getting Started
 
 ### Prerequisites
 - .NET 10.0 SDK
-- MongoDB instance
+- MongoDB 4.4 or higher
 
-### Build
+### Build and Run
+
 ```bash
+# Build the solution
 dotnet build SchoolConnect.Calendar.sln
+
+# Run the API
+dotnet run --project src/SchoolConnect.Calendar.Api
+
+# The API will be available at https://localhost:5001
 ```
 
-### Run
+### Docker Support
 ```bash
-cd src/SchoolConnect.Calendar.Api
-dotnet run
+docker-compose up calendar-api
 ```
 
-The API will be available at `https://localhost:5001` (HTTPS) or `http://localhost:5000` (HTTP).
+## Integration
 
-### Swagger UI
-Access the interactive API documentation at: `https://localhost:5001/swagger`
+### Event Publishing
+The service publishes integration events for:
+- Timetable changes (for notifications)
+- Event updates (for calendar synchronization)
+- Reminder scheduling
 
-## Domain Model Details
+### Event Consumption
+The service may consume events from:
+- Institution service (institute/centre updates)
+- Enrolment service (class/student updates)
+- Identity service (user updates)
+
+## Domain Model
 
 ### CalendarEvent
-Represents a calendar event with support for:
-- Basic event information (title, description, location)
-- Time management (start/end times, all-day events, timezones)
+Core entity representing any scheduled event with support for:
 - Recurrence patterns
-- Visibility and access control
-- RSVP management
-- Event status tracking
+- Attendee management
+- RSVP tracking
+- Location (physical or virtual)
+- Custom fields
 
 ### Timetable
-Represents an academic timetable with:
-- Institute and centre association
-- Academic year and term tracking
-- Effective date ranges
-- Configurable settings (working days, period durations)
-- Publication workflow
+Represents an academic schedule with:
+- Configurable periods
+- Working days
+- Academic year/term tracking
+- Publishing workflow
 
 ### TimetableSlot
-Links together:
-- Period (when)
-- Day of week
-- Class and cohort
-- Subject
-- Teacher
-- Facility (optional)
+Scheduled class sessions with:
+- Teacher assignment
+- Facility booking
+- Class/cohort association
+- Subject information
 
-### TimetableChange
-Tracks modifications to scheduled slots:
-- Substitutions (teacher changes)
-- Room changes
-- Cancellations
-- Rescheduling
+## Business Rules
 
-## Integration Points
-
-The Calendar microservice can integrate with:
-- **Identity Service**: For user authentication and authorization
-- **Institution Service**: For institute, centre, and facility information
-- **Communication Service**: For sending event and timetable change notifications
-- **Curriculum Service**: For subject information
+1. **Conflict Prevention**: System prevents double-booking of teachers, facilities, and classes
+2. **Past Event Protection**: Completed events cannot be modified
+3. **RSVP Deadline**: RSVPs must be submitted before the deadline
+4. **Timetable Publishing**: Only published timetables are visible to students/parents
+5. **Substitution Tracking**: All schedule changes are logged with reasons
 
 ## Future Enhancements
 
-Potential improvements for future iterations:
-- iCal/ICS export functionality
-- Calendar synchronization with external systems (Google Calendar, Outlook)
-- Advanced recurring event patterns
-- Resource booking with approval workflows
-- Time zone conversion support
-- Mobile-specific optimizations
-- Real-time updates via WebSockets/SignalR
-- Analytics and reporting
+- Calendar synchronization (iCal, Google Calendar, Outlook)
+- Advanced recurrence patterns (nth weekday, custom intervals)
+- Resource booking (equipment, venues)
+- Automated timetable generation
+- AI-powered conflict resolution
+- Mobile push notification integration
+- Parent-teacher meeting scheduling
+- Exam timetable management
 
 ## License
 
-This microservice is part of the SchoolConnect platform.
+Copyright © 2024 SchoolConnect. All rights reserved.

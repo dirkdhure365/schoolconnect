@@ -1,4 +1,5 @@
 using SchoolConnect.Calendar.Application.Services;
+using SchoolConnect.Calendar.Domain.Entities;
 using SchoolConnect.Calendar.Domain.Interfaces;
 
 namespace SchoolConnect.Calendar.Infrastructure.Services;
@@ -12,16 +13,9 @@ public class ReminderSchedulerService : IReminderSchedulerService
         _reminderRepository = reminderRepository;
     }
 
-    public async Task ScheduleReminderAsync(Guid reminderId, DateTime reminderTime, CancellationToken cancellationToken = default)
+    public async Task ScheduleReminderAsync(EventReminder reminder, CancellationToken cancellationToken = default)
     {
-        // In a real implementation, this would integrate with a job scheduler like Hangfire or Quartz.NET
-        // For now, we'll just ensure the reminder exists
-        var reminder = await _reminderRepository.GetByIdAsync(reminderId, cancellationToken);
-        if (reminder != null)
-        {
-            // Schedule the reminder for processing
-            await Task.CompletedTask;
-        }
+        await _reminderRepository.AddAsync(reminder, cancellationToken);
     }
 
     public async Task CancelReminderAsync(Guid reminderId, CancellationToken cancellationToken = default)
@@ -36,14 +30,15 @@ public class ReminderSchedulerService : IReminderSchedulerService
 
     public async Task ProcessPendingRemindersAsync(CancellationToken cancellationToken = default)
     {
-        var pendingReminders = await _reminderRepository.GetPendingRemindersAsync(DateTime.UtcNow, cancellationToken);
+        var pendingReminders = await _reminderRepository.GetPendingRemindersAsync(cancellationToken);
         
         foreach (var reminder in pendingReminders)
         {
             try
             {
-                // Send the reminder via the appropriate channel
-                // In a real implementation, this would integrate with notification services
+                // Send reminder through appropriate channel (email, push, sms)
+                // This would integrate with Communication service
+                
                 reminder.MarkAsSent();
                 await _reminderRepository.UpdateAsync(reminder, cancellationToken);
             }

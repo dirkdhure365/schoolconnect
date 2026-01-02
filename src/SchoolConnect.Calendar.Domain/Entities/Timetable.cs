@@ -1,6 +1,6 @@
-using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Calendar.Domain.Enums;
 using SchoolConnect.Calendar.Domain.Events;
+using SchoolConnect.Common.Domain.Primitives;
 
 namespace SchoolConnect.Calendar.Domain.Entities;
 
@@ -8,25 +8,25 @@ public class Timetable : AggregateRoot
 {
     public Guid InstituteId { get; private set; }
     public Guid CentreId { get; private set; }
-    
+
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public int AcademicYear { get; private set; }
     public int? TermNumber { get; private set; }
-    
+
     public DateTime EffectiveFrom { get; private set; }
     public DateTime EffectiveTo { get; private set; }
-    
+
     public TimetableStatus Status { get; private set; }
     public DateTime? PublishedAt { get; private set; }
-    public Guid? PublishedBy { get; private set; }
-    
-    public TimetableSettings Settings { get; private set; } = new();
-    
+    public Guid? PublishedByUserId { get; private set; }
+
+    public TimetableSettings Settings { get; private set; } = TimetableSettings.CreateDefault();
+
     public int PeriodCount { get; private set; }
     public int SlotCount { get; private set; }
-    
-    public new Guid CreatedBy { get; private set; }
+
+    public Guid CreatedByUserId { get; private set; }
 
     private Timetable() { }
 
@@ -40,8 +40,12 @@ public class Timetable : AggregateRoot
         Guid createdBy,
         string? description = null,
         int? termNumber = null,
-        TimetableSettings? settings = null)
+        TimetableSettings? settings = null
+    )
     {
+        if (effectiveTo <= effectiveFrom)
+            throw new ArgumentException("Effective to date must be after effective from date");
+
         var timetable = new Timetable
         {
             Id = Guid.NewGuid(),
@@ -53,30 +57,16 @@ public class Timetable : AggregateRoot
             TermNumber = termNumber,
             EffectiveFrom = effectiveFrom,
             EffectiveTo = effectiveTo,
+            Settings = settings ?? TimetableSettings.CreateDefault(),
             Status = TimetableStatus.Draft,
-            Settings = settings ?? new TimetableSettings
-            {
-                DayStartTime = new TimeOnly(8, 0),
-                DayEndTime = new TimeOnly(15, 0),
-                DefaultPeriodDurationMinutes = 45,
-                BreakDurationMinutes = 15,
-                WorkingDays = [DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday],
-                AllowDoubleBooking = false,
-                RequireFacility = true
-            },
-            PeriodCount = 0,
-            SlotCount = 0,
-            CreatedBy = createdBy,
+            CreatedByUserId = createdBy,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
 
-        timetable.Apply(new TimetableCreatedEvent(
-            timetable.Id,
-            instituteId,
-            centreId,
-            name,
-            createdBy));
+        timetable.Apply(
+            new TimetableCreatedEvent(timetable.Id, instituteId, centreId, name, createdBy)
+        );
 
         return timetable;
     }
@@ -86,24 +76,36 @@ public class Timetable : AggregateRoot
         string? description = null,
         DateTime? effectiveFrom = null,
         DateTime? effectiveTo = null,
-        TimetableSettings? settings = null)
+        TimetableSettings? settings = null,
+        Guid? updatedBy = null
+    )
     {
-        if (name != null) Name = name;
-        if (description != null) Description = description;
-        if (effectiveFrom != null) EffectiveFrom = effectiveFrom.Value;
-        if (effectiveTo != null) EffectiveTo = effectiveTo.Value;
-        if (settings != null) Settings = settings;
+        if (name != null)
+            Name = name;
+        if (description != null)
+            Description = description;
+        if (effectiveFrom.HasValue)
+            EffectiveFrom = effectiveFrom.Value;
+        if (effectiveTo.HasValue)
+            EffectiveTo = effectiveTo.Value;
+        if (settings != null)
+            Settings = settings;
 
         UpdatedAt = DateTime.UtcNow;
-        Apply(new TimetableUpdatedEvent(Id, Name));
+
+        if (updatedBy.HasValue)
+        {
+            Apply(new TimetableUpdatedEvent(Id, Name) { AggregateType = nameof(Timetable) });
+        }
     }
 
     public void Publish(Guid publishedBy)
     {
         Status = TimetableStatus.Published;
         PublishedAt = DateTime.UtcNow;
-        PublishedBy = publishedBy;
+        PublishedByUserId = publishedBy;
         UpdatedAt = DateTime.UtcNow;
+
         Apply(new TimetablePublishedEvent(Id, publishedBy));
     }
 
@@ -122,8 +124,10 @@ public class Timetable : AggregateRoot
     public void DecrementPeriodCount()
     {
         if (PeriodCount > 0)
+        {
             PeriodCount--;
-        UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 
     public void IncrementSlotCount()
@@ -135,12 +139,14 @@ public class Timetable : AggregateRoot
     public void DecrementSlotCount()
     {
         if (SlotCount > 0)
+        {
             SlotCount--;
-        UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 
     protected override void When(DomainEvent @event)
     {
-        // Event sourcing handler - can be implemented if needed
+        // Event sourcing implementation if needed
     }
 }

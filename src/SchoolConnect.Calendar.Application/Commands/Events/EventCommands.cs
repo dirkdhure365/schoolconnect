@@ -9,7 +9,7 @@ public record CreateEventCommand(
     string Title,
     DateTime StartTime,
     DateTime EndTime,
-    Guid CreatedBy,
+    Guid? CreatedBy,
     string CreatedByName,
     Guid? CentreId = null,
     Guid? ClassId = null,
@@ -34,14 +34,9 @@ public record UpdateEventCommand(
     EventVisibility? Visibility = null
 ) : IRequest<Unit>;
 
-public record CancelEventCommand(
-    Guid EventId,
-    string? CancellationReason = null
-) : IRequest<Unit>;
+public record CancelEventCommand(Guid EventId, string? CancellationReason = null) : IRequest<Unit>;
 
-public record DeleteEventCommand(
-    Guid EventId
-) : IRequest<Unit>;
+public record DeleteEventCommand(Guid EventId) : IRequest<Unit>;
 
 public record RsvpEventCommand(
     Guid EventId,
@@ -60,7 +55,4 @@ public record AddAttendeeCommand(
     bool IsOrganizer = false
 ) : IRequest<Guid>;
 
-public record RemoveAttendeeCommand(
-    Guid EventId,
-    Guid UserId
-) : IRequest<Unit>;
+public record RemoveAttendeeCommand(Guid EventId, Guid UserId) : IRequest<Unit>;

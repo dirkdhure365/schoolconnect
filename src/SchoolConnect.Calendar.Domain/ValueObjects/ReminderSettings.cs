@@ -32,7 +32,6 @@ public class ReminderSettings : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return string.Join(",", MinutesBeforeOptions);
         yield return DefaultChannel;
         yield return EnableEmailReminders;
         yield return EnablePushReminders;

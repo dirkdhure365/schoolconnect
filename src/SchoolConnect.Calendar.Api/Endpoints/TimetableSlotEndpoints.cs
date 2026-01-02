@@ -1,37 +1,52 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SchoolConnect.Calendar.Application.Commands.Timetables;
+using SchoolConnect.Calendar.Application.DTOs;
+using SchoolConnect.Calendar.Application.Queries.Timetables;
 
 namespace SchoolConnect.Calendar.Api.Endpoints;
 
 public static class TimetableSlotEndpoints
 {
-    public static void MapTimetableSlotEndpoints(this IEndpointRouteBuilder app)
+    public static void MapTimetableSlotEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/api/timetable-slots").WithTags("Timetable Slots");
+        var group = app.MapGroup("/api/timetables/{timetableId:guid}/slots")
+            .WithTags("Timetable Slots")
+            .WithOpenApi();
 
-        group.MapPut("/{id}", async (Guid id, [FromBody] UpdateSlotCommand command, IMediator mediator) =>
-        {
-            if (id != command.SlotId)
-                return Results.BadRequest("ID mismatch");
-            
-            await mediator.Send(command);
-            return Results.NoContent();
-        });
+        // GET /api/timetables/{timetableId}/slots
+        group
+            .MapGet(
+                "/",
+                async (Guid timetableId, [FromQuery] DayOfWeek? dayOfWeek, IMediator mediator) =>
+                {
+                    // Replace the instantiation of GetTimetableSlotsQuery to use the required constructor parameter
+                    var query = new GetTimetableSlotsQuery(timetableId);
+                    var result = await mediator.Send(query);
+                    return Results.Ok(result);
+                }
+            )
+            .WithName("GetTimetableSlots")
+            .Produces<IEnumerable<TimetableSlotDto>>();
 
-        group.MapDelete("/{id}", async (Guid id, IMediator mediator) =>
-        {
-            await mediator.Send(new DeleteSlotCommand(id));
-            return Results.NoContent();
-        });
+        // POST /api/timetables/{timetableId}/slots
+        group
+            .MapPost(
+                "/",
+                async (
+                    Guid timetableId,
+                    [FromBody] CreateSlotCommand command,
+                    IMediator mediator
+                ) =>
+                {
+                    if (timetableId != command.TimetableId)
+                        return Results.BadRequest("Timetable ID mismatch");
 
-        group.MapPost("/{id}/substitutions", async (Guid id, [FromBody] CreateSubstitutionCommand command, IMediator mediator) =>
-        {
-            if (id != command.TimetableSlotId)
-                return Results.BadRequest("ID mismatch");
-            
-            var substitutionId = await mediator.Send(command);
-            return Results.Created($"/api/timetable-changes/{substitutionId}", new { Id = substitutionId });
-        });
+                    var result = await mediator.Send(command);
+                    return Results.Created($"/api/timetable-slots/{result.Id}", result);
+                }
+            )
+            .WithName("CreateTimetableSlot")
+            .Produces<TimetableSlotDto>(201);
     }
 }

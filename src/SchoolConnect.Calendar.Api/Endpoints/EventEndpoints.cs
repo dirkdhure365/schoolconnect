@@ -1,94 +1,126 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SchoolConnect.Calendar.Application.Commands.Events;
+using SchoolConnect.Calendar.Application.DTOs;
 using SchoolConnect.Calendar.Application.Queries.Events;
 
 namespace SchoolConnect.Calendar.Api.Endpoints;
 
 public static class EventEndpoints
 {
-    public static void MapEventEndpoints(this IEndpointRouteBuilder app)
+    public static void MapEventEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/api/calendar/events").WithTags("Calendar Events");
+        var group = app.MapGroup("/api/calendar/events").WithTags("Events").WithOpenApi();
 
-        group.MapGet("/{id}", async (Guid id, IMediator mediator) =>
-        {
-            var result = await mediator.Send(new GetEventByIdQuery(id));
-            return result != null ? Results.Ok(result) : Results.NotFound();
-        });
+        // GET /api/calendar/events/{id}
+        group
+            .MapGet(
+                "/{id:guid}",
+                async (Guid id, IMediator mediator) =>
+                {
+                    var query = new GetEventByIdQuery(id);
+                    var result = await mediator.Send(query);
+                    return result is not null ? Results.Ok(result) : Results.NotFound();
+                }
+            )
+            .WithName("GetEventById")
+            .Produces<CalendarEventDto>()
+            .Produces(404);
 
-        group.MapGet("", async (
-            [FromQuery] Guid? instituteId,
-            [FromQuery] Guid? centreId,
-            [FromQuery] Guid? classId,
-            IMediator mediator) =>
-        {
-            var result = await mediator.Send(new GetEventsQuery(instituteId, centreId, classId));
-            return Results.Ok(result);
-        });
+        // GET /api/calendar/events/range
+        group
+            .MapGet(
+                "/range",
+                async (
+                    [FromQuery] DateTime startDate,
+                    [FromQuery] DateTime endDate,
+                    [FromQuery] Guid? instituteId,
+                    [FromQuery] Guid? centreId,
+                    IMediator mediator
+                ) =>
+                {
+                    // 'GetEventsByDateRangeQuery' does not have a 'CentreId' property, so do not set it
+                    var query = new GetEventsByDateRangeQuery(startDate, endDate, instituteId);
+                    var result = await mediator.Send(query);
+                    return Results.Ok(result);
+                }
+            )
+            .WithName("GetEventsByDateRange")
+            .Produces<IEnumerable<CalendarEventDto>>();
 
-        group.MapGet("/range", async (
-            [FromQuery] DateTime startDate,
-            [FromQuery] DateTime endDate,
-            [FromQuery] Guid? instituteId,
-            IMediator mediator) =>
-        {
-            var result = await mediator.Send(new GetEventsByDateRangeQuery(startDate, endDate, instituteId));
-            return Results.Ok(result);
-        });
+        // POST /api/calendar/events
+        group
+            .MapPost(
+                "/",
+                async ([FromBody] CreateEventCommand command, IMediator mediator) =>
+                {
+                    var result = await mediator.Send(command);
+                    return Results.CreatedAtRoute("GetEventById", new { id = result }, result);
+                }
+            )
+            .WithName("CreateEvent")
+            .Produces<CalendarEventDto>(201);
 
-        group.MapGet("/upcoming", async (
-            IMediator mediator,
-            [FromQuery] Guid userId,
-            [FromQuery] int count = 10) =>
-        {
-            var result = await mediator.Send(new GetUpcomingEventsQuery(userId, count));
-            return Results.Ok(result);
-        });
+        // PUT /api/calendar/events/{id}
+        group
+            .MapPut(
+                "/{id:guid}",
+                async (Guid id, [FromBody] UpdateEventCommand command, IMediator mediator) =>
+                {
+                    if (id != command.EventId)
+                        return Results.BadRequest("Event ID mismatch");
 
-        group.MapPost("", async ([FromBody] CreateEventCommand command, IMediator mediator) =>
-        {
-            var id = await mediator.Send(command);
-            return Results.Created($"/api/calendar/events/{id}", new { Id = id });
-        });
+                    var result = await mediator.Send(command);
+                    return Results.Ok(result);
+                }
+            )
+            .WithName("UpdateEvent")
+            .Produces<CalendarEventDto>();
 
-        group.MapPut("/{id}", async (Guid id, [FromBody] UpdateEventCommand command, IMediator mediator) =>
-        {
-            if (id != command.EventId)
-                return Results.BadRequest("ID mismatch");
-            
-            await mediator.Send(command);
-            return Results.NoContent();
-        });
+        // POST /api/calendar/events/{id}/cancel
+        group
+            .MapPost(
+                "/{id:guid}/cancel",
+                async (Guid id, [FromBody] CancelEventCommand command, IMediator mediator) =>
+                {
+                    if (id != command.EventId)
+                        return Results.BadRequest("Event ID mismatch");
 
-        group.MapPost("/{id}/cancel", async (Guid id, [FromBody] CancelEventCommand command, IMediator mediator) =>
-        {
-            if (id != command.EventId)
-                return Results.BadRequest("ID mismatch");
-            
-            await mediator.Send(command);
-            return Results.NoContent();
-        });
+                    await mediator.Send(command);
+                    return Results.NoContent();
+                }
+            )
+            .WithName("CancelEvent")
+            .Produces(204);
 
-        group.MapDelete("/{id}", async (Guid id, IMediator mediator) =>
-        {
-            await mediator.Send(new DeleteEventCommand(id));
-            return Results.NoContent();
-        });
+        // DELETE /api/calendar/events/{id}
+        group
+            .MapDelete(
+                "/{id:guid}",
+                async (Guid id, [FromQuery] Guid deletedBy, IMediator mediator) =>
+                {
+                    var command = new DeleteEventCommand(id);
+                    await mediator.Send(command);
+                    return Results.NoContent();
+                }
+            )
+            .WithName("DeleteEvent")
+            .Produces(204);
 
-        group.MapPost("/{id}/attendees", async (Guid id, [FromBody] AddAttendeeCommand command, IMediator mediator) =>
-        {
-            if (id != command.EventId)
-                return Results.BadRequest("ID mismatch");
-            
-            var attendeeId = await mediator.Send(command);
-            return Results.Created($"/api/calendar/events/{id}/attendees/{attendeeId}", new { Id = attendeeId });
-        });
+        // POST /api/calendar/events/{id}/rsvp
+        group
+            .MapPost(
+                "/{id:guid}/rsvp",
+                async (Guid id, [FromBody] RsvpEventCommand command, IMediator mediator) =>
+                {
+                    if (id != command.EventId)
+                        return Results.BadRequest("Event ID mismatch");
 
-        group.MapDelete("/{eventId}/attendees/{userId}", async (Guid eventId, Guid userId, IMediator mediator) =>
-        {
-            await mediator.Send(new RemoveAttendeeCommand(eventId, userId));
-            return Results.NoContent();
-        });
+                    await mediator.Send(command);
+                    return Results.NoContent();
+                }
+            )
+            .WithName("RsvpEvent")
+            .Produces(204);
     }
 }

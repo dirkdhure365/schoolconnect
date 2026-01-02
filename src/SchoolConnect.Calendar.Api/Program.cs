@@ -19,7 +19,7 @@ var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB")
     ?? "mongodb://localhost:27017";
 var databaseName = builder.Configuration["MongoDB:DatabaseName"] ?? "schoolconnect_calendar";
 
-builder.Services.AddCalendarInfrastructure(mongoConnectionString, databaseName);
+builder.Services.AddCalendarInfrastructure();
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -52,4 +52,3 @@ app.MapTimetableSlotEndpoints();
 app.MapGet("/", () => "SchoolConnect Calendar API - Running");
 
 app.Run();
-

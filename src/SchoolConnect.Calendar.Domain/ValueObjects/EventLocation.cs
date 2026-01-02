@@ -43,10 +43,6 @@ public class EventLocation : ValueObject
         yield return Name;
         yield return Address ?? string.Empty;
         yield return FacilityId ?? Guid.Empty;
-        yield return FacilityName ?? string.Empty;
         yield return VirtualMeetingUrl ?? string.Empty;
-        yield return VirtualMeetingProvider ?? string.Empty;
-        yield return Latitude ?? 0.0;
-        yield return Longitude ?? 0.0;
     }
 }

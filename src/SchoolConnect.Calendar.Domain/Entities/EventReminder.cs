@@ -1,5 +1,6 @@
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Calendar.Domain.Enums;
+using SchoolConnect.Calendar.Domain.Events;
 
 namespace SchoolConnect.Calendar.Domain.Entities;
 
@@ -21,11 +22,11 @@ public class EventReminder : Entity
     public static EventReminder Create(
         Guid eventId,
         Guid userId,
-        int minutesBefore,
         DateTime eventStartTime,
+        int minutesBefore,
         ReminderChannel channel)
     {
-        return new EventReminder
+        var reminder = new EventReminder
         {
             Id = Guid.NewGuid(),
             EventId = eventId,
@@ -37,6 +38,8 @@ public class EventReminder : Entity
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
+
+        return reminder;
     }
 
     public void MarkAsSent()

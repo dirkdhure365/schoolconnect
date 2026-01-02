@@ -42,11 +42,7 @@ public class RecurrenceRule : ValueObject
     {
         yield return Frequency;
         yield return Interval;
-        yield return DaysOfWeek ?? new List<DayOfWeek>();
-        yield return DaysOfMonth ?? new List<int>();
-        yield return MonthsOfYear ?? new List<int>();
         yield return EndDate ?? DateTime.MinValue;
         yield return Occurrences ?? 0;
-        yield return ExceptionDates ?? new List<DateTime>();
     }
 }

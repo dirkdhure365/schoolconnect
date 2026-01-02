@@ -11,7 +11,7 @@ public class TimetablePeriod : Entity
     public int PeriodNumber { get; private set; }
     public TimeOnly StartTime { get; private set; }
     public TimeOnly EndTime { get; private set; }
-    public int DurationMinutes => (int)(EndTime - StartTime).TotalMinutes;
+    public int DurationMinutes => (int)(EndTime.ToTimeSpan() - StartTime.ToTimeSpan()).TotalMinutes;
     
     public PeriodType Type { get; private set; }
     public List<DayOfWeek> ApplicableDays { get; private set; } = [];
@@ -26,11 +26,14 @@ public class TimetablePeriod : Entity
         int periodNumber,
         TimeOnly startTime,
         TimeOnly endTime,
-        PeriodType type = PeriodType.Lesson,
+        PeriodType type,
         List<DayOfWeek>? applicableDays = null,
         string? color = null)
     {
-        return new TimetablePeriod
+        if (endTime <= startTime)
+            throw new ArgumentException("End time must be after start time");
+
+        var period = new TimetablePeriod
         {
             Id = Guid.NewGuid(),
             TimetableId = timetableId,
@@ -39,11 +42,13 @@ public class TimetablePeriod : Entity
             StartTime = startTime,
             EndTime = endTime,
             Type = type,
-            ApplicableDays = applicableDays ?? [DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday],
+            ApplicableDays = applicableDays ?? [],
             Color = color,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
+
+        return period;
     }
 
     public void Update(
@@ -55,9 +60,9 @@ public class TimetablePeriod : Entity
         string? color = null)
     {
         if (name != null) Name = name;
-        if (startTime != null) StartTime = startTime.Value;
-        if (endTime != null) EndTime = endTime.Value;
-        if (type != null) Type = type.Value;
+        if (startTime.HasValue) StartTime = startTime.Value;
+        if (endTime.HasValue) EndTime = endTime.Value;
+        if (type.HasValue) Type = type.Value;
         if (applicableDays != null) ApplicableDays = applicableDays;
         if (color != null) Color = color;
 
