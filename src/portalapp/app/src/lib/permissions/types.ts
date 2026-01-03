@@ -1,0 +1,115 @@
+/**
+ * Permission types for SchoolConnect Portal
+ */
+
+export type Permission =
+  // Institution
+  | 'institution:view'
+  | 'institution:create'
+  | 'institution:edit'
+  | 'institution:delete'
+  // Centres
+  | 'centre:view'
+  | 'centre:create'
+  | 'centre:edit'
+  | 'centre:delete'
+  // Students
+  | 'student:view'
+  | 'student:create'
+  | 'student:edit'
+  | 'student:delete'
+  | 'student:enrol'
+  // Staff
+  | 'staff:view'
+  | 'staff:create'
+  | 'staff:edit'
+  | 'staff:delete'
+  | 'staff:assign'
+  // Academics
+  | 'class:view'
+  | 'class:create'
+  | 'class:edit'
+  | 'class:delete'
+  | 'subject:view'
+  | 'subject:create'
+  | 'subject:edit'
+  | 'subject:delete'
+  | 'timetable:view'
+  | 'timetable:create'
+  | 'timetable:edit'
+  // Lessons
+  | 'lesson:view'
+  | 'lesson:create'
+  | 'lesson:edit'
+  | 'lesson:delete'
+  | 'lesson:approve'
+  | 'attendance:view'
+  | 'attendance:record'
+  | 'homework:view'
+  | 'homework:assign'
+  | 'homework:grade'
+  // Assessments
+  | 'assessment:view'
+  | 'assessment:create'
+  | 'assessment:edit'
+  | 'assessment:delete'
+  | 'grade:view'
+  | 'grade:enter'
+  | 'grade:approve'
+  | 'report:view'
+  | 'report:generate'
+  // Communication
+  | 'message:view'
+  | 'message:send'
+  | 'message:broadcast'
+  | 'announcement:view'
+  | 'announcement:create'
+  // Calendar
+  | 'calendar:view'
+  | 'event:create'
+  | 'event:edit'
+  | 'event:delete'
+  // Collaboration
+  | 'workspace:view'
+  | 'workspace:create'
+  | 'workspace:edit'
+  | 'workspace:delete'
+  | 'board:view'
+  | 'board:create'
+  | 'board:edit'
+  // Billing
+  | 'billing:view'
+  | 'billing:manage'
+  | 'invoice:view'
+  | 'invoice:create'
+  | 'payment:process'
+  // Settings
+  | 'settings:view'
+  | 'settings:edit'
+  | 'user:view'
+  | 'user:create'
+  | 'user:edit'
+  | 'user:delete'
+  | 'role:view'
+  | 'role:create'
+  | 'role:edit'
+  | 'role:delete';
+
+export type Role =
+  | 'super_admin'
+  | 'institute_admin'
+  | 'centre_admin'
+  | 'principal'
+  | 'teacher'
+  | 'parent'
+  | 'student';
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+  permissions?: Permission[];
+  institutionId?: string;
+  centreId?: string;
+}
