@@ -10,10 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add MediatR - register from both Application and current assembly
+// Add MediatR - register from Application assembly
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(EnrolmentMappingProfile).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
 // Add AutoMapper
