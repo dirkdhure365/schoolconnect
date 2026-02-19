@@ -13,7 +13,6 @@ builder.Services.AddSwaggerGen();
 // Add MediatR - register from both Application and current assembly
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(EnrolmentMappingProfile).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(StudentCreatedEventHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 

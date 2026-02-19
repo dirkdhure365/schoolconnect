@@ -15,7 +15,7 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
     protected readonly IMongoCollection<T> Collection;
     protected readonly IEventStore? EventStore;
     protected readonly IMessagePublisher? MessagePublisher;
-    protected readonly IDomainEventDispatcher? _domainEventDispatcher;
+    protected readonly IDomainEventDispatcher? DomainEventDispatcher;
     protected readonly ILogger<MongoRepository<T>> _logger;
 
     public MongoRepository(
@@ -29,7 +29,7 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
         _logger = logger;
         EventStore = eventStore;
         MessagePublisher = messagePublisher;
-        _domainEventDispatcher = domainEventDispatcher;
+        DomainEventDispatcher = domainEventDispatcher;
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
@@ -64,9 +64,9 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
         entity.ClearDomainEvents();
 
         // Dispatch events via MediatR
-        if (_domainEventDispatcher != null && eventsToDispatch.Any())
+        if (DomainEventDispatcher != null && eventsToDispatch.Any())
         {
-            await _domainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
+            await DomainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
         }
 
         _logger.LogInformation("Added entity {EntityType} with ID {EntityId}", typeof(T).Name, entity.Id);
@@ -91,9 +91,9 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
         entity.ClearDomainEvents();
 
         // Dispatch events via MediatR
-        if (_domainEventDispatcher != null && eventsToDispatch.Any())
+        if (DomainEventDispatcher != null && eventsToDispatch.Any())
         {
-            await _domainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
+            await DomainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
         }
 
         _logger.LogInformation("Updated entity {EntityType} with ID {EntityId}", typeof(T).Name, entity.Id);
