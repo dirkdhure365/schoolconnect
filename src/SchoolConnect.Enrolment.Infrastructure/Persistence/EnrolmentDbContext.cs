@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using ApplicationEntity = SchoolConnect.Enrolment.Domain.Entities.Application;
 using SchoolConnect.Enrolment.Domain.Entities;
+using SchoolConnect.Enrolment.Application.ReadModels;
 
 namespace SchoolConnect.Enrolment.Infrastructure.Persistence;
 
@@ -24,4 +25,8 @@ public class EnrolmentDbContext
     public IMongoCollection<StudentClassEnrolment> StudentClassEnrolments => _database.GetCollection<StudentClassEnrolment>("student_class_enrolments");
     public IMongoCollection<ExtraCurricularEnrolment> ExtraCurricularEnrolments => _database.GetCollection<ExtraCurricularEnrolment>("extra_curricular_enrolments");
     public IMongoCollection<StudentBillingAccount> StudentBillingAccounts => _database.GetCollection<StudentBillingAccount>("student_billing_accounts");
+    
+    // Read Models
+    public IMongoCollection<StudentReadModel> StudentReadModels => _database.GetCollection<StudentReadModel>("student_read_models");
+    public IMongoCollection<StudentEnrolmentSummaryReadModel> StudentEnrolmentSummaryReadModels => _database.GetCollection<StudentEnrolmentSummaryReadModel>("student_enrolment_summary_read_models");
 }
