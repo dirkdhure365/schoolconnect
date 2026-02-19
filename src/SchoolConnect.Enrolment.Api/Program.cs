@@ -1,6 +1,5 @@
 using SchoolConnect.Enrolment.Infrastructure.Extensions;
 using SchoolConnect.Enrolment.Application.Mappers;
-using SchoolConnect.Enrolment.Application.EventHandlers;
 using SchoolConnect.Enrolment.Api.Endpoints;
 using SchoolConnect.Common.Infrastructure.Extensions;
 
