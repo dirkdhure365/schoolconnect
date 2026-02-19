@@ -1,6 +1,8 @@
 using SchoolConnect.Enrolment.Infrastructure.Extensions;
 using SchoolConnect.Enrolment.Application.Mappers;
+using SchoolConnect.Enrolment.Application.EventHandlers;
 using SchoolConnect.Enrolment.Api.Endpoints;
+using SchoolConnect.Common.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
-    typeof(EnrolmentMappingProfile).Assembly));
+// Add MediatR - register from both Application and current assembly
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(EnrolmentMappingProfile).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(StudentCreatedEventHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(EnrolmentMappingProfile).Assembly);
@@ -22,6 +27,9 @@ var databaseName = builder.Configuration.GetValue<string>("MongoDB:DatabaseName"
     ?? "SchoolConnectEnrolment";
 
 builder.Services.AddEnrolmentInfrastructure(connectionString, databaseName);
+
+// Add Domain Event Dispatching
+builder.Services.AddDomainEventDispatching();
 
 // Add CORS
 builder.Services.AddCors(options =>

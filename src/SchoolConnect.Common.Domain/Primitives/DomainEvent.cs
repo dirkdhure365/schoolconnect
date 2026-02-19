@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace SchoolConnect.Common.Domain.Primitives;
 
-public abstract record DomainEvent
+public abstract record DomainEvent : INotification
 {
     public Guid EventId { get; init; } = Guid.NewGuid();
     public DateTime OccurredOn { get; init; } = DateTime.UtcNow;

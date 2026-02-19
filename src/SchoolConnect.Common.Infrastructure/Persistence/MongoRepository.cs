@@ -5,6 +5,7 @@ using SchoolConnect.Common.Application.Models;
 using SchoolConnect.Common.Domain.Interfaces;
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Common.Infrastructure.EventStore;
+using SchoolConnect.Common.Infrastructure.Events;
 using SchoolConnect.Common.Infrastructure.Messaging.AzureServiceBus;
 
 namespace SchoolConnect.Common.Infrastructure.Persistence;
@@ -14,18 +15,21 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
     protected readonly IMongoCollection<T> Collection;
     protected readonly IEventStore? EventStore;
     protected readonly IMessagePublisher? MessagePublisher;
+    protected readonly IDomainEventDispatcher? _domainEventDispatcher;
     protected readonly ILogger<MongoRepository<T>> _logger;
 
     public MongoRepository(
         MongoDbContext context,
         ILogger<MongoRepository<T>> logger,
         IEventStore? eventStore = null,
-        IMessagePublisher? messagePublisher = null)
+        IMessagePublisher? messagePublisher = null,
+        IDomainEventDispatcher? domainEventDispatcher = null)
     {
         Collection = context.GetCollection<T>();
         _logger = logger;
         EventStore = eventStore;
         MessagePublisher = messagePublisher;
+        _domainEventDispatcher = domainEventDispatcher;
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
@@ -48,13 +52,22 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
     {
         await Collection.InsertOneAsync(entity, cancellationToken: ct);
 
+        // Capture events before clearing
+        var eventsToDispatch = entity.DomainEvents.ToList();
+
         // Save domain events to event store if available
-        if (EventStore != null && entity.DomainEvents.Any())
+        if (EventStore != null && eventsToDispatch.Any())
         {
-            await EventStore.SaveEventsAsync(entity.Id, entity.DomainEvents, entity.Version - entity.DomainEvents.Count, ct);
+            await EventStore.SaveEventsAsync(entity.Id, eventsToDispatch, entity.Version - eventsToDispatch.Count, ct);
         }
 
         entity.ClearDomainEvents();
+
+        // Dispatch events via MediatR
+        if (_domainEventDispatcher != null && eventsToDispatch.Any())
+        {
+            await _domainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
+        }
 
         _logger.LogInformation("Added entity {EntityType} with ID {EntityId}", typeof(T).Name, entity.Id);
 
@@ -66,13 +79,22 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
         var filter = Builders<T>.Filter.Eq(e => e.Id, entity.Id);
         await Collection.ReplaceOneAsync(filter, entity, cancellationToken: ct);
 
+        // Capture events before clearing
+        var eventsToDispatch = entity.DomainEvents.ToList();
+
         // Save domain events to event store if available
-        if (EventStore != null && entity.DomainEvents.Any())
+        if (EventStore != null && eventsToDispatch.Any())
         {
-            await EventStore.SaveEventsAsync(entity.Id, entity.DomainEvents, entity.Version - entity.DomainEvents.Count, ct);
+            await EventStore.SaveEventsAsync(entity.Id, eventsToDispatch, entity.Version - eventsToDispatch.Count, ct);
         }
 
         entity.ClearDomainEvents();
+
+        // Dispatch events via MediatR
+        if (_domainEventDispatcher != null && eventsToDispatch.Any())
+        {
+            await _domainEventDispatcher.DispatchEventsAsync(eventsToDispatch, ct);
+        }
 
         _logger.LogInformation("Updated entity {EntityType} with ID {EntityId}", typeof(T).Name, entity.Id);
     }
