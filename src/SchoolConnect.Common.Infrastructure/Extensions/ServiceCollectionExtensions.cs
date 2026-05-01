@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolConnect.Common.Infrastructure.EventStore;
+using SchoolConnect.Common.Infrastructure.Events;
 using SchoolConnect.Common.Infrastructure.Messaging.AzureServiceBus;
 using SchoolConnect.Common.Infrastructure.Persistence;
 
@@ -40,6 +41,13 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMessagePublisher, ServiceBusPublisher>();
         services.AddSingleton<IMessageConsumer, ServiceBusConsumer>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddDomainEventDispatching(
+        this IServiceCollection services)
+    {
+        services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
         return services;
     }
 }
