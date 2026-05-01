@@ -6,6 +6,7 @@ using SchoolConnect.Common.Domain.Interfaces;
 using SchoolConnect.Common.Domain.Primitives;
 using SchoolConnect.Common.Infrastructure.EventStore;
 using SchoolConnect.Common.Infrastructure.Messaging.AzureServiceBus;
+using SchoolConnect.Common.Infrastructure.EventDispatcher;
 
 namespace SchoolConnect.Common.Infrastructure.Persistence;
 
@@ -14,18 +15,21 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
     protected readonly IMongoCollection<T> Collection;
     protected readonly IEventStore? EventStore;
     protected readonly IMessagePublisher? MessagePublisher;
+    protected readonly IDomainEventDispatcher? EventDispatcher;
     protected readonly ILogger<MongoRepository<T>> _logger;
 
     public MongoRepository(
         MongoDbContext context,
         ILogger<MongoRepository<T>> logger,
         IEventStore? eventStore = null,
-        IMessagePublisher? messagePublisher = null)
+        IMessagePublisher? messagePublisher = null,
+        IDomainEventDispatcher? eventDispatcher = null)
     {
         Collection = context.GetCollection<T>();
         _logger = logger;
         EventStore = eventStore;
         MessagePublisher = messagePublisher;
+        EventDispatcher = eventDispatcher;
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
@@ -54,6 +58,12 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
             await EventStore.SaveEventsAsync(entity.Id, entity.DomainEvents, entity.Version - entity.DomainEvents.Count, ct);
         }
 
+        // Dispatch domain events to handlers if dispatcher is available
+        if (EventDispatcher != null && entity.DomainEvents.Any())
+        {
+            await EventDispatcher.DispatchAsync(entity.DomainEvents, ct);
+        }
+
         entity.ClearDomainEvents();
 
         _logger.LogInformation("Added entity {EntityType} with ID {EntityId}", typeof(T).Name, entity.Id);
@@ -70,6 +80,12 @@ public class MongoRepository<T> : IRepository<T> where T : AggregateRoot
         if (EventStore != null && entity.DomainEvents.Any())
         {
             await EventStore.SaveEventsAsync(entity.Id, entity.DomainEvents, entity.Version - entity.DomainEvents.Count, ct);
+        }
+
+        // Dispatch domain events to handlers if dispatcher is available
+        if (EventDispatcher != null && entity.DomainEvents.Any())
+        {
+            await EventDispatcher.DispatchAsync(entity.DomainEvents, ct);
         }
 
         entity.ClearDomainEvents();
